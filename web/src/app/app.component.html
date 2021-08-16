@@ -1,3 +1,10 @@
 <p>App Page</p>
 <p>{{ data }}</p>
+<div *ngFor="let d of data">
+    {{ d.username }}
+</div>
+<p>{{ users }}</p>
+<div *ngFor="let user of users">
+    {{ user.email }}
+</div>
 <router-outlet></router-outlet>

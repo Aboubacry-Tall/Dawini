@@ -9,16 +9,25 @@ import { User } from './user';
 })
 export class AppComponent {
   title = 'web';
-  data: any;
+  data: User[] = [];
+  users: User[] = [];
   constructor(private appservice: AppService){}
 
   ngOnInit() {
+    this.getData();
     this.getUsers();
+  }
+
+  getData() {
+    this.appservice.getData().subscribe(data => {
+      this.data = data;
+      console.log(this.data);
+    });
   }
 
   getUsers() {
     this.appservice.getUsers().subscribe(data => {
-      this.data = data;
+      this.users = data;
       console.log(this.data);
     });
   }

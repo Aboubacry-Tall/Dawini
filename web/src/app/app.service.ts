@@ -8,11 +8,15 @@ import { User } from './user';
 })
 export class AppService {
 
-  api: string = 'http://localhost:5000/users';
+  api: string = 'http://localhost:5000';
 
   constructor(private http: HttpClient){}
 
-  getUsers(): Observable<User[]>{
-    return this.http.get<User[]>(this.api);
+  getData(): Observable<User[]>{
+    return this.http.get<User[]>(this.api + '/data');
+  }
+
+  getUsers(): Observable<any>{
+    return this.http.get(this.api + '/users');
   }
 }
