@@ -1,11 +1,11 @@
-from flask import Flask, jsonify, request, make_response, abort
+from flask import Flask, jsonify
 from flask_restful import Resource, Api
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///example.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://root:''@localhost/_flask'
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 data = [
@@ -38,11 +38,11 @@ ma = Marshmallow(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
+    username = db.Column(db.String(255), unique=True, nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
 
 user = User(username="Django", email="django@example.com")
-#db.create_all()
+db.create_all()
 #db.session.add(user)
 #db.session.commit()
 
