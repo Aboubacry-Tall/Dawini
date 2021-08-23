@@ -2,3 +2,19 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.text-second{
+    color: #F29F05;
+}
+
+.click{
+    cursor: pointer; 
+}
+
+.example-form {
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+}
