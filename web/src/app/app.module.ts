@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -7,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +20,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
-import { Login2Component } from './pages/login2/login2.component';
+import { LocalisationComponent } from './pages/localisation/localisation.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,7 @@ import { Login2Component } from './pages/login2/login2.component';
     LoginComponent,
     ResetComponent,
     InscriptionComponent,
-    Login2Component
+    LocalisationComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { Login2Component } from './pages/login2/login2.component';
     MatInputModule,
     MatFormFieldModule,
     FormsModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

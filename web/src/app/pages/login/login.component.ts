@@ -7,7 +7,7 @@ import { AppComponent } from 'src/app/app.component';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  hide = true;
   constructor(private app:AppComponent) { }
   title = this.app.title;
   ngOnInit(): void {

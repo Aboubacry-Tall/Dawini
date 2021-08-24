@@ -2,19 +2,26 @@
     <div class="row">
         <div class="col-sm-6 offset-3">
             <mat-card class="text-dark mt-5">
-                <mat-card-title class="text-center display-4">{{ title }}</mat-card-title>
+                <mat-card-title class="text-center text-success display-5 mb-4">{{ title }}</mat-card-title>
                 <mat-card-subtitle class="text-center text-second fa-2x">Connexion</mat-card-subtitle>
                 <mat-card-content>
-                    <mat-form-field class="example-full-width mb-3 px-4">
+                    <mat-form-field class="example-full-width px-3">
                         <mat-label>Adresse e-mail ou numéro de téléphone</mat-label>
                         <input matInput type="text" placeholder="Adresse e-mail ou numéro de téléphone" autofocus>
                     </mat-form-field>
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Mot de passe</mat-label>
+                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe" autofocus>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
                     <div class="my-4">
-                        <a routerLink='/reset' class="text-decoration-none">Adresse e-mail oubliée ?</a>
+                        <a routerLink='/reset' class="text-decoration-none ms-3">Mot de passe oublié ?</a>
                     </div>
                     <div class="clearfix">
-                        <a routerLink='/inscription' class="text-decoration-none text-second float-start pt-2">Créer un compte</a>
-                        <button mat-raised-button class="bg-success text-white float-end">Se connecter</button>
+                        <a routerLink='/inscription' mat-button class="text-decoration-none float-start pt-2">Créer un compte</a>
+                        <button mat-raised-button routerLink='/login2' class="bg-success text-white float-end me-3">Se connecter</button>
                     </div>
                 </mat-card-content>
             </mat-card>
