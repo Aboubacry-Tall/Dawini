@@ -1,3 +1,4 @@
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6 offset-3">
@@ -19,28 +20,44 @@
                                 <input matInput type="text" placeholder="Nom">
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-12">
-                            <mat-form-field class="example-full-width px-3">
-                                <mat-label>Adresse E-mail</mat-label>
-                                <input matInput type="email" placeholder="Adresse e-mail">
-                            </mat-form-field>
+                        <div class="col-sm-6">
+                            <div class="shadow rounded-2">
+                                <google-map
+                                    height="300px"
+                                    width="100%"
+                                    [zoom]="zoom"
+                                    [center]="center"
+                                    [options]="options">
+                                </google-map>
+                            </div>
                         </div>
                         <div class="col-sm-6">
-                            <mat-form-field class="example-full-width ps-3">
-                                <mat-label>Mot de passe</mat-label>
-                                <input matInput type="text" placeholder="Mot de passe">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-6">
-                            <mat-form-field class="example-full-width pe-3">
-                                <mat-label>Confirmer</mat-label>
-                                <input matInput type="text" placeholder="Confirmer">
-                            </mat-form-field>
+                            <div class="row">
+                                <div class="col-12">
+                                    <mat-form-field class="example-full-width pe-3">
+                                        <mat-label>Adresse sehdini</mat-label>
+                                        <input matInput type="text" placeholder="Adresse sehdini">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field class="example-full-width pe-3">
+                                        <mat-label>X: Latitude</mat-label>
+                                        <input matInput type="text" placeholder="Latitude">
+                                    </mat-form-field>
+                                    <p>Coordonnées GPS</p>
+                                </div>
+                                <div class="col-6">
+                                    <mat-form-field class="example-full-width pe-3">
+                                        <mat-label>Y: Longitude </mat-label>
+                                        <input matInput type="text" placeholder="Longitude">
+                                    </mat-form-field>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="clearfix">
                         <a routerLink="/login" mat-button class="text-dark pt-1 text-primary">Se connecter à un compte</a>
-                        <button mat-raised-button class="float-end bg-success text-white me-3">Suivant</button>
+                        <button mat-raised-button class="float-end bg-success text-white me-3">S'inscrire</button>
                     </div>
                 </mat-card-content>
             </mat-card>

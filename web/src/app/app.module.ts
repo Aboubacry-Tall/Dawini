@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { GoogleMapsModule } from '@angular/google-maps'
 
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -45,7 +46,8 @@ import { LocalisationComponent } from './pages/localisation/localisation.compone
     MatFormFieldModule,
     FormsModule,
     MatCardModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
