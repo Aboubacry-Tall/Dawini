@@ -22,6 +22,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { LocalisationComponent } from './pages/localisation/localisation.component';
+import { MapComponent } from './pages/map/map.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { LocalisationComponent } from './pages/localisation/localisation.compone
     LoginComponent,
     ResetComponent,
     InscriptionComponent,
-    LocalisationComponent
+    LocalisationComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
