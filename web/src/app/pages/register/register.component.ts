@@ -2,19 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
-  selector: 'app-inscription',
-  templateUrl: './inscription.component.html',
-  styleUrls: ['./inscription.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class InscriptionComponent implements OnInit {
+export class RegisterComponent implements OnInit {
+
   
   constructor(private app:AppComponent) { }
   hide = true;
   title = this.app.title;
-  
-  lat = 51.678418;
-  lng = 7.809007;
-
   ngOnInit(): void {
   }
 

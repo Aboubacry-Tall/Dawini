@@ -23,6 +23,9 @@ import { ResetComponent } from './pages/reset/reset.component';
 import { InscriptionComponent } from './pages/inscription/inscription.component';
 import { LocalisationComponent } from './pages/localisation/localisation.component';
 import { MapComponent } from './pages/map/map.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { LocateComponent } from './pages/locate/locate.component';
+import { MapboxComponent } from './modules/locate/mapbox/mapbox.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { MapComponent } from './pages/map/map.component';
     ResetComponent,
     InscriptionComponent,
     LocalisationComponent,
-    MapComponent
+    MapComponent,
+    RegisterComponent,
+    LocateComponent,
+    MapboxComponent
   ],
   imports: [
     BrowserModule,
