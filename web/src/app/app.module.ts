@@ -26,6 +26,7 @@ import { MapComponent } from './pages/map/map.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { LocateComponent } from './pages/locate/locate.component';
 import { MapboxComponent } from './modules/locate/mapbox/mapbox.component';
+import { MaplefComponent } from './modules/locate/maplef/maplef.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MapboxComponent } from './modules/locate/mapbox/mapbox.component';
     MapComponent,
     RegisterComponent,
     LocateComponent,
-    MapboxComponent
+    MapboxComponent,
+    MaplefComponent
   ],
   imports: [
     BrowserModule,
