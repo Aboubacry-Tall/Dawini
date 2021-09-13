@@ -20,13 +20,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
-import { InscriptionComponent } from './pages/inscription/inscription.component';
-import { LocalisationComponent } from './pages/localisation/localisation.component';
-import { MapComponent } from './pages/map/map.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { LocateComponent } from './pages/locate/locate.component';
-import { MapboxComponent } from './modules/locate/mapbox/mapbox.component';
-import { MaplefComponent } from './modules/locate/maplef/maplef.component';
 
 @NgModule({
   declarations: [
@@ -37,13 +31,7 @@ import { MaplefComponent } from './modules/locate/maplef/maplef.component';
     HomeComponent,
     LoginComponent,
     ResetComponent,
-    InscriptionComponent,
-    LocalisationComponent,
-    MapComponent,
-    RegisterComponent,
-    LocateComponent,
-    MapboxComponent,
-    MaplefComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
