@@ -1,7 +1,9 @@
+import { ScannerComponent } from './pages/scanner/scanner.component';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { FooterComponent } from './common/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MedicamentComponent } from './pages/medicament/medicament.component';
+import { MedicamentsComponent } from './pages/medicaments/medicaments.component';
 
 const routes: Routes = [
   {
@@ -9,14 +11,24 @@ const routes: Routes = [
     component:HomeComponent
   },
   {
-    path: 'footer',
-    component:FooterComponent
+    path: 'medicament',
+    component:MedicamentComponent
+  },
+  {
+    path: 'medicaments',
+    component:MedicamentsComponent
+  },
+  {
+    path: 'scanner',
+    component:ScannerComponent
   },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },
+  }
+
+
 ];
 
 @NgModule({

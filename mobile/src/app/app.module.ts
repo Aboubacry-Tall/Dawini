@@ -1,3 +1,4 @@
+import { SidemenuComponent } from './common/sidemenu/sidemenu.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { AproposComponent } from './pages/apropos/apropos.component';
 import { OnstartComponent } from './pages/onstart/onstart.component';
@@ -30,6 +31,7 @@ import { HeaderComponent } from './common/header/header.component';
     ScannerComponent,
     OnstartComponent,
     AproposComponent,
+    SidemenuComponent,
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
