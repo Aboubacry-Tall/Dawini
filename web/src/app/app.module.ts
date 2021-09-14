@@ -20,8 +20,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
-import { InscriptionComponent } from './pages/inscription/inscription.component';
-import { LocalisationComponent } from './pages/localisation/localisation.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,7 @@ import { LocalisationComponent } from './pages/localisation/localisation.compone
     HomeComponent,
     LoginComponent,
     ResetComponent,
-    InscriptionComponent,
-    LocalisationComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
