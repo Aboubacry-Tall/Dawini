@@ -1,4 +1,4 @@
-import { SidemenuComponent } from './common/sidemenu/sidemenu.component';
+
 import { FooterComponent } from './common/footer/footer.component';
 import { AproposComponent } from './pages/apropos/apropos.component';
 import { OnstartComponent } from './pages/onstart/onstart.component';
@@ -18,6 +18,8 @@ import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { ScannerComponent } from './pages/scanner/scanner.component';
 import { HeaderComponent } from './common/header/header.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +33,6 @@ import { HeaderComponent } from './common/header/header.component';
     ScannerComponent,
     OnstartComponent,
     AproposComponent,
-    SidemenuComponent,
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
