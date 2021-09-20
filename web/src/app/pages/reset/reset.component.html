@@ -1,1 +1,22 @@
-<p>reset works!</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-6 offset-3">
+            <mat-card>
+                <mat-card-title class="text-center text-success display-5 mb-4">{{ title }}</mat-card-title>
+                <mat-card-content>
+                    <div class="ms-3 me-3">
+                        <h3>Veuillez entrer votre adresse e-mail ou votre numéro de mobile pour rechercher votre compte.</h3>
+                    </div>
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Adresse e-mail ou numéro de téléphone</mat-label>
+                        <input matInput type="text" placeholder="Adresse e-mail ou numéro de téléphone" autofocus>
+                    </mat-form-field>
+                    <div class="clearfix">
+                        <button mat-raised-button class="bg-success text-white float-end me-3">Rechercher</button>
+                        <button mat-raised-button class="bg-light float-end me-3 text-dark">Annuler</button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
