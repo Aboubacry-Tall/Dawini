@@ -1,3 +1,57 @@
-<p>
-  medicaments works!
-</p>
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Medicaments
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-searchbar placeholder="Rechercher un medicament"></ion-searchbar>
+
+  <ion-infinite-scroll>
+    <ion-infinite-scroll-content>
+      <div class="container">
+          <div class="card">
+            <h3 class="card-title">Card title</h3>
+            <ion-card-content>
+              <p>Content goes here Card Subtitle quick example text</p>
+            </ion-card-content>
+            <b>prix : 450MRU</b>
+          </div>
+      </div>
+      <div class="container">
+          <div class="card">
+            <h3 class="card-title">Card title</h3>
+            <ion-card-content>
+              <p>Content goes here Card Subtitle quick example text</p>
+            </ion-card-content>
+            <b>prix : 450MRU</b>
+          </div>
+      </div>
+      <div class="container">
+          <div class="card">
+            <h3 class="card-title">Card title</h3>
+            <ion-card-content>
+              Content goes here Card Subtitle quick example text
+            <b>prix : 450MRU</b>
+            </ion-card-content>
+          </div>
+      </div>
+      <div class="container">
+          <div class="card">
+            <h3 class="card-title">Card title</h3>
+            <ion-card-content>
+              <p>Content goes here Card Subtitle quick example text</p>
+            </ion-card-content>
+            <b>prix : 450MRU</b>
+          </div>
+      </div>
+      </ion-infinite-scroll-content>
+  </ion-infinite-scroll>  
+</ion-content>
+
+<app-footer></app-footer>

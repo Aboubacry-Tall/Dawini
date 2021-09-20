@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScannerComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit() {}
+  
 
 }
