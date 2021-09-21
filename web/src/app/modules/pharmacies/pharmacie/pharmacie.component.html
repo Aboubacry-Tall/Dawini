@@ -1,0 +1,87 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <mat-card>
+                <div class="text-center">
+                    <mat-form-field class="w-75 mb-3">
+                        <mat-label></mat-label>
+                        <span matPrefix class="text-second"><i class="fa fa-search me-3"></i></span>
+                        <input matInput type="text" [(ngModel)]="value" placeholder="Rechercher des médicaments" autofocus>
+                        <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <h3>Liste de médicaments</h3>
+                <div class="p-2 mb-2">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <b>Nom du medoc</b>
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            <b>Prix du medoc</b>
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            <b>Etat</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 mb-2 shadow-sm">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            Nom du medoc
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            Prix du medoc
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            Etat
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 mb-2 shadow-sm">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            Nom du medoc
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            Prix du medoc
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            Etat
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-sm-4">
+            <mat-card>
+                <h3>Ajouter un nouveau médicament</h3>
+                <form action="">
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Nom du médicament</mat-label>
+                        <input matInput type="text" placeholder="Nom du médicament">
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Description</mat-label>
+                        <input matInput type="text" placeholder="Description">
+                    </mat-form-field>
+                    <div class="clearfix">
+                        <button mat-raised-button class="bg-success text-white float-end me-3">Rechercher</button>
+                        <button mat-raised-button class="bg-light float-end me-3 text-dark">Annuler</button>
+                    </div>
+                </form>
+            </mat-card>
+
+            <mat-card class="mt-3">
+                <h3>Importez des médicaments</h3>
+                <form action="">
+                    <input type="file" class="form-control mb-3">
+                    <div class="text-center">
+                        <button mat-raised-button class="bg-success text-white me-3">Importer</button>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

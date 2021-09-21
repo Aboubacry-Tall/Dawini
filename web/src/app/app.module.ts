@@ -21,6 +21,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { SearchComponent } from './pages/search/search.component';
+import { PharmacieComponent } from './modules/pharmacies/pharmacie/pharmacie.component';
+import { MedicamentComponent } from './modules/medicaments/medicament/medicament.component';
+import { MedicamentsComponent } from './modules/medicaments/medicaments/medicaments.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { RegisterComponent } from './pages/register/register.component';
     HomeComponent,
     LoginComponent,
     ResetComponent,
-    RegisterComponent
+    RegisterComponent,
+    SearchComponent,
+    PharmacieComponent,
+    MedicamentComponent,
+    MedicamentsComponent
   ],
   imports: [
     BrowserModule,
