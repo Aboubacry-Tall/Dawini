@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MapboxComponent } from './modules/maps/mapbox/mapbox.component';
 import { MedicamentComponent } from './modules/medicaments/medicament/medicament.component';
 import { MedicamentsComponent } from './modules/medicaments/medicaments/medicaments.component';
 import { PharmacieComponent } from './modules/pharmacies/pharmacie/pharmacie.component';
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'pharmacie', component: PharmacieComponent},
   {path: 'medicament', component: MedicamentComponent},
-  {path: 'medicaments', component: MedicamentsComponent}
+  {path: 'medicaments', component: MedicamentsComponent},
+  {path: 'mapbox', component: MapboxComponent}
   
 ];
 
