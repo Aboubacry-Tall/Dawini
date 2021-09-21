@@ -17,6 +17,7 @@ import { MedicamentsComponent } from './pages/medicaments/medicaments.component'
 import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { ScannerComponent } from './pages/scanner/scanner.component';
 import { HeaderComponent } from './common/header/header.component';
+import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 
 
@@ -36,7 +37,7 @@ import { HeaderComponent } from './common/header/header.component';
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [QRScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
