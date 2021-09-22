@@ -2,6 +2,7 @@
 Projet de fin d'étude 
 key=AIzaSyBFG4otprd8aau0zUS_i2ybhT9-qd0A9Uo
 
+npm uninstall cordova -g
 
 npm install cordova -g   
 npm i cordova-common 
