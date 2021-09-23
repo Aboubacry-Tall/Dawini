@@ -8,11 +8,17 @@ npm uninstall cordova -g
 
 npm install cordova -g   
 npm i cordova-common 
+<<<<<<< HEAD
 npm i cordova-serve    
+=======
+npm i cordova-serve   
+npm i -g native-run   
+>>>>>>> origin/main
 npm i @ionic-native/core
 ionic cordova plugin add cordova-plugin-qrscanner
 npm install @ionic-native/qr-scanner
 ionic cordova run browser
+<<<<<<< HEAD
 cordova platform rm android
 cordova platform add android
 ionic cordova build android
@@ -21,3 +27,5 @@ ionic cordova run android --livereload
 dans un variable d'environnement 
 name :_JAVA_OPTIONS
 value: -Xmx512M
+=======
+>>>>>>> origin/main
