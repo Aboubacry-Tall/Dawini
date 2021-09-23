@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/architect": "^0.1200.0",
     "@angular/common": "~12.1.1",
     "@angular/compiler": "~12.1.1",
     "@angular/core": "~12.1.1",
@@ -24,10 +25,13 @@
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/qr-scanner": "^5.36.0",
     "@ionic/angular": "^5.5.2",
+    "@popperjs/core": "^2.9.3",
+    "ajv": "^6.9.1",
     "bootstrap": "^5.1.0",
     "cordova-browser": "6.0.0",
     "cordova-common": "^4.0.2",
     "cordova-serve": "^4.0.0",
+    "mapbox-gl": "^2.4.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
