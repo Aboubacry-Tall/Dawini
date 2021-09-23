@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
-import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-scanner',
@@ -11,7 +10,7 @@ export class ScannerComponent implements OnInit {
   
   scannedData: any;
 
-  constructor(private qrScanner: QRScanner,private barcodeScanner:BarcodeScanner) {}
+  constructor(private qrScanner: QRScanner) {}
 
   Qrscan(){
     this.qrScanner.prepare()
@@ -39,7 +38,7 @@ export class ScannerComponent implements OnInit {
   .catch((e: any) => console.log('Error is', e));
 
   }
-
+/*
   Barscan(){
     const options: BarcodeScannerOptions = {
       preferFrontCamera: true,
@@ -61,7 +60,7 @@ export class ScannerComponent implements OnInit {
     });
   }
 
-
+*/
   ngOnInit() {
   }
   

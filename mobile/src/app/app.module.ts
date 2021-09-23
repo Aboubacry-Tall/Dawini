@@ -18,7 +18,6 @@ import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { ScannerComponent } from './pages/scanner/scanner.component';
 import { HeaderComponent } from './common/header/header.component';
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 
@@ -38,7 +37,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [BarcodeScanner,QRScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [QRScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
