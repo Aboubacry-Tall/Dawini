@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
+import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 
 @Component({
   selector: 'app-scanner',
@@ -7,60 +7,30 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
   styleUrls: ['./scanner.component.scss'],
 })
 export class ScannerComponent implements OnInit {
+  public showCamera = false;
+  public textScanned: string='';
+
+  constructor(private barcodeScanner:BarcodeScanner) {}
   
-  scannedData: any;
-
-  constructor(private qrScanner: QRScanner) {}
-
-  Qrscan(){
-    this.qrScanner.prepare()
-    .then((status: QRScannerStatus) => {
-      if (status.authorized) {
-        // camera permission was granted
-
-
-        // start scanning
-        let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-          console.log('Scanned something', text);
-
-          this.qrScanner.hide(); // hide camera preview
-          scanSub.unsubscribe(); // stop scanning
-        });
-
-      } else if (status.denied) {
-        // camera permission was permanently denied
-        // you must use QRScanner.openSettings() method to guide the user to the settings page
-        // then they can grant the permission from there
-      } else {
-        // permission was denied, but not permanently. You can ask for permission again at a later time.
-      }
-  })
-  .catch((e: any) => console.log('Error is', e));
-
-  }
-/*
   Barscan(){
     const options: BarcodeScannerOptions = {
-      preferFrontCamera: true,
-      showFlipCameraButton: true,
+      preferFrontCamera: false,
       showTorchButton: true,
       torchOn: false,
       prompt: 'Place a barcode inside the scan area',
-      resultDisplayDuration: 500,
-      formats: 'QR_CODE,PDF_417 ',
-      orientation: 'landscape',
+      resultDisplayDuration: 10000,
+      formats: 'QR_CODE,CODE_128,MSI,CODABAR,CODE_39,CODE_93,UPC_A,UPC_A,DATA_MATRIX,RSS_EXPANDED ',
+      orientation: 'portrait',
     };
 
-    this.barcodeScanner.scan(options).then(barcodeData => {
+    this.barcodeScanner.scan(options).then((barcodeData:any) => {
       console.log('Barcode data', barcodeData);
-      this.scannedData = barcodeData;
-
+      this.textScanned= barcodeData;
     }).catch(err => {
       console.log('Error', err);
     });
   }
 
-*/
   ngOnInit() {
   }
   

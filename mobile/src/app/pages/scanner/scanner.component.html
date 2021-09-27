@@ -11,13 +11,20 @@
 
 <ion-content>
   
-  <div id="container">
-    <ion-button (click)="Qrscan()">QR Scanner</ion-button>
-  </div>
+  <ion-icon class="frame" name="qr-scanner"></ion-icon>
+  <div *ngIf="!showCamera">
+    <ion-button expand="block"  (click)="Barscan()" >
+      <ion-icon slot="start" name="qr-scanner"></ion-icon>
+      Scanner un Code
+    </ion-button>
 
-  <div id="container">
-    <ion-button >Barcode Scanner</ion-button>
-  </div>
+    <ion-item *ngIf="textScanned" lines="none">
+      <ion-label>
+        <p>Texte du QR Code</p>
+        <h2><b>{{ textScanned }}</b></h2>
+      </ion-label>
+    </ion-item>
+    </div>
 
 </ion-content>
 <app-footer></app-footer>
