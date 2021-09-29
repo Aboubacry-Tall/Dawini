@@ -13,9 +13,11 @@ npm i @ionic-native/core
 ionic cordova plugin add cordova-plugin-qrscanner
 npm install @ionic-native/qr-scanner
 ionic cordova run browser
+
 cordova platform rm android
 cordova platform add android
 ionic cordova build android
+
 ionic cordova run android --livereload
 ionic cordova emulate android
 
