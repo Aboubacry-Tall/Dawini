@@ -29,10 +29,19 @@ export class MapboxComponent implements OnInit {
     zoom: 9 ,// starting zoom
     
     });
+<<<<<<< HEAD
     // Add zoom and rotation controls to the map.
     this.map.addControl(new mapboxgl.NavigationControl());
     
     this.map.addControl(new mapboxgl.FullscreenControl());
+=======
+
+    map.on('load', function () {
+      map.resize();
+    });
+    //map.addControl(new mapboxgl.FullscreenControl());
+    //map.addControl(new mapboxgl.NavigationControl());
+>>>>>>> origin/main
 
     /*
     // Create a default Marker and add it to the map.
@@ -45,5 +54,6 @@ export class MapboxComponent implements OnInit {
     .setLngLat([12.65147, 55.608166])
     .addTo(map);
     */
+    
   }
 }
