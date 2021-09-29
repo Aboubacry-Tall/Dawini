@@ -55,6 +55,7 @@
     "@typescript-eslint/parser": "4.16.1",
     "cordova-android": "^9.1.0",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^4.0.0",
@@ -90,6 +91,9 @@
       "cordova-plugin-inappbrowser": {},
       "phonegap-plugin-barcodescanner": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-geolocation": {
+        "GPS_REQUIRED": "true"
       }
     },
     "platforms": [
