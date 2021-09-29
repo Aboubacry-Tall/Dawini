@@ -9,23 +9,30 @@ import * as mapboxgl from 'mapbox-gl';
 })
 export class MapboxComponent implements OnInit {
 
+  map: mapboxgl.Map;
+
   constructor() { }
 
   ngOnInit() {
     this.getMap();
+    this.map.on('load', () => {
+      this.map.resize();
+  });
   }
   getMap(){
     (mapboxgl as any).accessToken = 'pk.eyJ1IjoiZ2hvc3RtYXAiLCJhIjoiY2tzeXN4YmxpMGFzajJ1bW9xOXRkeG10ZSJ9.q6yvHK5OCnSVLOKUj48lpw';
-    const map = new mapboxgl.Map({
+    this.map = new mapboxgl.Map({
     container: 'mapid', // container ID
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
-    center: [12.550343, 55.665957], // starting position [lng, lat]
-    pitch: 60,
-    zoom: 9 // starting zoom
+    center: [-15.9749,18.0796], // starting position [lng, lat]
+    pitch: 50,
+    zoom: 9 ,// starting zoom
+    
     });
-
-    //map.addControl(new mapboxgl.FullscreenControl());
-    //map.addControl(new mapboxgl.NavigationControl());
+    // Add zoom and rotation controls to the map.
+    this.map.addControl(new mapboxgl.NavigationControl());
+    
+    this.map.addControl(new mapboxgl.FullscreenControl());
 
     /*
     // Create a default Marker and add it to the map.
