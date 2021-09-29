@@ -8,18 +8,16 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 })
 export class ScannerComponent implements OnInit {
   public showCamera = false;
-  public textScanned: string='';
+  public textScanned: any;
 
   constructor(private barcodeScanner:BarcodeScanner) {}
   
   Barscan(){
     const options: BarcodeScannerOptions = {
-      preferFrontCamera: false,
       showTorchButton: true,
-      torchOn: false,
-      prompt: 'Place a barcode inside the scan area',
-      resultDisplayDuration: 10000,
-      formats: 'QR_CODE,CODE_128,MSI,CODABAR,CODE_39,CODE_93,UPC_A,UPC_A,DATA_MATRIX,RSS_EXPANDED ',
+      prompt: 'Placez le barcode dans la zone de scan',
+      resultDisplayDuration: 500,
+      formats: 'QR_CODE,CODE_128,CODABAR,CODE_39,CODE_93,UPC_A,UPC_E,DATA_MATRIX ',
       orientation: 'portrait',
     };
 
