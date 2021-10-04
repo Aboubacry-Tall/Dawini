@@ -29,3 +29,9 @@ name :_JAVA_OPTIONS
 value: -Xmx512M
 
 emulator -avd Pixel_2_API_26
+
+# Mettre à jour les dépendences de Django
+pip freeze > requirements.txt
+
+# Installation des dépendences de Django
+pip install -r requirements.txt
