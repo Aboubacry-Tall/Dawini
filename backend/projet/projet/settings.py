@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
+    'corsheaders',
+    'fullapi.apps.FullapiConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +44,13 @@ INSTALLED_APPS = [
     'mobileapp.apps.MobileappConfig'
 ]
 
+
+
 MIDDLEWARE = [
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,6 +59,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:8081',
+)
 
 ROOT_URLCONF = 'projet.urls'
 
@@ -84,7 +98,10 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '__dawini',
+        'OPTIONS': {
+            'init_command': 'SET default_storage_engine=INNODB',
+        },
+        'NAME': '__dawinidb',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',
