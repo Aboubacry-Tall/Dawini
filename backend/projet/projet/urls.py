@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-from fullapi import views
+from mobileapp import views
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+router.register(r'medicament', views.MedicamentViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
