@@ -1,12 +1,10 @@
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
-<<<<<<< HEAD
-from mobileapp import views
-=======
+
+from mobileapp import viewsets
 from fullapi import views
 from django.conf.urls import url 
->>>>>>> origin/main
 
 router = routers.DefaultRouter()
 router.register(r'medicament', views.MedicamentViewSet)
