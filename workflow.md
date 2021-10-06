@@ -6,3 +6,6 @@ crud pharmacies
 espace administration
 
 # Mobile
+lister les medicaments
+rechercher les medicament
+mode dark
