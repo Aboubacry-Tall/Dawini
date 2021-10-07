@@ -41,13 +41,7 @@ ionic cordova build android
 # Generer et lancer l'app version android sur un emulateur
 ionic cordova run android --livereload
 
-ionic cordova emulate android
-
-
-dans un variable d'environnement 
-name :_JAVA_OPTIONS
-value: -Xmx512M
-
+# Ouvrir l'emulateur de Android Studio
 emulator -avd Pixel_2_API_26
 
 # Mettre à jour les dépendences de Django
