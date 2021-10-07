@@ -14,10 +14,10 @@ export class ScannerComponent implements OnInit {
   
   Barscan(){
     const options: BarcodeScannerOptions = {
-      showTorchButton: true,
+      showTorchButton: false,
       prompt: 'Placez le barcode dans la zone de scan',
       resultDisplayDuration: 500,
-      formats: 'QR_CODE,CODE_128,CODABAR,CODE_39,CODE_93,UPC_A,UPC_E,DATA_MATRIX ',
+      formats: 'QR_CODE,CODE_128,CODABAR,CODE_39,CODE_93,UPC_A,UPC_E,DATA_MATRIX,EAN_8,EAN_13,PDF_417,RSS_EXPANDED',
       orientation: 'portrait',
     };
 
