@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { GoogleMapsModule } from '@angular/google-maps'
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -45,6 +46,7 @@ import { MedicamentsComponent } from './modules/medicaments/medicaments/medicame
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,

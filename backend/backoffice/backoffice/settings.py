@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'web.apps.WebConfig',
     'mobile.apps.MobileConfig'
 ]
 
@@ -91,6 +92,9 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
+        'OPTIONS': {
+            "init_command": "SET innodb_strict_mode=1",
+        }
     }
 }
 
