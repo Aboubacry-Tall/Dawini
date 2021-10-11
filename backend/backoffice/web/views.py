@@ -7,7 +7,7 @@ from web.models import Pharmacie
 from web.serializers import PharmacieSerializer
 
 @api_view(['GET', 'POST', 'DELETE'])
-def create_medicament(request):
+def create_pharmacie(request):
     pharmacie_data = JSONParser().parse(request)
     pharmacie_serializer = PharmacieSerializer(data=pharmacie_data)
     if pharmacie_serializer.is_valid():

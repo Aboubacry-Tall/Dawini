@@ -10,7 +10,6 @@ import { PharmaciesService } from 'src/app/modules/pharmacies/services/pharmacie
 })
 export class RegisterComponent implements OnInit {
 
-  
   constructor(private app:AppComponent, private service: PharmaciesService) { }
   hide = true;
   title = this.app.title;
@@ -20,7 +19,7 @@ export class RegisterComponent implements OnInit {
   }
 
   create_pharmacie(){
-    alert(this.pharmacie.nom);
+    alert(this.pharmacie.nom + "         " + this.pharmacie.password);
     this.service.create_pharmacie(this.pharmacie).subscribe(data =>{
       console.log(data);
     },

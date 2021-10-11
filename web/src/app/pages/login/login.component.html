@@ -1,30 +1,35 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-6 offset-3">
-            <mat-card class="text-dark mt-5">
-                <mat-card-title class="text-center text-success display-5 mb-4">{{ title }}</mat-card-title>
-                <mat-card-subtitle class="text-center text-second fa-2x">Connexion</mat-card-subtitle>
-                <mat-card-content>
-                    <mat-form-field class="example-full-width px-3">
-                        <mat-label>Adresse e-mail ou numéro de téléphone</mat-label>
-                        <input matInput type="text" placeholder="Adresse e-mail ou numéro de téléphone" autofocus>
-                    </mat-form-field>
-                    <mat-form-field class="example-full-width px-3">
-                        <mat-label>Mot de passe</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Mot de passe" autofocus>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <div class="my-4">
-                        <a routerLink='/reset' class="text-decoration-none ms-3">Mot de passe oublié ?</a>
+            <form #form="ngForm" (ngSubmit)="login()">
+                <mat-card class="text-dark mt-5">
+                    <div class="text-center">
+                        <img src="assets/images/logo.png" style="width:100px; height:100px" alt="logo">
                     </div>
-                    <div class="clearfix">
-                        <a routerLink='/register' mat-button class="text-decoration-none float-start pt-2">Créer un compte</a>
-                        <button mat-raised-button routerLink='/medicaments' class="bg-success text-white float-end me-3">Se connecter</button>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+                    <mat-card-title class="text-center text-success display-5 mb-4">{{ title }}</mat-card-title>
+                    <mat-card-subtitle class="text-center text-dark mt-3" style="font-size: 20px;">Se connecter à DAWINI</mat-card-subtitle>
+                    <mat-card-content>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Adresse e-mail</mat-label>
+                            <input matInput type="email" name="email" [(ngModel)]="pharmacie.email" #email="ngModel" placeholder="Adresse e-mail" reauired>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Mot de passe</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="pharmacie.password" #password="ngModel" placeholder="Mot de passe" required>
+                            <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </a>
+                        </mat-form-field>
+                        <div class="my-4">
+                            <a routerLink='/reset' class="text-decoration-none ms-3">Mot de passe oublié ?</a>
+                        </div>
+                        <div class="clearfix">
+                            <a routerLink='/register' mat-button class="text-decoration-none float-start pt-2">Créer un compte</a>
+                            <button [disabled]="form.form.invalid" mat-raised-button color="primary" class="text-white float-end me-3">Se connecter</button>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </form>
         </div>
     </div>
 </div>
