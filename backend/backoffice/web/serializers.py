@@ -6,9 +6,4 @@ class PharmacieSerializer(serializers.ModelSerializer):
  
     class Meta:
         model  = Pharmacie
-        fields = ('id',
-                  'nom',
-                  'pseudo',
-                  'email',
-                  'password',
-                  'quartier',)
+        fields = '__all__'
