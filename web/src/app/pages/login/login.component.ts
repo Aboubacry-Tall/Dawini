@@ -24,14 +24,12 @@ export class LoginComponent implements OnInit {
     this.service.login_pharmacie(this.pharmacie).subscribe(data =>{
       if(Object.keys(data).length != 0){
         this.pharmacies = data;
-        this.router.navigate(['pharmacie', this.pharmacies[0].id])
+        this.router.navigate(['pharmacie', this.pharmacies[0].id]);
+        const id = this.pharmacies[0].id + '';
+        localStorage.setItem('pharamcie_id', id);
       }
     },
     error => console.log(error));
-  }
-
-  get_pharmacie(){
-    alert(this.pharmacie.nom);
   }
 
 }
