@@ -32,7 +32,6 @@ ionic cordova run browser
 cordova platform rm android
 
 # Installation du palatform android sur cordova
-
 cordova platform add android
 
 # Generer l'app version android
@@ -49,3 +48,9 @@ pip freeze > requirements.txt
 
 # Installation des dépendences de Django
 pip install -r requirements.txt
+
+# regrouper vos changements de modèle dans des fichiers de migration individuels - comme des commits
+python manage.py makemigrations
+
+# Applique les changements à la base de données.
+python manage.py migrate
