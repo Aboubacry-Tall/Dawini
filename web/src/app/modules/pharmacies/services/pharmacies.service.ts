@@ -23,5 +23,9 @@ export class PharmaciesService {
   login_pharmacie(pharmacie: Pharmacie): Observable<any> {
     return this.http.post(this.server + 'login-pharmacie', pharmacie);
   }
+
+  get_pharmacie(id: number): Observable<any> {
+    return this.http.get(this.server + 'pharmacie/' + id);
+  }
 }
  

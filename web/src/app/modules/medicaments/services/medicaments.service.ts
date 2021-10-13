@@ -15,8 +15,8 @@ export class MedicamentsService {
     return this.http.post(this.server + 'create-medicament', medicament);
   }
 
-  get_all_medicaments(): Observable<any> {
-    return this.http.get(this.server + 'medicaments');
+  get_all_medicaments(pharmacie_id:number): Observable<any> {
+    return this.http.get(this.server + 'medicaments?pharmacie=' + pharmacie_id);
   }
 
 }
