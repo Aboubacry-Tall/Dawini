@@ -26,29 +26,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-2 mb-2 shadow-sm">
+                <div class="p-2 mb-2 shadow-sm" *ngFor="let medicament of medicaments">
                     <div class="row">
                         <div class="col-sm-8">
-                            Nom du medoc
+                            {{medicament.nom}}
                         </div>
                         <div class="col-sm-2 text-end">
-                            Prix du medoc
+                            {{medicament.prix}}
                         </div>
                         <div class="col-sm-2 text-end">
-                            Etat
-                        </div>
-                    </div>
-                </div>
-                <div class="p-2 mb-2 shadow-sm">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            Nom du medoc
-                        </div>
-                        <div class="col-sm-2 text-end">
-                            Prix du medoc
-                        </div>
-                        <div class="col-sm-2 text-end">
-                            Etat
+                            {{medicament.etat}}
                         </div>
                     </div>
                 </div>
@@ -57,18 +44,22 @@
         <div class="col-sm-4">
             <mat-card>
                 <h3>Ajouter un nouveau médicament</h3>
-                <form action="">
+                <form #form="ngForm" (ngSubmit)="create_medicament()">
                     <mat-form-field class="example-full-width px-3">
                         <mat-label>Nom du médicament</mat-label>
-                        <input matInput type="text" placeholder="Nom du médicament">
+                        <input matInput type="text" name="nom" [(ngModel)]="medicament.nom" #nom="ngModel" placeholder="Nom du médicament" required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Prix du médicament</mat-label>
+                        <input matInput type="number" name="prix" [(ngModel)]="medicament.prix" #prix="ngModel" placeholder="000,00 MRU" required>
                     </mat-form-field>
                     <mat-form-field class="example-full-width px-3">
                         <mat-label>Description</mat-label>
-                        <input matInput type="text" placeholder="Description">
+                        <input matInput type="text" name="description" [(ngModel)]="medicament.description" #description="ngModel" placeholder="Description" required>
                     </mat-form-field>
                     <div class="clearfix">
-                        <button mat-raised-button class="bg-success text-white float-end me-3">Rechercher</button>
-                        <button mat-raised-button class="bg-light float-end me-3 text-dark">Annuler</button>
+                        <button mat-raised-button class="text-white float-end me-3" [disabled]="form.form.invalid" color="primary">Ajouter</button>
+                        <a mat-raised-button class="bg-light float-end me-3 text-dark" [disabled]="form.form.invalid">Annuler</a>
                     </div>
                 </form>
             </mat-card>
