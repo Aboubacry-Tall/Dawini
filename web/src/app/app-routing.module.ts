@@ -16,7 +16,7 @@ const routes: Routes = [
   {path: 'reset', component: ResetComponent},
   {path: 'search', component: SearchComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'pharmacie', component: PharmacieComponent},
+  {path: 'pharmacie/:id', component: PharmacieComponent},
   {path: 'medicament', component: MedicamentComponent},
   {path: 'medicaments', component: MedicamentsComponent},
   {path: 'mapbox', component: MapboxComponent}
