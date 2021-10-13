@@ -15,17 +15,23 @@ export class LoginComponent implements OnInit {
   title = this.app.title;
   hide = true;
   pharmacie: Pharmacie = new Pharmacie();
+  pharmacies!: Pharmacie[];
+
   ngOnInit(): void {
   }
 
   login(){
     this.service.login_pharmacie(this.pharmacie).subscribe(data =>{
-      console.log(data);
       if(Object.keys(data).length != 0){
-        this.router.navigate(['pharmacie']);
+        this.pharmacies = data;
+        this.router.navigate(['pharmacie', this.pharmacies[0].id])
       }
     },
     error => console.log(error));
+  }
+
+  get_pharmacie(){
+    alert(this.pharmacie.nom);
   }
 
 }
