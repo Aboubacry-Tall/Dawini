@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Pharmacie } from 'src/app/modules/pharmacies/models/pharmacie';
 import { PharmaciesService } from 'src/app/modules/pharmacies/services/pharmacies.service';
@@ -10,7 +11,7 @@ import { PharmaciesService } from 'src/app/modules/pharmacies/services/pharmacie
 })
 export class RegisterComponent implements OnInit {
 
-  constructor(private app:AppComponent, private service: PharmaciesService) { }
+  constructor(private app:AppComponent, private service: PharmaciesService, private router:Router) { }
   hide = true;
   title = this.app.title;
   pharmacie: Pharmacie = new Pharmacie();
@@ -19,9 +20,9 @@ export class RegisterComponent implements OnInit {
   }
 
   create_pharmacie(){
-    alert(this.pharmacie.nom + "         " + this.pharmacie.password);
     this.service.create_pharmacie(this.pharmacie).subscribe(data =>{
       console.log(data);
+      this.router.navigate(['login']);
     },
     error =>console.log(error));
   }

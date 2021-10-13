@@ -13,7 +13,7 @@
                             <div class="col-sm-6">
                                 <mat-form-field class="example-full-width ps-3">
                                     <mat-label>Nom de la pharmacie</mat-label>
-                                    <input matInput type="email" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" placeholder="Nom" required>
+                                    <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" placeholder="Nom" required>
                                 </mat-form-field>
                                 <small class="ps-3 text-danger" [class.d-none]="nom.valid || nom.untouched">Vueillez saisir un nom valide</small>
                             </div>
