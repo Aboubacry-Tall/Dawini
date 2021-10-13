@@ -8,7 +8,7 @@ import { Pharmacie } from '../models/pharmacie';
 })
 export class PharmaciesService {
 
-  private server = "http://localhost:8000/api/";
+  private server = "http://localhost:8000/api/web/";
   constructor(private http: HttpClient) { }
 
   create_pharmacie(pharmacie: Pharmacie): Observable<Pharmacie> {
@@ -20,7 +20,7 @@ export class PharmaciesService {
     return this.http.post(this.server + 'create-pharmacie', pharmacie);
   }
 
-  login_pharmacie(pharmacie: Pharmacie): Observable<Pharmacie> {
+  login_pharmacie(pharmacie: Pharmacie): Observable<any> {
     return this.http.post(this.server + 'login-pharmacie', pharmacie);
   }
 }
