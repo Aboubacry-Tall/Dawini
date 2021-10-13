@@ -26,14 +26,20 @@ def login_pharmacie(request):
     pharmacie_serializer = PharmacieSerializer(data=pharmacie_data)
 
     if pharmacie_serializer.is_valid():
-        email = pharmacie_serializer.data['email']
+        nom = pharmacie_serializer.data['nom']
         password = pharmacie_serializer.data['password']
-        if email is not None and password is not None:
-            pharmacie = Pharmacie.objects.filter(email = email, password = password)
+        if nom is not None and password is not None:
+            pharmacie = Pharmacie.objects.filter(nom = nom, password = password)
             pharmacie_serialize = PharmacieSerializer(pharmacie, many=True)
-            pprint(pharmacie_serialize)
         return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
     #return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_pharmacie(request, pk):
+    pharmacie = Pharmacie.objects.get(pk=pk)
+    pprint(pharmacie)
+    pharmacie_serialize = PharmacieSerializer(pharmacie)
+    return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
 
 @api_view(['POST'])
 def create_medicament(request):
@@ -49,6 +55,9 @@ def create_medicament(request):
 @api_view(['GET'])
 def get_all_medicaments(request):
     medicaments = Medicament.objects.all();
+    pharmacie_id = request.GET['pharmacie']
+    medicaments = Medicament.objects.filter(pharmacie_id=pharmacie_id).order_by('-id')
+    pprint(pharmacie_id)
     medicaments_serializer = MedicamentSerializer(medicaments, many=True)
     return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
     #raise APIException("There was a problem!")
