@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +28,8 @@ import { SearchComponent } from './pages/search/search.component';
 import { PharmacieComponent } from './modules/pharmacies/pharmacie/pharmacie.component';
 import { MedicamentComponent } from './modules/medicaments/medicament/medicament.component';
 import { MedicamentsComponent } from './modules/medicaments/medicaments/medicaments.component';
+import { ParametresComponent } from './modules/pharmacies/parametres/parametres.component';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,9 @@ import { MedicamentsComponent } from './modules/medicaments/medicaments/medicame
     SearchComponent,
     PharmacieComponent,
     MedicamentComponent,
-    MedicamentsComponent
+    MedicamentsComponent,
+    ParametresComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +61,9 @@ import { MedicamentsComponent } from './modules/medicaments/medicaments/medicame
     FormsModule,
     MatCardModule,
     MatCheckboxModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    MatMenuModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]
