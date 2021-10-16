@@ -1,18 +1,21 @@
 <div class="container text-center">
-    <p class="mat-display-2 mt-5">
+    <!-- <p class="mat-display-2 mt-5">
         Trouvez vos médicaments <br> sans perdre du temps
-    </p>
+    </p> -->
+    <div class="my-4">
+        <img src="assets/images/logo.png" alt="logo" width="200" height="200">
+    </div>
     <p class="display-2 text-success">{{ title }}</p>
     <div class="row">
         <div class="col-sm-6 offset-3">
             <mat-form-field class="example-full-width mb-3" appearance="fill">
                 <mat-label></mat-label>
-                <span matPrefix class="text-second"><i class="fa fa-search me-3"></i></span>
+                <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
                 <input matInput type="text" [(ngModel)]="value" autofocus>
                 <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                   <mat-icon>close</mat-icon>
                 </button>
-                <a routerLink="/search" matSuffix class="click text-second"><i class="fas fa-arrow-alt-circle-right"></i></a>
+                <a routerLink="/search" matSuffix class="click text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></a>
             </mat-form-field>
             <button mat-raised-button class="mx-2 bg-light text-dark">Recherche sur dawini</button>
             <button mat-raised-button class="mx-2 bg-light text-dark">Rester en bonne santé</button>

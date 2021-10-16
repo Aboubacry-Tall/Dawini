@@ -1,4 +1,4 @@
-export class Pharmacie{
+export class Pharmacie {
     id ?: number;
     nom ?: string;
     pseudo ?: string;

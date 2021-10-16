@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pharmacie } from '../models/pharmacie';
+import { Pharmacie } from '../models/pharmacie.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PharmaciesService {
+export class PharmacieService {
 
   private server = "http://localhost:8000/api/web/";
   constructor(private http: HttpClient) { }
@@ -28,4 +28,3 @@ export class PharmaciesService {
     return this.http.get(this.server + 'pharmacie/' + id);
   }
 }
- 
