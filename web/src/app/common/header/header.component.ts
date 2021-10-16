@@ -11,12 +11,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(private app: AppComponent, private router: Router, private route : ActivatedRoute) { }
   title: string = "";
-  id!: string;
 
   ngOnInit(): void {
     this.title = this.app.title;
-    this.id = this.id + localStorage.getItem('id');
-    this.get_user_id();
   }
 
   get_user_id(){
@@ -24,11 +21,11 @@ export class HeaderComponent implements OnInit {
   }
 
   get_pharmacie(){
-    this.router.navigate(['pharmacie/' + this.id])
+    this.router.navigate(['pharmacie/' + this.get_user_id()]);
   }
 
   get_parametres(){
-    this.router.navigate(['parametres/' + this.id])
+    this.router.navigate(['parametres/' + this.get_user_id()]);
   }
 }
  

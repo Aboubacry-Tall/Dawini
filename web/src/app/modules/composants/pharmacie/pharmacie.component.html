@@ -1,1 +1,79 @@
-<p>pharmacie works!</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <mat-card>
+                <div class="text-center">
+                    <mat-form-field class="w-75 mb-3">
+                        <span matPrefix class="text-second"><i class="fa fa-search me-3"></i></span>
+                        <input matInput type="text" [(ngModel)]="value" placeholder="Rechercher des médicaments" autofocus>
+                        <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                          <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button class="ms-2 btn btn-sm bg-success text-white shadow-sm" color="primary">Rechercher</button>
+                </div>
+                <p class="fs-5"><i class="fas fa-capsules me-2 fs-2 text-second"></i>Liste de médicaments</p>
+                <div class="p-2 mb-2 bg-light text-success">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <p>Nom</p>
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            <p>Prix en <b>MRU</b></p>
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            <p>Etat</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 mb-2 shadow-sm" *ngFor="let medicament of medicaments">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            {{medicament.nom}}
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            {{medicament.prix}}
+                        </div>
+                        <div class="col-sm-2 text-end">
+                            <i class="fas fa-check-circle text-success" *ngIf="medicament.etat == 0"></i>
+                            <i class="fas fa-minus-circle text-danger" *ngIf="medicament.etat != 0"></i>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="col-sm-4">
+            <mat-card>
+                <p class="fs-5"><i class="fas fa-book-medical me-2 fs-2 text-second"></i>Ajouter un nouveau médicament</p>
+                <form #form="ngForm" (ngSubmit)="create_medicament()">
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Nom du médicament</mat-label>
+                        <input matInput type="text" name="nom" [(ngModel)]="medicament.nom" #nom="ngModel" placeholder="Nom du médicament" required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Prix du médicament</mat-label>
+                        <input matInput type="number" name="prix" [(ngModel)]="medicament.prix" #prix="ngModel" placeholder="000,00 MRU" required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width px-3">
+                        <mat-label>Description</mat-label>
+                        <input matInput type="text" name="description" [(ngModel)]="medicament.description" #description="ngModel" placeholder="Description" required>
+                    </mat-form-field>
+                    <div class="clearfix">
+                        <button mat-raised-button class="text-white float-end me-3" [disabled]="form.form.invalid" color="primary">Ajouter</button>
+                        <a mat-raised-button class="bg-light float-end me-3 text-dark" [disabled]="form.form.invalid">Annuler</a>
+                    </div>
+                </form>
+            </mat-card>
+
+            <mat-card class="mt-3">
+                <p class="fs-5 pb-3"><i class="fas fa-file-medical me-2 fs-2 text-second"></i> Importez des médicaments</p>
+                <form action="">
+                    <input type="file" class="form-control mb-3">
+                    <div class="clearfix">
+                        <button mat-raised-button class="bg-success text-white me-3 float-end">Importer</button>
+                    </div>
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

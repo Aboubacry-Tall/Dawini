@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppComponent } from 'src/app/app.component';
+import { Medicament } from '../../models/medicament.model';
+import { Pharmacie } from '../../models/pharmacie.model';
+import { MedicamentService } from '../../services/medicament.service';
+import { PharmacieService } from '../../services/pharmacie.service';
 
 @Component({
   selector: 'app-parametres',
@@ -6,10 +12,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./parametres.component.css']
 })
 export class ParametresComponent implements OnInit {
-
-  constructor() { }
-
   ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
+  
 }
