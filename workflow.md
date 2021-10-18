@@ -1,9 +1,8 @@
 # Web
-Creation de pharmacie
-Se connecter 
-Crud medicaments 
-crud pharmacies
-espace administration
+Messages de notifications
+Recherche de medicaments
+
+
 importation de medicaments via drag and dropdown
 
 # Mobile
