@@ -5,7 +5,7 @@
     <button mat-button [matMenuTriggerFor]="beforeMenu" *ngIf="get_user_id() != null">Menu</button>
     <button mat-button routerLink="/login" *ngIf="get_user_id() == null">Se connecter</button>
     <mat-menu #beforeMenu="matMenu" xPosition="before" class="px-3">
-      <button mat-menu-item (click)="get_pharmacie()">Espace de travail</button>
+      <button mat-menu-item (click)="get_pharmacie()">Médicaments</button>
       <button mat-menu-item (click)="get_parametres()">Paramètre</button>
       <hr>
       <button mat-menu-item routerLink="/logout">Deconnexion</button>
