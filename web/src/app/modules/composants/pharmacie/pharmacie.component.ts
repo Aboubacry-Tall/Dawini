@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Medicament } from '../../models/medicament.model';
 import { Pharmacie } from '../../models/pharmacie.model';
+import { Telephone } from '../../models/telephone.model';
 import { MedicamentService } from '../../services/medicament.service';
 import { PharmacieService } from '../../services/pharmacie.service';
 
@@ -19,6 +20,7 @@ export class PharmacieComponent implements OnInit {
   hide = true;
   value ='';
   pharmacie: Pharmacie = new Pharmacie();
+  telephone: Telephone = new Telephone();
   pharmacie_id!: number;
   medicament: Medicament = new Medicament();
   medicaments!: Medicament[];
@@ -26,6 +28,7 @@ export class PharmacieComponent implements OnInit {
   ngOnInit(): void {
     this.pharmacie_id= this.route.snapshot.params['id'];
     this.get_pharmacie(this.pharmacie_id);
+    this.get_telephone(this.pharmacie_id);
     this.get_all_medicaments(this.pharmacie_id);
   }
 
@@ -42,6 +45,14 @@ export class PharmacieComponent implements OnInit {
     this.s_pharmacie.get_pharmacie(id).subscribe(data =>{
       console.log(data);
       this.pharmacie = data;
+    },
+    error =>console.log(error));
+  }
+
+  get_telephone(id:number){
+    this.s_pharmacie.get_telephone(id).subscribe(data =>{
+      console.log(data);
+      this.telephone = data;
     },
     error =>console.log(error));
   }
