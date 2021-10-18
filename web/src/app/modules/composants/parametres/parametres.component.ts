@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponent } from 'src/app/app.component';
-import { Medicament } from '../../models/medicament.model';
 import { Pharmacie } from '../../models/pharmacie.model';
-import { MedicamentService } from '../../services/medicament.service';
+import * as mapboxgl from 'mapbox-gl';
+import { Coordonnee } from '../../models/coordonnee.model';
+import { Telephone } from '../../models/telephone.model';
 import { PharmacieService } from '../../services/pharmacie.service';
+import { BaseComponent } from 'src/app/common/base/base.component';
 
 @Component({
   selector: 'app-parametres',
@@ -12,9 +12,108 @@ import { PharmacieService } from '../../services/pharmacie.service';
   styleUrls: ['./parametres.component.css']
 })
 export class ParametresComponent implements OnInit {
+
+  constructor(private s_pharmacie: PharmacieService, public base: BaseComponent){}
+
+  pharmacie: Pharmacie = new Pharmacie();
+  telephone: Telephone = new Telephone();
+  coordonnee: Coordonnee = new Coordonnee();
+  pharmacie_id: number = parseInt(this.base.get_pharmacie_Id() + '');
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.getMap();
+    this.getLngLat();
+    this.get_pharmacie(this.pharmacie_id);
+    this.get_telephone(this.pharmacie_id);
   }
 
-  
+  get_pharmacie(id:number){
+    this.s_pharmacie.get_pharmacie(id).subscribe(data =>{
+      console.log(data);
+      this.pharmacie = data;
+    },
+    error =>console.log(error));
+  }
+
+  edit_pharmacie(){
+    this.s_pharmacie.edit_pharmacie(this.pharmacie_id, this.pharmacie).subscribe(data =>{
+      console.log(data);
+      this.pharmacie = data;
+    },
+    error =>console.log(error));
+  }
+
+  get_telephone(id:number){
+    this.s_pharmacie.get_telephone(id).subscribe(data =>{
+      console.log(data);
+      this.telephone = data;
+    },
+    error =>console.log(error));
+  }
+
+  edit_telephone(){
+    this.telephone.pharmacie_id = parseInt(this.base.get_pharmacie_Id + '');
+    this.s_pharmacie.edit_telephone(this.pharmacie_id, this.pharmacie).subscribe(data =>{
+      console.log(data);
+      this.pharmacie = data;
+    },
+    error =>console.log(error));
+  }
+
+  getMap(){
+    (mapboxgl as any).accessToken = 'pk.eyJ1IjoiZ2hvc3RtYXAiLCJhIjoiY2tzeXN4YmxpMGFzajJ1bW9xOXRkeG10ZSJ9.q6yvHK5OCnSVLOKUj48lpw';
+    const map = new mapboxgl.Map({
+    container: 'map', // container ID
+    style: 'mapbox://styles/mapbox/streets-v11', // style URL
+    center: [-15.942172529368463, 18.069114191259317], // starting position [lng, lat]
+    pitch: 60,
+    zoom: 12, // starting zoom
+    attributionControl: true
+    });
+
+    map.addControl(new mapboxgl.FullscreenControl());
+    map.addControl(new mapboxgl.NavigationControl());
+
+    // Create a default Marker, colored black, rotated 45 degrees.
+    const marker2 = new mapboxgl.Marker({ color: 'green', rotation: 45 })
+    .setLngLat([-15.948172708169068, 18.04098244539739])
+    .addTo(map);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+
+    const geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+      enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showUserHeading: true
+    });
+
+    // Add the control to the map.
+    map.addControl(geolocate);
+      geolocate.on('geolocate', () => {
+      console.log('A geolocate event has occurred.');
+    });
+
+    map.on('style.load', function() {
+      map.on('click', function(e) {
+        const coordinates = e.lngLat;
+        const x = e.lngLat.lng;
+        const y = e.lngLat.lat;
+        sessionStorage.setItem('lng', x + '');
+        sessionStorage.setItem('lat', y + '');
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML('you clicked here: <br/>' + x + ' et ' + y)
+          .addTo(map);
+        });
+    });
+
+  }
+
+  getLngLat() {
+    this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
+    this.coordonnee.latitude = sessionStorage.getItem('lat') + '';
+  }
 }
