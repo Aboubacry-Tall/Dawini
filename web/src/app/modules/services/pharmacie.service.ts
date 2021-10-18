@@ -20,11 +20,23 @@ export class PharmacieService {
     return this.http.post(this.server + 'create-pharmacie', pharmacie);
   }
 
+  edit_pharmacie(id: number, pharmacie: Pharmacie): Observable<Pharmacie> {
+    return this.http.post(this.server + 'edit-pharmacie/' + id, pharmacie);
+  }
+
+  edit_telephone(id: number, pharmacie: Pharmacie): Observable<Pharmacie> {
+    return this.http.post(this.server + 'edit-telephone/' + id, pharmacie);
+  }
+
   login_pharmacie(pharmacie: Pharmacie): Observable<any> {
     return this.http.post(this.server + 'login-pharmacie', pharmacie);
   }
 
   get_pharmacie(id: number): Observable<any> {
     return this.http.get(this.server + 'pharmacie/' + id);
+  }
+
+  get_telephone(id: number): Observable<any> {
+    return this.http.get(this.server + 'telephone/' + id);
   }
 }
