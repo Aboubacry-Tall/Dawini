@@ -12,4 +12,8 @@ export class BaseComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public get_pharmacie_Id(){
+    return localStorage.getItem('id');
+  }
+
 }
