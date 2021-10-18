@@ -1,0 +1,8 @@
+.maps{
+    height: 50vh;
+}
+
+#map{
+    width: 100%;
+    height: 100%;
+}
