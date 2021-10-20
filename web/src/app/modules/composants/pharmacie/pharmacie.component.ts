@@ -29,7 +29,8 @@ export class PharmacieComponent implements OnInit {
     this.pharmacie_id= this.route.snapshot.params['id'];
     this.get_pharmacie(this.pharmacie_id);
     this.get_telephone(this.pharmacie_id);
-    this.get_all_medicaments(this.pharmacie_id);
+    this.recherche();
+
   }
 
   create_medicament(){
@@ -64,5 +65,18 @@ export class PharmacieComponent implements OnInit {
     },
     error =>console.log(error));
   }
+  onSearch(event:any){
+    this.s_medicament.getMedic(this.value).subscribe(data =>{
+      console.log(data);
+      this.medicaments=data;
+    });
 
+  }
+
+  recherche(){
+    this.s_medicament.getMedic(this.value).subscribe(data =>{
+      console.log(data);
+      this.medicaments=data;
+    });
+  }
 }
