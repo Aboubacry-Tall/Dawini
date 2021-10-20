@@ -16,7 +16,7 @@ export class DataService {
 
     }  
     getMedic(nom:string): Observable<any>{
-      return this.http.get(this.baseUrl+'?nom='+`${nom}`)
+      return this.http.get(`${this.baseUrl+'?nom='}${nom}`)
   
       }
 }
