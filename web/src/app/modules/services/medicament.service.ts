@@ -19,7 +19,7 @@ export class MedicamentService {
     return this.http.get(this.server + 'medicaments?pharmacie=' + pharmacie_id);
   }
   getMedic(value:string): Observable<any>{
-    return this.http.get(`${this.server+'medic?value='}${value}`)
+    return this.http.get(`${this.server}medic?value=${value}`)
 
     }
 }
