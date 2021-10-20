@@ -38,7 +38,7 @@
                 <div class="text-center">
                     <mat-form-field class="w-75 mb-3">
                         <span matPrefix class="text-second"><i class="fa fa-search me-3"></i></span>
-                        <input matInput type="text" [(ngModel)]="value" (keypress)="onSearch($event)" placeholder="Rechercher des médicaments" autofocus>
+                        <input  matInput name="value" type="search" [(ngModel)]="value"  (keyup)="onSearch($event)" placeholder="Rechercher des médicaments" autofocus>
                         <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="get_all_medicaments(pharmacie_id)" (click)="value=''">
                           <mat-icon>close</mat-icon>
                         </button>
