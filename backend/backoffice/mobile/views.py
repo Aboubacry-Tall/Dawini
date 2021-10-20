@@ -4,7 +4,7 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
  
-from mobile.models import Medicament
+from web.models import Medicament
 from mobile.serializers import MedicamentSerializer
 from rest_framework.decorators import api_view
 
