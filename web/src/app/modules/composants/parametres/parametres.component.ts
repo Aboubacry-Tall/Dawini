@@ -5,6 +5,7 @@ import { Coordonnee } from '../../models/coordonnee.model';
 import { Telephone } from '../../models/telephone.model';
 import { PharmacieService } from '../../services/pharmacie.service';
 import { BaseComponent } from 'src/app/common/base/base.component';
+import { marker } from 'leaflet';
 
 @Component({
   selector: 'app-parametres',
@@ -73,14 +74,11 @@ export class ParametresComponent implements OnInit {
 
     map.addControl(new mapboxgl.FullscreenControl());
     map.addControl(new mapboxgl.NavigationControl());
-
-    // Create a default Marker, colored black, rotated 45 degrees.
-    const marker2 = new mapboxgl.Marker({ color: 'green', rotation: 45 })
-    .setLngLat([-15.948172708169068, 18.04098244539739])
-    .addTo(map);
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
+    var longitude = sessionStorage.getItem('lng') + '';
+    var latitude = sessionStorage.getItem('lat') + '';
+    const log = Number(longitude);
+    const lat = Number(latitude);
 
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -103,14 +101,20 @@ export class ParametresComponent implements OnInit {
         const y = e.lngLat.lat;
         sessionStorage.setItem('lng', x + '');
         sessionStorage.setItem('lat', y + '');
-        new mapboxgl.Popup()
-          .setLngLat(coordinates)
-          .setHTML('you clicked here: <br/>' + x + ' et ' + y)
-          .addTo(map);
-        });
+        
+        var lg  = Number(sessionStorage.getItem('lng') + '');
+        var lt  = Number(sessionStorage.getItem('lat') + '');
+            
+        const marker2 = new mapboxgl.Marker({ color: 'green', rotation: 45 })
+        .setLngLat([lg, lt])
+        marker2.addTo(map)
+        
+      map.on('click', function(e) {
+        marker2.remove()
+      })
     });
-
-  }
+  });
+}
 
   getLngLat() {
     this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
