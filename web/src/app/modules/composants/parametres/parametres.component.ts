@@ -53,10 +53,9 @@ export class ParametresComponent implements OnInit {
   }
 
   edit_telephone(){
-    this.telephone.pharmacie_id = parseInt(this.base.get_pharmacie_Id + '');
-    this.s_pharmacie.edit_telephone(this.pharmacie_id, this.pharmacie).subscribe(data =>{
+    this.s_pharmacie.edit_telephone(this.pharmacie_id, this.telephone).subscribe(data =>{
       console.log(data);
-      this.pharmacie = data;
+      this.telephone = data;
     },
     error =>console.log(error));
   }

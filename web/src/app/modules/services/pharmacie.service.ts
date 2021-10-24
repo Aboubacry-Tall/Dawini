@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Pharmacie } from '../models/pharmacie.model';
+import { Telephone } from '../models/telephone.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +25,8 @@ export class PharmacieService {
     return this.http.post(this.server + 'edit-pharmacie/' + id, pharmacie);
   }
 
-  edit_telephone(id: number, pharmacie: Pharmacie): Observable<Pharmacie> {
-    return this.http.post(this.server + 'edit-telephone/' + id, pharmacie);
+  edit_telephone(id: number, telephone: Telephone): Observable<Telephone> {
+    return this.http.post(this.server + 'edit-telephone/' + id, telephone);
   }
 
   login_pharmacie(pharmacie: Pharmacie): Observable<any> {
