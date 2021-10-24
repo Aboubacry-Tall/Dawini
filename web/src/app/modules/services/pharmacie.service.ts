@@ -1,3 +1,4 @@
+import { Coordonnee } from './../models/coordonnee.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -27,6 +28,9 @@ export class PharmacieService {
 
   edit_telephone(id: number, telephone: Telephone): Observable<Telephone> {
     return this.http.post(this.server + 'edit-telephone/' + id, telephone);
+  }
+  edit_coordonnees(id: number, coordonnee: Coordonnee): Observable<Coordonnee> {
+    return this.http.post(this.server + 'edit-coordonnee/' + id, coordonnee);
   }
 
   login_pharmacie(pharmacie: Pharmacie): Observable<any> {

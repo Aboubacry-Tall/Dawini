@@ -90,7 +90,7 @@ def edit_coordonnee(request, pk):
     except Coordonnee.DoesNotExist:
         obj = Coordonnee(pharmacie_id=pk)
         obj.save()
-    coordonnee = Telephone.objects.get(pharmacie_id=pk)
+    coordonnee = Coordonnee.objects.get(pharmacie_id=pk)
     coordonnee_serializer = CoordonneeSerializer(coordonnee, data=coordonne_data)
 
     if coordonnee_serializer.is_valid():

@@ -30,7 +30,6 @@ export class ParametresComponent implements OnInit {
 
   get_pharmacie(id:number){
     this.s_pharmacie.get_pharmacie(id).subscribe(data =>{
-      console.log(data);
       this.pharmacie = data;
     },
     error =>console.log(error));
@@ -38,7 +37,6 @@ export class ParametresComponent implements OnInit {
 
   edit_pharmacie(){
     this.s_pharmacie.edit_pharmacie(this.pharmacie_id, this.pharmacie).subscribe(data =>{
-      console.log(data);
       this.pharmacie = data;
     },
     error =>console.log(error));
@@ -46,7 +44,6 @@ export class ParametresComponent implements OnInit {
 
   get_telephone(id:number){
     this.s_pharmacie.get_telephone(id).subscribe(data =>{
-      console.log(data);
       this.telephone = data;
     },
     error =>console.log(error));
@@ -54,8 +51,19 @@ export class ParametresComponent implements OnInit {
 
   edit_telephone(){
     this.s_pharmacie.edit_telephone(this.pharmacie_id, this.telephone).subscribe(data =>{
-      console.log(data);
       this.telephone = data;
+    },
+    error =>console.log(error));
+  }
+  
+  edit_coordonnees(){
+    this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
+    this.coordonnee.latitude = sessionStorage.getItem('lat') + '';
+    this.coordonnee.pharmacie_id = this.pharmacie_id;
+    console.log(this.coordonnee);
+    this.s_pharmacie.edit_coordonnees(this.pharmacie_id, this.coordonnee).subscribe(data =>{
+      console.log(data);
+      this.coordonnee = data;
     },
     error =>console.log(error));
   }
@@ -74,10 +82,6 @@ export class ParametresComponent implements OnInit {
     map.addControl(new mapboxgl.FullscreenControl());
     map.addControl(new mapboxgl.NavigationControl());
     
-    var longitude = sessionStorage.getItem('lng') + '';
-    var latitude = sessionStorage.getItem('lat') + '';
-    const log = Number(longitude);
-    const lat = Number(latitude);
 
     const geolocate = new mapboxgl.GeolocateControl({
       positionOptions: {
@@ -103,7 +107,7 @@ export class ParametresComponent implements OnInit {
         
         var lg  = Number(sessionStorage.getItem('lng') + '');
         var lt  = Number(sessionStorage.getItem('lat') + '');
-            
+            console.log(lg+'--'+lt)
         const marker2 = new mapboxgl.Marker({ color: 'green', rotation: 45 })
         .setLngLat([lg, lt])
         marker2.addTo(map)
