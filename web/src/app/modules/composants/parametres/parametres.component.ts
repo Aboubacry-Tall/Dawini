@@ -26,6 +26,7 @@ export class ParametresComponent implements OnInit {
     this.getLngLat();
     this.get_pharmacie(this.pharmacie_id);
     this.get_telephone(this.pharmacie_id);
+    this.get_coordonnees(this.pharmacie_id);
   }
 
   get_pharmacie(id:number){
@@ -56,13 +57,19 @@ export class ParametresComponent implements OnInit {
     error =>console.log(error));
   }
   
+  get_coordonnees(id:number){
+    this.s_pharmacie.get_coordonnees(id).subscribe(data =>{
+      console.log(data)
+      this.coordonnee = data;
+      
+    },
+    error =>console.log(error));
+  }
   edit_coordonnees(){
     this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
     this.coordonnee.latitude = sessionStorage.getItem('lat') + '';
     this.coordonnee.pharmacie_id = this.pharmacie_id;
-    console.log(this.coordonnee);
     this.s_pharmacie.edit_coordonnees(this.pharmacie_id, this.coordonnee).subscribe(data =>{
-      console.log(data);
       this.coordonnee = data;
     },
     error =>console.log(error));

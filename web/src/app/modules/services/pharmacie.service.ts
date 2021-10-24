@@ -44,4 +44,7 @@ export class PharmacieService {
   get_telephone(id: number): Observable<any> {
     return this.http.get(this.server + 'telephone/' + id);
   }
+  get_coordonnees(id: number): Observable<any> {
+    return this.http.get(this.server + 'coordonnee/' + id);
+  }
 }
