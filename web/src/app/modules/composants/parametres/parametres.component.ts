@@ -23,7 +23,6 @@ export class ParametresComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMap();
-    this.getLngLat();
     this.get_pharmacie(this.pharmacie_id);
     this.get_telephone(this.pharmacie_id);
     this.get_coordonnees(this.pharmacie_id);
@@ -71,6 +70,7 @@ export class ParametresComponent implements OnInit {
     this.coordonnee.pharmacie_id = this.pharmacie_id;
     this.s_pharmacie.edit_coordonnees(this.pharmacie_id, this.coordonnee).subscribe(data =>{
       this.coordonnee = data;
+      window.location.reload()
     },
     error =>console.log(error));
   }
@@ -126,8 +126,4 @@ export class ParametresComponent implements OnInit {
   });
 }
 
-  getLngLat() {
-    this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
-    this.coordonnee.latitude = sessionStorage.getItem('lat') + '';
-  }
 }
