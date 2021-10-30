@@ -19,25 +19,25 @@
                             <input matInput type="text" name="email" [(ngModel)]="pharmacie.password" #password="ngModel" value="{{ pharmacie.password }}" placeholder="Adresse e-mail" required>
                         </mat-form-field>
                         <div class="clearfix">
-                            <button mat-raised-button class="float-end"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
+                            <button mat-raised-button class="float-end" (click)="edit_pharmacie()"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
                         </div>
                     </form>
                     <p class="fs-6">Modifier vos adresses téléphoniques</p>
                     <form class="mb-4">
                         <mat-form-field class="example-full-width px-3">
                             <mat-label>Numéro primaire</mat-label>
-                            <input matInput type="text" name="primaire" [(ngModel)]="telephone.primaire" #primaire="ngModel" value="{{ telephone.primaire }}" placeholder="Nom de la pharmacie">
+                            <input matInput type="number" name="primaire" [(ngModel)]="telephone.primaire" #primaire="ngModel" placeholder="Numéro primaire">
                         </mat-form-field>
                         <mat-form-field class="example-full-width px-3">
                             <mat-label>Numéro secondaire</mat-label>
-                            <input matInput type="text" name="secondaire" [(ngModel)]="telephone.secondaire" #secondaire="ngModel" value="{{ telephone.secondaire }}" placeholder="Pseudo">
+                            <input matInput type="number" name="secondaire" [(ngModel)]="telephone.secondaire" #secondaire="ngModel" placeholder="Numéro secondaire">
                         </mat-form-field>
                         <mat-form-field class="example-full-width px-3">
                             <mat-label>Numéro whatsapp</mat-label>
-                            <input matInput type="text" name="whatsapp" [(ngModel)]="telephone.whatsapp" #whatsapp="ngModel" value="{{ telephone.whatsapp }}" placeholder="Adresse e-mail">
+                            <input matInput type="number" name="whatsapp" [(ngModel)]="telephone.whatsapp" #whatsapp="ngModel" placeholder="Numéro whatsapp">
                         </mat-form-field>
                         <div class="clearfix">
-                            <button mat-raised-button class="float-end"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
+                            <button mat-raised-button class="float-end" (click)="edit_telephone()"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -55,13 +55,13 @@
                             <div class="col-sm-6">
                                 <mat-form-field class="example-full-width px-3">
                                     <mat-label>Longitude</mat-label>
-                                    <input matInput type="text" name="longitude" [(ngModel)]="coordonnee.longitude" #longitude="ngModel" value="{{ coordonnee.longitude }}" placeholder="Longitude" required>
+                                    <input matInput type="text" name="longitude" [(ngModel)]="coordonnee.longitude" #longitude="ngModel" placeholder="Longitude" required>
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-6">
                                 <mat-form-field class="example-full-width px-3">
                                     <mat-label>Latitude</mat-label>
-                                    <input matInput type="text" name="latitude" [(ngModel)]="coordonnee.latitude" #latitude="ngModel" value="{{ coordonnee.latitude }}" placeholder="Latitude" required>
+                                    <input matInput type="text" name="latitude" [(ngModel)]="coordonnee.latitude" #latitude="ngModel" placeholder="Latitude" required>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div id="map" class="rounded-3"></div>
                         </div>
                         <div class="clearfix">
-                            <button mat-raised-button color="primary" class="float-end my-2">Valider</button>
+                            <button mat-raised-button color="primary" (click)="edit_coordonnees()" class="float-end my-2">Valider</button>
                         </div>
                     </form>
                 </mat-card-content>

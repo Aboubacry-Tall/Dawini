@@ -14,8 +14,8 @@ class Telephone(models.Model):
     pharmacie_id = models.IntegerField(blank=False)
 
 class Coordonnee(models.Model):
-    latitude = models.CharField(max_length=50, blank=False)
-    longitude = models.CharField(max_length=50, blank=False)
+    latitude = models.CharField(max_length=50, blank=True, default='')
+    longitude = models.CharField(max_length=50, blank=True, default='')
     pharmacie_id = models.IntegerField(blank=False)
 
 class Medicament(models.Model):

@@ -1,7 +1,24 @@
 # run django server
+
 cd .\PFE\backend\backoffice\
 .\venv\Scripts\activate 
 python manage.py runserver
+
+manage.py runserver 192.168.137.191:8000
+
+# run mobile server
+
+cd .\PFE\mobile\
+ionic serve -l
+
+# run web server
+
+cd .\PFE\web\
+ng serve
+
+# Generer l'app version android
+cd .\PFE\mobile\
+ionic cordova build android
 
 # create  virtual environment ,install dependences
 python -m venv venv 
@@ -9,10 +26,6 @@ pip install django
 pip install djangorestframework
 pip install pymysql
 pip install django-cors-headers
-
-# run ionic server
-cd .\PFE\mobile\
-ionic serve -l
 
 
 # PFE
@@ -52,8 +65,6 @@ cordova platform rm android
 
 cordova platform add android
 
-# Generer l'app version android
-ionic cordova build android
 
 # Generer et lancer l'app version android sur un emulateur
 ionic cordova run android --livereload

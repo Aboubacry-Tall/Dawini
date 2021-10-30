@@ -12,26 +12,32 @@ export class MedicamentsComponent implements OnInit {
 
   medicaments: Medicament[] = [];
   medicament: Medicament = new Medicament();
-  cheikh ='panado'
-
+  nom='';
   constructor(private dataService: DataService,private router: Router) { }
 
   ngOnInit() {
-   // this.getAllMedicament()
    this.getMedic();
   }
   
-  private getAllMedicament() {
+   getAllMedicament() {
     this.dataService.getAllMedicaments().subscribe(data =>{
       this.medicaments=data;
       console.log(this.medicaments)
     });
   }
-  private getMedic(){
-    this.dataService.getMedic(this.cheikh).subscribe(data =>{
+   getMedic(){
+    this.dataService.getMedic(this.nom).subscribe(data =>{
       this.medicaments=data;
-      console.log(this.medicaments)
     });
+    }
+    
+  onSearch(event:any){
+    this.dataService.getMedic(this.nom).subscribe(data =>{
+      console.log(this.nom)
+      this.medicaments=data;
+    });
+
   }
 
 }
+

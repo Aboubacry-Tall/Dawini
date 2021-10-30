@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private baseUrl = "http://127.0.0.1:8000/api/medicaments";
+  private baseUrl = "http://127.0.0.1:8000/api/mobile/medicaments";
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class DataService {
 
     }  
     getMedic(nom:string): Observable<any>{
-      return this.http.get(this.baseUrl+'?nom='+`${nom}`)
+      return this.http.get(`${this.baseUrl}?nom=${nom}`)
   
       }
 }

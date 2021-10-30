@@ -30,6 +30,7 @@ export class ScannerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.Barscan();
   }
   
 

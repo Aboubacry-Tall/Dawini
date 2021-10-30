@@ -5,6 +5,7 @@ import { Coordonnee } from '../../models/coordonnee.model';
 import { Telephone } from '../../models/telephone.model';
 import { PharmacieService } from '../../services/pharmacie.service';
 import { BaseComponent } from 'src/app/common/base/base.component';
+import { marker } from 'leaflet';
 
 @Component({
   selector: 'app-parametres',
@@ -22,14 +23,13 @@ export class ParametresComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMap();
-    this.getLngLat();
     this.get_pharmacie(this.pharmacie_id);
     this.get_telephone(this.pharmacie_id);
+    this.get_coordonnees(this.pharmacie_id);
   }
 
   get_pharmacie(id:number){
     this.s_pharmacie.get_pharmacie(id).subscribe(data =>{
-      console.log(data);
       this.pharmacie = data;
     },
     error =>console.log(error));
@@ -37,7 +37,6 @@ export class ParametresComponent implements OnInit {
 
   edit_pharmacie(){
     this.s_pharmacie.edit_pharmacie(this.pharmacie_id, this.pharmacie).subscribe(data =>{
-      console.log(data);
       this.pharmacie = data;
     },
     error =>console.log(error));
@@ -45,17 +44,33 @@ export class ParametresComponent implements OnInit {
 
   get_telephone(id:number){
     this.s_pharmacie.get_telephone(id).subscribe(data =>{
-      console.log(data);
       this.telephone = data;
     },
     error =>console.log(error));
   }
 
   edit_telephone(){
-    this.telephone.pharmacie_id = parseInt(this.base.get_pharmacie_Id + '');
-    this.s_pharmacie.edit_telephone(this.pharmacie_id, this.pharmacie).subscribe(data =>{
-      console.log(data);
-      this.pharmacie = data;
+    this.s_pharmacie.edit_telephone(this.pharmacie_id, this.telephone).subscribe(data =>{
+      this.telephone = data;
+    },
+    error =>console.log(error));
+  }
+  
+  get_coordonnees(id:number){
+    this.s_pharmacie.get_coordonnees(id).subscribe(data =>{
+      console.log(data)
+      this.coordonnee = data;
+      
+    },
+    error =>console.log(error));
+  }
+  edit_coordonnees(){
+    this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
+    this.coordonnee.latitude = sessionStorage.getItem('lat') + '';
+    this.coordonnee.pharmacie_id = this.pharmacie_id;
+    this.s_pharmacie.edit_coordonnees(this.pharmacie_id, this.coordonnee).subscribe(data =>{
+      this.coordonnee = data;
+      window.location.reload()
     },
     error =>console.log(error));
   }
@@ -73,13 +88,6 @@ export class ParametresComponent implements OnInit {
 
     map.addControl(new mapboxgl.FullscreenControl());
     map.addControl(new mapboxgl.NavigationControl());
-
-    // Create a default Marker, colored black, rotated 45 degrees.
-    const marker2 = new mapboxgl.Marker({ color: 'green', rotation: 45 })
-    .setLngLat([-15.948172708169068, 18.04098244539739])
-    .addTo(map);
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
 
     const geolocate = new mapboxgl.GeolocateControl({
@@ -103,17 +111,19 @@ export class ParametresComponent implements OnInit {
         const y = e.lngLat.lat;
         sessionStorage.setItem('lng', x + '');
         sessionStorage.setItem('lat', y + '');
-        new mapboxgl.Popup()
-          .setLngLat(coordinates)
-          .setHTML('you clicked here: <br/>' + x + ' et ' + y)
-          .addTo(map);
-        });
+        
+        var lg  = Number(sessionStorage.getItem('lng') + '');
+        var lt  = Number(sessionStorage.getItem('lat') + '');
+            console.log(lg+'--'+lt)
+        const marker2 = new mapboxgl.Marker({ color: 'green', rotation: 45 })
+        .setLngLat([lg, lt])
+        marker2.addTo(map)
+        
+      map.on('click', function(e) {
+        marker2.remove()
+      })
     });
+  });
+}
 
-  }
-
-  getLngLat() {
-    this.coordonnee.longitude = sessionStorage.getItem('lng') + '';
-    this.coordonnee.latitude = sessionStorage.getItem('lat') + '';
-  }
 }

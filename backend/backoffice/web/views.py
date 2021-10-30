@@ -90,7 +90,7 @@ def edit_coordonnee(request, pk):
     except Coordonnee.DoesNotExist:
         obj = Coordonnee(pharmacie_id=pk)
         obj.save()
-    coordonnee = Telephone.objects.get(pharmacie_id=pk)
+    coordonnee = Coordonnee.objects.get(pharmacie_id=pk)
     coordonnee_serializer = CoordonneeSerializer(coordonnee, data=coordonne_data)
 
     if coordonnee_serializer.is_valid():
@@ -113,7 +113,23 @@ def get_all_medicaments(request):
     medicaments = Medicament.objects.all();
     pharmacie_id = request.GET['pharmacie']
     medicaments = Medicament.objects.filter(pharmacie_id=pharmacie_id).order_by('-id')
-    pprint(pharmacie_id)
     medicaments_serializer = MedicamentSerializer(medicaments, many=True)
     return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
     #raise APIException("There was a problem!")
+
+
+@api_view(['GET', 'Post'])
+def medicament_search(request,pk):
+    # find medicament by name
+    
+    name = request.GET['value']
+    medicament = Medicament.objects.filter(pharmacie_id=pk)
+    try: 
+        medicament = Medicament.objects.filter(nom__icontains=name) 
+        
+        if request.method == 'GET': 
+            medicament_serializer = MedicamentSerializer(medicament,many=True) 
+            return JsonResponse(medicament_serializer.data, status=status.HTTP_200_OK, safe=False)
+            
+    except Medicament.DoesNotExist: 
+        return JsonResponse({'message': 'The medic does not exist'}, status=status.HTTP_404_NOT_FOUND) 
