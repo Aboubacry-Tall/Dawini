@@ -202,7 +202,7 @@ export class MapboxComponent implements OnInit {
     
         /* Add the link to the individual listing created above. */
         const link = listing.appendChild(document.createElement('a'));
-        link.href = '#';
+        link.href = 'http://localhost:4200/mapbox#';
         link.className = 'title';
         link.id = `link-${store.properties.id}`;
         link.innerHTML = `${store.properties.address}`;

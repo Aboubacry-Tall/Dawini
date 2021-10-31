@@ -29,6 +29,8 @@ import { PharmacieComponent } from './modules/composants/pharmacie/pharmacie.com
 import { LogoutComponent } from './pages/logout/logout.component';
 import { ParametresComponent } from './modules/composants/parametres/parametres.component';
 import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
+import { MapComponent } from './modules/composants/mapbox/map/map.component';
+import { MappComponent } from './modules/composants/mapp/mapp.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
     PharmacieComponent,
     ParametresComponent,
     LogoutComponent,
-    MapboxComponent
+    MapboxComponent,
+    MapComponent,
+    MappComponent
   ],
   imports: [
     BrowserModule,
