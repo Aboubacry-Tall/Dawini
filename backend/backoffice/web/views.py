@@ -55,6 +55,14 @@ def get_pharmacie(request, pk):
     return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
 
 @api_view(['GET'])
+def get_all_pharmacies(request):
+    pharmacies = Pharmacie.objects.all();
+    coordonnee = Coordonnee.objects.all();
+    pharmacies_serializer = PharmacieSerializer(pharmacies, many=True)
+    return JsonResponse(pharmacies_serializer.data, status=status.HTTP_200_OK, safe=False)
+    
+
+@api_view(['GET'])
 def get_telephone(request, pk):
     telephone = Telephone.objects.get(pk=pk)
     telephone_serialize = TelephoneSerializer(telephone)

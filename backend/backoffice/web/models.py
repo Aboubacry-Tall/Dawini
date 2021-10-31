@@ -41,3 +41,10 @@ class Dates_Base(models.Model):
     debut = models.CharField(max_length=50, blank=False, default='')
     fin = models.CharField(max_length=50, blank=False, default='')
     medicament_base_id = models.IntegerField(blank=False)
+
+class A(models.Model):
+    a_nom = models.CharField(max_length=100, blank=False, default='')
+
+class B(models.Model):
+    a = models.ForeignKey(A, on_delete=models.CASCADE)
+    b = models.CharField(max_length=100, blank=False, default='')
