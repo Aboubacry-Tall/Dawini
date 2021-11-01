@@ -2,13 +2,13 @@
     <img src="assets/images/logo.png" alt="logo" width="50" height="50">
     <a routerLink="" class="text-success text-decoration-none">{{ title }}</a>
     <span class="example-spacer"></span>
-    <button mat-button routerLink="map">Map</button>
+    <a mat-button href="/map">Map</a>
     <button mat-button routerLink="mapbox">Mapbox</button>
     <button mat-button [matMenuTriggerFor]="beforeMenu" *ngIf="get_user_id() != null">Menu</button>
     <button mat-button routerLink="/login" *ngIf="get_user_id() == null">Se connecter</button>
     <mat-menu #beforeMenu="matMenu" xPosition="before" class="px-3">
       <button mat-menu-item (click)="get_pharmacie()">Médicaments</button>
-      <button mat-menu-item (click)="get_parametres()">Paramètres</button>
+      <a mat-menu-item href="/parametres/{{ get_user_id() }}" (click)="get_parametres()">Paramètres</a>
       <hr>
       <button mat-menu-item routerLink="/logout">Deconnexion</button>
     </mat-menu>

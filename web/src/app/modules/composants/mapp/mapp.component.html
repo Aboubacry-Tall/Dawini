@@ -1,14 +1,45 @@
 <div class="container mt-5">
     <div class="row">
+        <div class="col-sm-8 offset-2">
+            <mat-form-field class="example-full-width mb-3" appearance="fill">
+                <mat-label></mat-label>
+                <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
+                <input matInput type="text" [(ngModel)]="value" autofocus>
+                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <a routerLink="/search" matSuffix class="click text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></a>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-3">
-            <p class="fs-3">
-                liste de pharmacies
-            </p>
+            <p class="fs-2 mb-5"><i class="fas fa-clinic-medical me-2 text-second"></i>pharmacies</p>
+            <div class="shadow-sm p-2 mb-2">
+                <p>Ph. Tall</p>
+                <small>distance 120km</small>
+            </div>
+            <div class="shadow-sm p-2 mb-2">
+                <p>Ph. Tall</p>
+                <small>distance 120km</small>
+            </div>
+            <div class="shadow-sm p-2 mb-2">
+                <p>Ph. Tall</p>
+                <small>distance 120km</small>
+            </div>
+            <div class="shadow-sm p-2 mb-2">
+                <p>Ph. Tall</p>
+                <small>distance 120km</small>
+            </div>
+            <div class="shadow-sm p-2 mb-2">
+                <p>Ph. Tall</p>
+                <small>distance 120km</small>
+            </div>
         </div>
         <div class="col-sm-9">
             <div class="maps shadow-sm p-2 rounded-3">
                 <div id="map" class="rounded-3"></div>
-                <div class="coordinates" (click) = testclick() #coordinates>
+                <div class="coordinates"  #coordinates>
                     
                 </div>
             </div>

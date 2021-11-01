@@ -12,6 +12,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
 
   constructor() { }
 
+  value = '';
   map!: mapboxgl.Map
   marker = new mapboxgl.Marker({ draggable: true, color: 'green'});
   @ViewChild('coordinates') coordonnees!: ElementRef;
@@ -48,16 +49,15 @@ export class MappComponent implements OnInit, AfterViewInit  {
     });
   }
 
-  testclick(){
+  onDragEnd(){
     const lngLat = this.marker.getLngLat();
+    this.coordonnees.nativeElement.style.display = 'block';
     this.coordonnees.nativeElement.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
     console.log(lngLat);
   }
 
-  onDragEnd(){
-    const lngLat = this.marker.getLngLat();
-    this.coordonnees.nativeElement.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
-    console.log(lngLat);
+  getLocate(){
+    return this.marker.getLngLat();
   }
 
 }
