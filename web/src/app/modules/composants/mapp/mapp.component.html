@@ -26,8 +26,8 @@
                 <div class="coordinates"  #coordinates></div>
             </div>
             <div class="shadow-sm p-2 mt-2">
-                <button mat-raised-button *ngIf="map_mode == 1" (click)="modeSatellite(0)">Satellite</button>
-                <button mat-raised-button *ngIf="map_mode == 0" (click)="modeSatellite(1)">Par defaut</button>
+                <button mat-raised-button *ngIf="map_mode == 1" (click)="set_map_style(0)">Satellite</button>
+                <button mat-raised-button *ngIf="map_mode == 0" (click)="set_map_style(1)">Par defaut</button>
             </div>
         </div>
     </div>

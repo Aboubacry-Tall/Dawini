@@ -100,6 +100,8 @@ export class MappComponent implements OnInit, AfterViewInit  {
       style: 'mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg', // style URL
       center: [-15.942172529368463, 18.069114191259317], // starting position [lng, lat]
       zoom: 12.3, 
+      pitch: 60, // pitch in degrees
+      bearing: 10 // bearing in degrees
     });
 
     // Language
@@ -108,6 +110,32 @@ export class MappComponent implements OnInit, AfterViewInit  {
     
     // Default locate
     this.marker.addTo(this.map);
+
+    // controls
+    this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    this.map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+    this.map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        // When active the map will receive updates to the device's location as it changes.
+        trackUserLocation: true,
+        // Draw an arrow next to the location dot to indicate which direction the device is heading.
+        showUserHeading: true,
+        fitBoundsOptions: {
+          zoom: 15  
+        }
+        
+      }),
+      'bottom-right'
+    );
+
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      sessionStorage.setItem('user_lng', position.coords.longitude + '');
+      sessionStorage.setItem('user_lat', position.coords.latitude + '');
+    });
 
     // Evenements
     this.marker.on('dragend', (e) =>{
@@ -127,7 +155,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
     return this.marker.getLngLat();
   }
 
-  modeSatellite(mode: number): void{
+  set_map_style(mode: number): void{
     this.map_mode = mode;
     if(this.map_mode == 0){
       this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
