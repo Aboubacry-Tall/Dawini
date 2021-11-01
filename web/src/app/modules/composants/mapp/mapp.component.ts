@@ -13,18 +13,20 @@ import { marker } from 'leaflet';
 })
 export class MappComponent implements OnInit, AfterViewInit  {
 
-  constructor(private service: PharmacieService, private elementRef:ElementRef) { }
-
   value = '';
+  map_mode: number = 1;
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
+
   map!: mapboxgl.Map
   markers!: [];
+  popup!: [];
   marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
-  @ViewChild('coordinates') coordonnees!: ElementRef;
-  //@ViewChild('ph') ph!: ElementRef;
-  
 
+  @ViewChild('coordinates') coordonnees!: ElementRef;
+  
+  constructor(private service: PharmacieService) {}
+  
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
@@ -43,9 +45,32 @@ export class MappComponent implements OnInit, AfterViewInit  {
   }
 
   add_marker(){
+    const el = document.createElement('div');
+    el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
+    el.style.width = '40px';
+    el.style.height = '40px';
+    el.style.backgroundSize = 'cover';
+    el.style.borderRadius = '50%';
+    el.style.cursor = 'pointer';
+
+    const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+      'Construction on the Washington Monument began in 1848.'
+    );
+
     for(let i = 0; i < this.pharmacies.length; i++){
-      marker[i] = new mapboxgl.Marker({ draggable: false, color: 'green'});
+      const el = document.createElement('div');
+      el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
+      el.style.width = '40px';
+      el.style.height = '40px';
+      el.style.backgroundSize = 'cover';
+      el.style.borderRadius = '50%';
+      el.style.cursor = 'pointer';
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        '<h4 class="mt-3"> Ph. ' + this.pharmacies[i].nom + '</h4>'
+      );
+      marker[i] = new mapboxgl.Marker(el);
       marker[i].setLngLat([this.pharmacies[i].longitude, this.pharmacies[i].latitude]);
+      marker[i].setPopup(popup);
       marker[i].addTo(this.map);
     }
   }
@@ -55,7 +80,6 @@ export class MappComponent implements OnInit, AfterViewInit  {
       center: [parseFloat(pharmacie.longitude + ''), parseFloat(pharmacie.latitude + '')],
       zoom: 15
     });
-    console.log(parseFloat(pharmacie.longitude + '') + ' ' + parseFloat(pharmacie.latitude + ''))
   }
 
   getMap() {
@@ -92,4 +116,12 @@ export class MappComponent implements OnInit, AfterViewInit  {
     return this.marker.getLngLat();
   }
 
+  modeSatellite(mode: number): void{
+    this.map_mode = mode;
+    if(this.map_mode == 0){
+      this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
+    }else{
+      this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
+    }
+  }
 }
