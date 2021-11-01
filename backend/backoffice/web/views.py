@@ -13,7 +13,7 @@ from web.serializers import PharmacieSerializer
 from web.serializers import TelephoneSerializer
 from web.serializers import MedicamentSerializer
 from web.serializers import CoordonneeSerializer
-from pprint import pprint
+from pprint import pp, pprint
 
 @api_view(['POST'])
 def login_pharmacie(request):
