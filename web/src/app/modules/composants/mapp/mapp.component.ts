@@ -6,6 +6,7 @@ import { PharmacieService } from '../../services/pharmacie.service';
 import { Pharmacie } from '../../models/pharmacie.model';
 import { marker } from 'leaflet';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'app-mapp',
@@ -31,20 +32,19 @@ export class MappComponent implements OnInit, AfterViewInit  {
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
+    this.testDistance();
   }
 
   ngAfterViewInit(): void {
     this.getMap();
-    this.testdirection()
   }
 
-  testdirection(): void {
-    this.map.addControl(
-      new MapboxDirections({
-        accessToken: mapboxgl.accessToken
-      }),
-      'top-right'
-    );
+  testDistance(): void {
+    var from = turf.point([-75.343, 39.984]);
+    var to = turf.point([-75.534, 39.123]);
+
+    var distance = turf.distance(from, to);
+    alert(distance);
   }
 
   get_all_pharmacie(){
@@ -129,6 +129,12 @@ export class MappComponent implements OnInit, AfterViewInit  {
         
       }),
       'bottom-right'
+    );
+    this.map.addControl(
+      new MapboxDirections({
+        accessToken: mapboxgl.accessToken
+      }),
+      'top-right'
     );
 
     const geo = navigator.geolocation
