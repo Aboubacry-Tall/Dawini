@@ -5,6 +5,7 @@ import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import { PharmacieService } from '../../services/pharmacie.service';
 import { Pharmacie } from '../../models/pharmacie.model';
 import { marker } from 'leaflet';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 
 @Component({
   selector: 'app-mapp',
@@ -34,6 +35,16 @@ export class MappComponent implements OnInit, AfterViewInit  {
 
   ngAfterViewInit(): void {
     this.getMap();
+    this.testdirection()
+  }
+
+  testdirection(): void {
+    this.map.addControl(
+      new MapboxDirections({
+        accessToken: mapboxgl.accessToken
+      }),
+      'top-right'
+    );
   }
 
   get_all_pharmacie(){
