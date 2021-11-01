@@ -4,5 +4,9 @@ export class Pharmacie {
     pseudo ?: string;
     email ?: string;
     password ?: string;
-    quartier ?: string;
+    primaire ?: string;
+    secondaire ?: string;
+    whatsapp ?: string;
+    longitude ?: string;
+    latitude ?: string;
 }

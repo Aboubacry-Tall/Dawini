@@ -15,25 +15,9 @@
     <div class="row">
         <div class="col-sm-3">
             <p class="fs-2 mb-5"><i class="fas fa-clinic-medical me-2 text-second"></i>pharmacies</p>
-            <div class="shadow-sm p-2 mb-2">
-                <p>Ph. Tall</p>
-                <small>distance 120km</small>
-            </div>
-            <div class="shadow-sm p-2 mb-2">
-                <p>Ph. Tall</p>
-                <small>distance 120km</small>
-            </div>
-            <div class="shadow-sm p-2 mb-2">
-                <p>Ph. Tall</p>
-                <small>distance 120km</small>
-            </div>
-            <div class="shadow-sm p-2 mb-2">
-                <p>Ph. Tall</p>
-                <small>distance 120km</small>
-            </div>
-            <div class="shadow-sm p-2 mb-2">
-                <p>Ph. Tall</p>
-                <small>distance 120km</small>
+            <div class="shadow-sm p-2 mb-2" *ngFor="let pharmacie of pharmacies">
+                <p class="text-success fs-6" style="cursor: pointer" (click)="flyToPharmacie(pharmacie)">{{ pharmacie.nom }}</p>
+                <small>{{ pharmacie.longitude }}</small>
             </div>
         </div>
         <div class="col-sm-9">
