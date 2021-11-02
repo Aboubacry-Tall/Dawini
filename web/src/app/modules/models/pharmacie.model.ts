@@ -9,4 +9,5 @@ export class Pharmacie {
     whatsapp ?: string;
     longitude ?: string;
     latitude ?: string;
+    distance : string = '';
 }

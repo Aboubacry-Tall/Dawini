@@ -13,7 +13,7 @@ export class PharmacieService {
   private server = "http://localhost:8000/api/apps/";
   constructor(private http: HttpClient) { }
 
-  create_pharmacie(pharmacie: Pharmacie): Observable<Pharmacie> {
+  create_pharmacie(pharmacie: Pharmacie): Observable<any> {
     /*
     const headers = { 'content-type': 'application/json'}  
     const body=JSON.stringify(pharmacie);
@@ -22,7 +22,7 @@ export class PharmacieService {
     return this.http.post(this.server + 'create-pharmacie', pharmacie);
   }
 
-  edit_pharmacie(id: number, pharmacie: Pharmacie): Observable<Pharmacie> {
+  edit_pharmacie(id: number, pharmacie: Pharmacie): Observable<any> {
     return this.http.post(this.server + 'edit-pharmacie/' + id, pharmacie);
   }
 
