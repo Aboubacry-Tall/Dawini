@@ -20,6 +20,15 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "geojson-equality",
+              "density-clustering",
+              "skmeans",
+              "rbush",
+              "concaveman",
+              "geojson-rbush",
+              "deep-equal"
+            ],
             "outputPath": "dist/web",
             "index": "src/index.html",
             "main": "src/main.ts",
