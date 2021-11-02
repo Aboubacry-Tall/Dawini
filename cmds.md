@@ -26,7 +26,7 @@ pip install django
 pip install djangorestframework
 pip install pymysql
 pip install django-cors-headers
-
+pip install djangorestframework-gis
 
 # PFE
 Projet de fin d'étude 
