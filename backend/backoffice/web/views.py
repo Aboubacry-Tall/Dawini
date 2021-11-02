@@ -13,7 +13,7 @@ from web.serializers import PharmacieSerializer
 from web.serializers import TelephoneSerializer
 from web.serializers import MedicamentSerializer
 from web.serializers import CoordonneeSerializer
-from pprint import pprint
+from pprint import pp, pprint 
 
 @api_view(['POST'])
 def login_pharmacie(request):
@@ -53,6 +53,14 @@ def get_pharmacie(request, pk):
     pharmacie = Pharmacie.objects.get(pk=pk)
     pharmacie_serialize = PharmacieSerializer(pharmacie)
     return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
+
+@api_view(['GET'])
+def get_all_pharmacies(request):
+    pharmacies = Pharmacie.objects.all();
+    coordonnee = Coordonnee.objects.all();
+    pharmacies_serializer = PharmacieSerializer(pharmacies, many=True)
+    return JsonResponse(pharmacies_serializer.data, status=status.HTTP_200_OK, safe=False)
+    
 
 @api_view(['GET'])
 def get_telephone(request, pk):

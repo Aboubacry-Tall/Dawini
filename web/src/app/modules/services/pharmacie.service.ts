@@ -10,7 +10,7 @@ import { Telephone } from '../models/telephone.model';
 })
 export class PharmacieService {
 
-  private server = "http://localhost:8000/api/web/";
+  private server = "http://localhost:8000/api/apps/";
   constructor(private http: HttpClient) { }
 
   create_pharmacie(pharmacie: Pharmacie): Observable<Pharmacie> {
@@ -139,7 +139,11 @@ export class PharmacieService {
     }];
     return geoJson;
   }
+
+  get_all_pharmacie(): Observable<any>{
+    return this.http.get(this.server + 'pharmacie/list');
   }
+}
 
 
   

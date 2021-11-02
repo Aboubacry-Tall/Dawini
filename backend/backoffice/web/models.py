@@ -41,3 +41,4 @@ class Dates_Base(models.Model):
     debut = models.CharField(max_length=50, blank=False, default='')
     fin = models.CharField(max_length=50, blank=False, default='')
     medicament_base_id = models.IntegerField(blank=False)
+    

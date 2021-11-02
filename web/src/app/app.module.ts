@@ -28,6 +28,9 @@ import { SearchComponent } from './pages/search/search.component';
 import { PharmacieComponent } from './modules/composants/pharmacie/pharmacie.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { ParametresComponent } from './modules/composants/parametres/parametres.component';
+import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
+import { MapComponent } from './modules/composants/mapbox/map/map.component';
+import { MappComponent } from './modules/composants/mapp/mapp.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { ParametresComponent } from './modules/composants/parametres/parametres.
     SearchComponent,
     PharmacieComponent,
     ParametresComponent,
-    LogoutComponent
+    LogoutComponent,
+    MapboxComponent,
+    MapComponent,
+    MappComponent
   ],
   imports: [
     BrowserModule,

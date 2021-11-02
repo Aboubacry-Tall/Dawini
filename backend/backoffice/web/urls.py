@@ -3,6 +3,7 @@ from web import views
  
 urlpatterns = [ 
     url(r'^api/web/pharmacie/(?P<pk>[0-9]+)$', views.get_pharmacie),
+    url(r'^api/web/pharmacies', views.get_all_pharmacies),
     url(r'^api/web/telephone/(?P<pk>[0-9]+)$', views.get_telephone),
     url(r'^api/web/coordonnee/(?P<pk>[0-9]+)$', views.get_coordonnee),
     url(r'^api/web/create-pharmacie', views.create_pharmacie),
