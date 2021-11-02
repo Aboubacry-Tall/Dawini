@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
-import * as mapboxgl from 'mapbox-gl';
-import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import { PharmacieService } from '../../services/pharmacie.service';
 import { Pharmacie } from '../../models/pharmacie.model';
 import { marker } from 'leaflet';
+import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
+import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 
 @Component({
@@ -17,13 +16,12 @@ export class MappComponent implements OnInit, AfterViewInit  {
 
   value = '';
   map_mode: number = 1;
-  pharmacie: Pharmacie = new Pharmacie();
-  pharmacies!: Pharmacie[];
-
   map!: mapboxgl.Map
   markers!: [];
   popup!: [];
   marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
+  pharmacie: Pharmacie = new Pharmacie();
+  pharmacies!: Pharmacie[];
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
@@ -40,11 +38,11 @@ export class MappComponent implements OnInit, AfterViewInit  {
   }
 
   testDistance(): void {
-    var from = turf.point([-75.343, 39.984]);
-    var to = turf.point([-75.534, 39.123]);
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    const from = turf.point([-75.343, 39.984]);
+    const to = turf.point([-75.534, 39.123]);
 
-    var distance = turf.distance(from, to);
-    alert(distance);
+    const distance = turf.distance(from, to);
   }
 
   get_all_pharmacie(){
@@ -119,9 +117,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
         positionOptions: {
           enableHighAccuracy: true
         },
-        // When active the map will receive updates to the device's location as it changes.
         trackUserLocation: true,
-        // Draw an arrow next to the location dot to indicate which direction the device is heading.
         showUserHeading: true,
         fitBoundsOptions: {
           zoom: 15  
@@ -168,5 +164,32 @@ export class MappComponent implements OnInit, AfterViewInit  {
     }else{
       this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
     }
+  }
+
+  flyToUser(){
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    const el = document.createElement('div');
+      el.style.backgroundImage = 'url("../../../../assets/images/l7.png")';
+      el.style.width = '60px';
+      el.style.height = '60px';
+      el.style.backgroundSize = 'cover';
+      el.style.borderRadius = '50%';
+      el.style.cursor = 'pointer';
+      el.style.transition = 'width 2s, height 4s';
+      el.addEventListener("dblclick", function( event ) {
+        el.style.display = 'none',
+        false
+      });
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        '<h4 class="mt-3"> Votre position' + '</h4>'
+      );
+      new mapboxgl.Marker(el)
+        .setLngLat([parseFloat(lng+ ''), parseFloat(lat + '')])
+        .setPopup(popup)
+        .addTo(this.map);
+    this.map.flyTo({
+      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
+      zoom: 14
+    });
   }
 }
