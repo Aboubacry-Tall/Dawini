@@ -19,6 +19,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
   map!: mapboxgl.Map
   markers!: [];
   popup!: [];
+  phs_distances = new Array();
   marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
@@ -30,27 +31,46 @@ export class MappComponent implements OnInit, AfterViewInit  {
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
-    this.testDistance();
   }
 
   ngAfterViewInit(): void {
     this.getMap();
-  }
-
-  testDistance(): void {
-    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
-    const from = turf.point([-75.343, 39.984]);
-    const to = turf.point([-75.534, 39.123]);
-
-    const distance = turf.distance(from, to);
+    this.get_user();
   }
 
   get_all_pharmacie(){
     this.service.get_all_pharmacie().subscribe(data =>{
       this.pharmacies = data;
       this.add_marker();
+      this.testDistance();
     },
     error =>console.log(error));
+  }
+
+  testDistance(): void {
+    const [lng, lat] = [ parseFloat(sessionStorage.getItem('user_lng') + ''), parseFloat(sessionStorage.getItem('user_lat') + '') ];
+    const from = turf.point([lng, lat]);
+    const to = turf.point([0, 0]);
+    const phs = [
+      {
+        "ph_id": "",
+        "ph_distance": ""
+      }
+    ];
+    
+    for(let i = 0; i < this.pharmacies.length; i++){
+      const to = turf.point([parseFloat(this.pharmacies[i].longitude + ''), parseFloat(this.pharmacies[i].latitude + '')]);
+      const ph = {
+        "ph_id": this.pharmacies[i].id + '',
+        "ph_distance": turf.distance(from, to) + ''
+      }
+      phs.push(ph); 
+      this.pharmacies[i].distance = ph.ph_distance;
+    };
+    phs.shift();
+    const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
+    const pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+    console.log(this.pharmacies);
   }
 
   add_marker(){
@@ -107,7 +127,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
     this.map.addControl(language);
     
     // Default locate
-    this.marker.addTo(this.map);
+    //this.marker.addTo(this.map);
 
     // controls
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -168,10 +188,19 @@ export class MappComponent implements OnInit, AfterViewInit  {
 
   flyToUser(){
     const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    this.get_user();
+    this.map.flyTo({
+      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
+      zoom: 14
+    });
+  }
+
+  get_user(): void{
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
     const el = document.createElement('div');
       el.style.backgroundImage = 'url("../../../../assets/images/l7.png")';
-      el.style.width = '60px';
-      el.style.height = '60px';
+      el.style.width = '40px';
+      el.style.height = '40px';
       el.style.backgroundSize = 'cover';
       el.style.borderRadius = '50%';
       el.style.cursor = 'pointer';
@@ -187,9 +216,5 @@ export class MappComponent implements OnInit, AfterViewInit  {
         .setLngLat([parseFloat(lng+ ''), parseFloat(lat + '')])
         .setPopup(popup)
         .addTo(this.map);
-    this.map.flyTo({
-      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
-      zoom: 14
-    });
   }
 }
