@@ -10,11 +10,6 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-   
-  getAllMedicaments(): Observable<any>{
-    return this.http.get(this.baseUrl)
-
-    }  
     getMedic(nom:string): Observable<any>{
       return this.http.get(`${this.baseUrl}?nom=${nom}`)
   
