@@ -125,6 +125,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
     // Language
     const language = new MapboxLanguage();
     this.map.addControl(language);
+    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
     
     // Default locate
     //this.marker.addTo(this.map);
