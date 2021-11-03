@@ -27,6 +27,7 @@ pip install djangorestframework
 pip install pymysql
 pip install django-cors-headers
 pip install djangorestframework-gis
+pip install django-livesync
 
 # PFE
 Projet de fin d'étude 
