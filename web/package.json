@@ -30,6 +30,7 @@
     "@types/mapbox-gl-leaflet": "0.0.1",
     "ajv": "^6.9.1",
     "ajv-keywords": "^3.5.2",
+    "axios": "^0.24.0",
     "bootstrap": "^5.1.0",
     "geojson": "^0.5.0",
     "leaflet": "^1.7.1",

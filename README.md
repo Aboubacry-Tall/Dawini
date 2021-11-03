@@ -2,6 +2,9 @@
 Projet de fin d'étude 
 key=AIzaSyBFG4otprd8aau0zUS_i2ybhT9-qd0A9Uo
 
+# ARGIS API
+AAPKab520b339af648b0879d9dca57f2f880vay_UhT4SrhIssFx-TdNyDuWN_MZ3Yn76pDbfmfyM2bHkEqx7QznzC14LF_TyDj8
+
 # Installation de ionic cli
 npm install -g @ionic/cli
 
@@ -54,3 +57,6 @@ python manage.py makemigrations
 
 # Applique les changements à la base de données.
 python manage.py migrate
+
+# setData 'AnySourceImpl'
+const source: mapboxgl.GeoJSONSource = this.map.getSource('earthquakes') as mapboxgl.GeoJSONSource;
