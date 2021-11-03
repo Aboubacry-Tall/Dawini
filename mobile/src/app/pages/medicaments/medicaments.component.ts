@@ -19,11 +19,17 @@ export class MedicamentsComponent implements OnInit {
    this.getMedic();
   }
   
+   getAllMedicament() {
+    this.dataService.getAllMedicaments().subscribe(data =>{
+      this.medicaments=data;
+      console.log(this.medicaments)
+    });
+  }
    getMedic(){
     this.dataService.getMedic(this.nom).subscribe(data =>{
       this.medicaments=data;
     });
-    }
+  }
     
   onSearch(event:any){
     this.dataService.getMedic(this.nom).subscribe(data =>{

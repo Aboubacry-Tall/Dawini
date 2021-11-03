@@ -9,6 +9,18 @@ from mobile.serializers import MedicamentSerializer
 from rest_framework.decorators import api_view
 
 
+@api_view(['GET', 'POST', 'DELETE'])
+def medicament_list(request):
+    if request.method == 'GET':
+        medicament = Medicament.objects.all()
+                
+        nom = request.GET.get('nom', None)
+        if nom is not None:
+            medicament = medicament.filter(nom__icontains=nom)
+        
+        medicament_serializer = MedicamentSerializer(medicament, many=True)
+        return JsonResponse(medicament_serializer.data, safe=False)
+
  
 @api_view(['GET', 'Post'])
 def medicament_search(request):
