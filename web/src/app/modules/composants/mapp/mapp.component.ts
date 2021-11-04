@@ -65,7 +65,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
         "ph_distance": turf.distance(from, to) + ''
       }
       phs.push(ph); 
-      this.pharmacies[i].distance = ph.ph_distance;
+      this.pharmacies[i].distance = parseFloat(ph.ph_distance).toFixed(2);
     };
     phs.shift();
     const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
@@ -95,7 +95,7 @@ export class MappComponent implements OnInit, AfterViewInit  {
       el.style.borderRadius = '50%';
       el.style.cursor = 'pointer';
       const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-        '<h4 class="mt-3"> Ph. ' + this.pharmacies[i].nom + '</h4>'
+        '<h4 class="pt-3"> Ph. ' + this.pharmacies[i].nom + '</h4>'
       );
       marker[i] = new mapboxgl.Marker(el);
       marker[i].setLngLat([this.pharmacies[i].longitude, this.pharmacies[i].latitude]);
