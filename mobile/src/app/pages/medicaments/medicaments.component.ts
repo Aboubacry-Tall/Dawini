@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../../data.service';
-import { Medicament } from 'src/app/medicament';
-
+import { Medicament } from 'src/app/modules/models/medicament';
+import { DataService } from 'src/app/modules/services/data.service';
 @Component({
   selector: 'app-medicaments',
   templateUrl: './medicaments.component.html',
@@ -19,8 +18,8 @@ export class MedicamentsComponent implements OnInit {
    this.getMedic();
   }
   
-   getAllMedicament() {
-    this.dataService.getAllMedicaments().subscribe(data =>{
+   getMedicament() {
+    this.dataService.getMedicaments().subscribe(data =>{
       this.medicaments=data;
       console.log(this.medicaments)
     });

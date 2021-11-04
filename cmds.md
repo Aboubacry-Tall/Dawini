@@ -22,6 +22,7 @@ ionic cordova build android
 
 # create  virtual environment ,install dependences
 python -m venv venv 
+.\venv\Scripts\activate 
 pip install django 
 pip install djangorestframework
 pip install pymysql
