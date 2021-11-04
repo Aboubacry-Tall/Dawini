@@ -1,54 +1,221 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
+import MapboxLanguage from '@mapbox/mapbox-gl-language';
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as mapboxgl from 'mapbox-gl';
+import * as turf from '@turf/turf';
+import { Pharmacie } from 'src/app/modules/models/pharmacie';
+import { DataService } from 'src/app/modules/services/data.service';
 
 @Component({
   selector: 'app-mapbox',
   templateUrl: './mapbox.component.html',
   styleUrls: ['./mapbox.component.scss'],
 })
-export class MapboxComponent implements OnInit {
+export class MapboxComponent implements OnInit , AfterViewInit {
 
-  map: mapboxgl.Map;
 
-  constructor() { }
+  value = '';
+  map_mode: number = 1;
+  map!: mapboxgl.Map
+  markers!: [];
+  popup!: [];
+  phs_distances = new Array();
+  marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
+  pharmacie: Pharmacie = new Pharmacie();
+  pharmacies!: Pharmacie[];
 
-  ngOnInit() {
+  @ViewChild('coordinates') coordonnees!: ElementRef;
+  
+  constructor(private service: DataService) {}
+  
+  ngOnInit(): void {
+    this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
+    this.get_all_pharmacie();
+  }
+
+  ngAfterViewInit(): void {
     this.getMap();
     this.map.on('load', () => {
       this.map.resize();
-  });
+    })
+    
+    this.get_user();
   }
-  getMap(){
-    (mapboxgl as any).accessToken = 'pk.eyJ1IjoiZ2hvc3RtYXAiLCJhIjoiY2tzeXN4YmxpMGFzajJ1bW9xOXRkeG10ZSJ9.q6yvHK5OCnSVLOKUj48lpw';
-    this.map = new mapboxgl.Map({
-    container: 'mapid', // container ID
-    style: 'mapbox://styles/mapbox/streets-v11', // style URL
-    center: [-15.9749,18.0796], // starting position [lng, lat]
-    pitch: 50,
-    zoom: 9 ,// starting zoom
+
+  get_all_pharmacie(){
+    this.service.getPharmacies().subscribe(data =>{
+      this.pharmacies = data;
+      console.log(data)
+      this.add_marker();
+      this.testDistance();
+    },
+    error =>console.log(error));
+  }
+
+  testDistance(): void {
+    const [lng, lat] = [ parseFloat(sessionStorage.getItem('user_lng') + ''), parseFloat(sessionStorage.getItem('user_lat') + '') ];
+    const from = turf.point([lng, lat]);
+    const to = turf.point([0, 0]);
+    const phs = [
+      {
+        "ph_id": "",
+        "ph_distance": ""
+      }
+    ];
     
+    for(let i = 0; i < this.pharmacies.length; i++){
+      const to = turf.point([parseFloat(this.pharmacies[i].longitude + ''), parseFloat(this.pharmacies[i].latitude + '')]);
+      const ph = {
+        "ph_id": this.pharmacies[i].id + '',
+        "ph_distance": turf.distance(from, to) + ''
+      }
+      phs.push(ph); 
+      this.pharmacies[i].distance = ph.ph_distance;
+    };
+    phs.shift();
+    const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
+    const pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+    console.log(this.pharmacies);
+  }
+
+  add_marker(){
+    const el = document.createElement('div');
+    el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
+    el.style.width = '40px';
+    el.style.height = '40px';
+    el.style.backgroundSize = 'cover';
+    el.style.borderRadius = '50%';
+    el.style.cursor = 'pointer';
+
+    const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+      'Construction on the Washington Monument began in 1848.'
+    );
+
+    for(let i = 0; i < this.pharmacies.length; i++){
+      const el = document.createElement('div');
+      el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
+      el.style.width = '40px';
+      el.style.height = '40px';
+      el.style.backgroundSize = 'cover';
+      el.style.borderRadius = '50%';
+      el.style.cursor = 'pointer';
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        '<h4 class="mt-3"> Ph. ' + this.pharmacies[i].nom + '</h4>'
+      );
+      this.marker[i] = new mapboxgl.Marker(el);
+      this.marker[i].setLngLat([this.pharmacies[i].longitude, this.pharmacies[i].latitude]);
+      this.marker[i].setPopup(popup);
+      this.marker[i].addTo(this.map);
+    }
+  }
+
+  flyToPharmacie(pharmacie: Pharmacie){
+    this.map.flyTo({
+      center: [parseFloat(pharmacie.longitude + ''), parseFloat(pharmacie.latitude + '')],
+      zoom: 15
     });
-    // Add zoom and rotation controls to the map.
-    this.map.addControl(new mapboxgl.NavigationControl());
-    
-    this.map.addControl(new mapboxgl.FullscreenControl());
+  }
 
-    //map.addControl(new mapboxgl.FullscreenControl());
-    //map.addControl(new mapboxgl.NavigationControl());
+  getMap() {
+    (mapboxgl as any).accessToken = 'pk.eyJ1IjoiZ2hvc3RtYXAiLCJhIjoiY2tzeXNxajBhMGFsODJ3bW9kYWg2eXJuZSJ9.EvLTJYcyz4JZ1y41sqF8nw';
+      this.map = new mapboxgl.Map({
+      container: 'map', // container ID
+      style: 'mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg', // style URL
+      center: [-15.942172529368463, 18.069114191259317], // starting position [lng, lat]
+      zoom: 12.3, 
+      pitch: 60, // pitch in degrees
+      bearing: 10 // bearing in degrees
+    });
 
+    // Language
+    const language = new MapboxLanguage();
+    this.map.addControl(language);
+    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
+    
+    // Default locate
+    //this.marker.addTo(this.map);
 
-    /*
-    // Create a default Marker and add it to the map.
-    const marker1 = new mapboxgl.Marker()
-    .setLngLat([12.554729, 55.70651])
-    .addTo(map);
-    
-    // Create a default Marker, colored black, rotated 45 degrees.
-    const marker2 = new mapboxgl.Marker({ color: 'black', rotation: 45 })
-    .setLngLat([12.65147, 55.608166])
-    .addTo(map);
-    */
-    
+    // controls
+    this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    this.map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+    this.map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+        fitBoundsOptions: {
+          zoom: 15  
+        }
+        
+      }),
+      'bottom-right'
+    );
+
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      sessionStorage.setItem('user_lng', position.coords.longitude + '');
+      sessionStorage.setItem('user_lat', position.coords.latitude + '');
+    });
+
+    // Evenements
+    this.marker.on('dragend', (e) =>{
+      this.onDragEnd();
+    });
+
+  }
+
+  onDragEnd(){
+    const lngLat = this.marker.getLngLat();
+    this.coordonnees.nativeElement.style.display = 'block';
+    this.coordonnees.nativeElement.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
+    console.log(lngLat);
+  }
+
+  getLocate(){
+    return this.marker.getLngLat();
+  }
+
+  set_map_style(mode: number): void{
+    this.map_mode = mode;
+    if(this.map_mode == 0){
+      this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
+    }else{
+      this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
+    }
+  }
+
+  flyToUser(){
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    this.get_user();
+    this.map.flyTo({
+      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
+      zoom: 14
+    });
+  }
+
+  get_user(): void{
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    const el = document.createElement('div');
+      el.style.backgroundImage = 'url("../../../../assets/images/l7.png")';
+      el.style.width = '40px';
+      el.style.height = '40px';
+      el.style.backgroundSize = 'cover';
+      el.style.borderRadius = '50%';
+      el.style.cursor = 'pointer';
+      el.style.transition = 'width 2s, height 4s';
+      el.addEventListener("dblclick", function( event ) {
+        el.style.display = 'none',
+        false
+      });
+      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        '<h4 class="mt-3"> Votre position' + '</h4>'
+      );
+      new mapboxgl.Marker(el)
+        .setLngLat([parseFloat(lng+ ''), parseFloat(lat + '')])
+        .setPopup(popup)
+        .addTo(this.map);
   }
 }

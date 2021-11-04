@@ -1,12 +1,12 @@
-from django.shortcuts import render
-
 from django.http.response import JsonResponse
-from rest_framework.parsers import JSONParser 
+from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view 
 from rest_framework import status
  
 from web.models import Medicament
+from apps.models import Pharmacie
 from mobile.serializers import MedicamentSerializer
-from rest_framework.decorators import api_view
+from mobile.serializers import PharmacieSerializer
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -36,3 +36,10 @@ def medicament_search(request):
             
     except Medicament.DoesNotExist: 
         return JsonResponse({'message': 'The medic does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+        
+@api_view(['GET'])
+def pharmacie_list(request):
+    pharmacies = Pharmacie.objects.all().order_by('-id')
+    pharmacies_serializer = PharmacieSerializer(pharmacies, many=True)
+    return JsonResponse(pharmacies_serializer.data, status=status.HTTP_200_OK, safe=False)
+    
