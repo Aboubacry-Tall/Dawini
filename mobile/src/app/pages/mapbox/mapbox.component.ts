@@ -20,6 +20,10 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   map!: mapboxgl.Map
   markers!: [];
   popup!: [];
+  map_directions : any;
+  start = [-15.9421725293, 18.069114191];
+  longitude : number;
+  latitude : number;
   phs_distances = new Array();
   marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
   pharmacie: Pharmacie = new Pharmacie();
@@ -32,6 +36,7 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
+    this.OnStart()
   }
 
   ngAfterViewInit(): void {
@@ -39,8 +44,7 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     this.map.on('load', () => {
       this.map.resize();
     })
-    
-    this.get_user();
+    this.testDirections();
   }
 
   get_all_pharmacie(){
@@ -48,35 +52,150 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.pharmacies = data;
       console.log(data)
       this.add_marker();
-      this.testDistance();
     },
     error =>console.log(error));
   }
 
-  testDistance(): void {
-    const [lng, lat] = [ parseFloat(sessionStorage.getItem('user_lng') + ''), parseFloat(sessionStorage.getItem('user_lat') + '') ];
-    const from = turf.point([lng, lat]);
-    const to = turf.point([0, 0]);
-    const phs = [
-      {
-        "ph_id": "",
-        "ph_distance": ""
-      }
-    ];
+  OnStart(){
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      this.longitude  = position.coords.longitude;
+      this.latitude = position.coords.latitude;
+      this.start=[this.longitude,this.latitude]
+      console.log(this.longitude,this.latitude)
+      this.map.flyTo({
+        center: [ this.longitude, this.latitude ],
+        zoom:12
+      });
+    });
+  }
+
+  testDirections(): void {
+    this.map.on('load', () => {
+      // make an initial directions request that
+      // starts and ends at the same location
+      this.getRoutes(this.start);
     
-    for(let i = 0; i < this.pharmacies.length; i++){
-      const to = turf.point([parseFloat(this.pharmacies[i].longitude + ''), parseFloat(this.pharmacies[i].latitude + '')]);
-      const ph = {
-        "ph_id": this.pharmacies[i].id + '',
-        "ph_distance": turf.distance(from, to) + ''
+      // Add starting point to the map
+      this.map.addLayer({
+        id: 'point',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'FeatureCollection',
+            features: [
+              {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'Point',
+                  coordinates: this.start
+                }
+              }
+            ]
+          }
+        },
+        paint: {
+          'circle-radius': 10,
+          'circle-color': '#3887be'
+        }
+      });
+      // this is where the code from the next step will go
+    });
+
+    this.map.on('click', (event) => {
+      const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+      const end = {
+        type: 'FeatureCollection' as const,
+        features: [
+          {
+            type: 'Feature' as const,
+            properties: {},
+            geometry: {
+              type: 'Point' as const,
+              coordinates: coords
+            }
+          }
+        ]
+      };
+      const source: mapboxgl.GeoJSONSource = this.map.getSource('end') as mapboxgl.GeoJSONSource;
+      if (this.map.getLayer('end')) {
+        source.setData(end);
+      } else {
+        this.map.addLayer({
+          id: 'end',
+          type: 'circle',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    type: 'Point',
+                    coordinates: coords
+                  }
+                }
+              ]
+            }
+          },
+          paint: {
+            'circle-radius': 10,
+            'circle-color': '#f30'
+          }
+        });
       }
-      phs.push(ph); 
-      this.pharmacies[i].distance = ph.ph_distance;
+      this.getRoutes(coords);
+      console.log(coords);
+    });
+    
+  }
+
+  async getRoutes(end) {
+    const query = await fetch(
+      `https://api.mapbox.com/directions/v5/mapbox/cycling/${this.start[0]},${this.start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+      { method: 'GET' }
+    );
+
+    const json = await query.json();
+    const data = json.routes[0];
+    const route = data.geometry.coordinates;
+
+    const geojson = {
+      type: 'Feature' as const,
+      properties: {},
+      geometry: {
+        type: 'LineString' as const,
+        coordinates: route
+      }
     };
-    phs.shift();
-    const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
-    const pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
-    console.log(this.pharmacies);
+
+    const source: mapboxgl.GeoJSONSource = this.map.getSource('route') as mapboxgl.GeoJSONSource;
+
+    if (this.map.getSource('route')) {
+      source.setData(geojson);
+    }else {
+      this.map.addLayer({
+        id: 'route',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: geojson
+        },
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#3887be',
+          'line-width': 5,
+          'line-opacity': 0.75
+        }
+      });
+    }
   }
 
   add_marker(){
@@ -153,29 +272,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       }),
       'bottom-right'
     );
-
-    const geo = navigator.geolocation
-    geo.getCurrentPosition((position) => {
-      sessionStorage.setItem('user_lng', position.coords.longitude + '');
-      sessionStorage.setItem('user_lat', position.coords.latitude + '');
-    });
-
-    // Evenements
-    this.marker.on('dragend', (e) =>{
-      this.onDragEnd();
-    });
-
-  }
-
-  onDragEnd(){
-    const lngLat = this.marker.getLngLat();
-    this.coordonnees.nativeElement.style.display = 'block';
-    this.coordonnees.nativeElement.innerHTML = `Longitude: ${lngLat.lng}<br />Latitude: ${lngLat.lat}`;
-    console.log(lngLat);
-  }
-
-  getLocate(){
-    return this.marker.getLngLat();
   }
 
   set_map_style(mode: number): void{
@@ -188,34 +284,5 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   }
 
   flyToUser(){
-    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
-    this.get_user();
-    this.map.flyTo({
-      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
-      zoom: 14
-    });
-  }
-
-  get_user(): void{
-    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
-    const el = document.createElement('div');
-      el.style.backgroundImage = 'url("../../../../assets/images/l7.png")';
-      el.style.width = '40px';
-      el.style.height = '40px';
-      el.style.backgroundSize = 'cover';
-      el.style.borderRadius = '50%';
-      el.style.cursor = 'pointer';
-      el.style.transition = 'width 2s, height 4s';
-      el.addEventListener("dblclick", function( event ) {
-        el.style.display = 'none',
-        false
-      });
-      const popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-        '<h4 class="mt-3"> Votre position' + '</h4>'
-      );
-      new mapboxgl.Marker(el)
-        .setLngLat([parseFloat(lng+ ''), parseFloat(lat + '')])
-        .setPopup(popup)
-        .addTo(this.map);
   }
 }
