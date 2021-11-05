@@ -19,7 +19,11 @@ export class PharmacieService {
     const body=JSON.stringify(pharmacie);
     console.log(body)
     */
-    return this.http.post(this.server + 'create-pharmacie', pharmacie);
+    return this.http.post(this.server + 'pharmacie/create', pharmacie);
+  }
+
+  login_pharmacie(pharmacie: Pharmacie): Observable<any> {
+    return this.http.post(this.server + 'pharmacie/login', pharmacie);
   }
 
   edit_pharmacie(id: number, pharmacie: Pharmacie): Observable<any> {
@@ -33,9 +37,7 @@ export class PharmacieService {
     return this.http.post(this.server + 'edit-coordonnee/' + id, coordonnee);
   }
 
-  login_pharmacie(pharmacie: Pharmacie): Observable<any> {
-    return this.http.post(this.server + 'login-pharmacie', pharmacie);
-  }
+  
 
   get_pharmacie(id: number): Observable<any> {
     return this.http.get(this.server + 'pharmacie/' + id);

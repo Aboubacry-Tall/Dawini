@@ -2,7 +2,7 @@ from django.db import models
 
 class Pharmacie(models.Model):
     nom = models.CharField(max_length=50, blank=False)
-    pseudo = models.CharField(max_length=50, blank=False)
+    pseudo = models.CharField(max_length=50, blank=True, default='')
     password = models.CharField(max_length=50, blank=False)
     email = models.EmailField(max_length=50, blank=True, default='')
     primaire = models.CharField(max_length=50, blank=True, default='')

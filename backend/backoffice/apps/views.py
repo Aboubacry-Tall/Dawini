@@ -13,6 +13,7 @@ def create_pharmacie(request):
     pharmacie_serializer = PharmacieSerializer(data=pharmacie_data)
     if pharmacie_serializer.is_valid():
         pharmacie_serializer.save()
+        
         return JsonResponse(pharmacie_serializer.data, status=status.HTTP_201_CREATED)
     return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -35,6 +36,21 @@ def get_all_pharmacie(request):
 @api_view(['GET'])
 def get_pharmacie(request):
     return JsonResponse({'a': 'b'}, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def login_pharmacie(request):
+    pharmacie_data = JSONParser().parse(request)
+    pharmacie_serializer = PharmacieSerializer(data=pharmacie_data)
+    if pharmacie_serializer.is_valid():
+        nom = pharmacie_serializer.data['nom']
+        password = pharmacie_serializer.data['password']
+        if nom is not None and password is not None:
+            pharmacie = Pharmacie.objects.filter(nom = nom, password = password)
+            if pharmacie:
+                pharmacie_serialize = PharmacieSerializer(pharmacie, many=True)
+                return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
+            return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def delete_pharmacie(request):

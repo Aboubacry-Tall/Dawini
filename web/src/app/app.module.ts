@@ -31,6 +31,10 @@ import { ParametresComponent } from './modules/composants/parametres/parametres.
 import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
 import { MapComponent } from './modules/composants/mapbox/map/map.component';
 import { MappComponent } from './modules/composants/mapp/mapp.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MessageComponent } from './pages/message/message.component';
+import { CoreComponent } from './common/core/core.component';
+import { AlertComponent } from './common/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,10 @@ import { MappComponent } from './modules/composants/mapp/mapp.component';
     LogoutComponent,
     MapboxComponent,
     MapComponent,
-    MappComponent
+    MappComponent,
+    MessageComponent,
+    CoreComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -65,9 +72,10 @@ import { MappComponent } from './modules/composants/mapp/mapp.component';
     MatCheckboxModule,
     GoogleMapsModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [CoreComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

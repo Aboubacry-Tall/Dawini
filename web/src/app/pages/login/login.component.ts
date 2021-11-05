@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
+import { CoreComponent } from 'src/app/common/core/core.component';
 import { Pharmacie } from 'src/app/modules/models/pharmacie.model';
 import { PharmacieService } from 'src/app/modules/services/pharmacie.service';
 
@@ -11,7 +12,7 @@ import { PharmacieService } from 'src/app/modules/services/pharmacie.service';
 })
 export class LoginComponent implements OnInit {
   
-  constructor(private app:AppComponent, private s_pharmacie: PharmacieService, private router: Router) { }
+  constructor(private app:AppComponent, private s_pharmacie: PharmacieService, private router: Router, public core: CoreComponent) { }
   title = this.app.title;
   hide = true;
   pharmacie: Pharmacie = new Pharmacie();
@@ -29,7 +30,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('id', id);
       }
     },
-    error => console.log(error));
+    error => {
+      this.core.openDialog(260);
+    })
   }
 
 }

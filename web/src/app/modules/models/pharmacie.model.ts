@@ -4,7 +4,7 @@ export class Pharmacie {
     pseudo ?: string;
     email ?: string;
     password ?: string;
-    primaire ?: string;
+    primaire !: number;
     secondaire ?: string;
     whatsapp ?: string;
     longitude ?: string;
