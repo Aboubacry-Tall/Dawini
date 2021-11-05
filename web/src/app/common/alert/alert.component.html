@@ -1,0 +1,13 @@
+<div *ngIf="alert == 'login'">
+    <p class="text-center">Vos identifiants Nom / Mot de passe sont incorrectes <i class="fas fa-frown text-warning fs-4"></i></p>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Fermé</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="alert == 'inscription'">
+    <h4>Echec de création de compte<i class="fas fa-exclamation-triangle fs-3 text-danger ms-2"></i></h4>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Fermé</button>
+    </mat-dialog-actions>
+</div>
