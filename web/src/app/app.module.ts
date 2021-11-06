@@ -24,13 +24,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { SearchComponent } from './pages/search/search.component';
-import { PharmacieComponent } from './modules/composants/pharmacie/pharmacie.component';
 import { LogoutComponent } from './pages/logout/logout.component';
-import { ParametresComponent } from './modules/composants/parametres/parametres.component';
-import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
-import { MapComponent } from './modules/composants/mapbox/map/map.component';
-import { MappComponent } from './modules/composants/mapp/mapp.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CoreComponent } from './common/core/core.component';
+import { AlertComponent } from './common/alert/alert.component';
+import { MedicamentsComponent } from './pages/medicaments/medicaments.component';
+import { MedicamentComponent } from './pages/medicament/medicament.component';
+import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
+import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
+import { MapComponent } from './common/map/map.component';
 
 @NgModule({
   declarations: [
@@ -42,13 +44,14 @@ import { MappComponent } from './modules/composants/mapp/mapp.component';
     LoginComponent,
     ResetComponent,
     RegisterComponent,
-    SearchComponent,
-    PharmacieComponent,
-    ParametresComponent,
     LogoutComponent,
-    MapboxComponent,
-    MapComponent,
-    MappComponent
+    CoreComponent,
+    AlertComponent,
+    MedicamentsComponent,
+    MedicamentComponent,
+    PharmaciesComponent,
+    PharmacieComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -65,9 +68,10 @@ import { MappComponent } from './modules/composants/mapp/mapp.component';
     MatCheckboxModule,
     GoogleMapsModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [CoreComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
-import { Pharmacie } from 'src/app/modules/models/pharmacie.model';
-import { PharmacieService } from 'src/app/modules/services/pharmacie.service';
+import { CoreComponent } from 'src/app/common/core/core.component';
+import { Pharmacie } from 'src/app/models/pharmacie';
+import { PharmacieService } from 'src/app/services/pharmacie.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { PharmacieService } from 'src/app/modules/services/pharmacie.service';
 })
 export class LoginComponent implements OnInit {
   
-  constructor(private app:AppComponent, private s_pharmacie: PharmacieService, private router: Router) { }
+  constructor(private app:AppComponent, private s_pharmacie: PharmacieService, private router: Router, private core: CoreComponent) { }
   title = this.app.title;
   hide = true;
   pharmacie: Pharmacie = new Pharmacie();
@@ -29,7 +30,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('id', id);
       }
     },
-    error => console.log(error));
+    error => {
+      this.core.openDialog(260, 'login', 'Vos identifiants Nom / Mot de passe sont incorrectes');
+    })
   }
 
 }

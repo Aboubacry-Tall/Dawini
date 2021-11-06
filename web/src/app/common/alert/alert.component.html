@@ -1,0 +1,27 @@
+<div *ngIf="alert == 'login'">
+    <p class="text-center">{{ message }} <i class="fas fa-frown text-warning fs-4"></i></p>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Fermé</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="alert == 'inscription'">
+    <h4>{{ message }}<i class="fas fa-exclamation-triangle fs-3 text-danger ms-2"></i></h4>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Fermé</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="alert == 'invalide'">
+    <h4 class="text-center">{{ message }}<i class="fas fa-exclamation fs-5 text-danger ms-2"></i></h4>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Fermé</button>
+    </mat-dialog-actions>
+</div>
+
+<div *ngIf="alert == 'valide'">
+    <h4 class="text-center">{{ message }}<i class="fas fa-check-circle text-success fs-5 ms-2"></i></h4>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Fermé</button>
+    </mat-dialog-actions>
+</div>
