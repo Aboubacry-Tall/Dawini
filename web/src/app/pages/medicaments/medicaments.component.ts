@@ -28,7 +28,7 @@ export class MedicamentsComponent implements OnInit {
   }
 
   create_medicament(){
-    this.medicament.pharmacie_id = this.pharmacie_id;
+    this.medicament.pharmacie = this.pharmacie_id;
     this.s_medicament.create_medicament(this.medicament).subscribe(data =>{
       console.log(data);
     },
@@ -44,7 +44,7 @@ export class MedicamentsComponent implements OnInit {
   }
 
   get_all_medicaments(pharmacie_id:number){
-    this.s_medicament.get_all_medicaments(this.pharmacie_id).subscribe(data =>{
+    this.s_medicament.get_all_medicament(this.pharmacie_id).subscribe(data =>{
       this.medicaments = data;
     },
     error =>console.log(error));

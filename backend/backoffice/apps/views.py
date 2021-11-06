@@ -5,7 +5,9 @@ from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 from apps.models import Pharmacie
+from apps.models import Medicament
 from apps.serializers import PharmacieSerializer
+from apps.serializers import MedicamentSerializer
 
 @api_view(['POST'])
 def create_pharmacie(request):
@@ -59,4 +61,36 @@ def login_pharmacie(request):
 def delete_pharmacie(request):
     return JsonResponse({'a': 'b'}, status=status.HTTP_200_OK)
 
+### Medicaments ###
 
+@api_view(['POST'])
+def create_medicament(request):
+    medicament_data = JSONParser().parse(request)
+    medicament_serializer = MedicamentSerializer(data=medicament_data)
+    if medicament_serializer.is_valid():
+        medicament_serializer.save()
+        return JsonResponse(medicament_serializer.data, status=status.HTTP_201_CREATED)
+    return JsonResponse(medicament_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_all_medicament(request):
+    medicaments = Medicament.objects.all();
+    pharmacie_id = request.GET['pharmacie']
+    medicaments = Medicament.objects.filter(pharmacie_id=pharmacie_id).order_by('-id')
+    medicaments_serializer = MedicamentSerializer(medicaments, many=True)
+    return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
+
+
+@api_view(['GET', 'Post'])
+def medicament_search(request,pk):
+    name = request.GET['value']
+    medicament = Medicament.objects.filter(pharmacie_id=pk)
+    try: 
+        medicament = Medicament.objects.filter(nom__icontains=name) 
+        
+        if request.method == 'GET': 
+            medicament_serializer = MedicamentSerializer(medicament,many=True) 
+            return JsonResponse(medicament_serializer.data, status=status.HTTP_200_OK, safe=False)
+            
+    except Medicament.DoesNotExist: 
+        return JsonResponse({'message': 'The medic does not exist'}, status=status.HTTP_404_NOT_FOUND) 

@@ -15,11 +15,11 @@ export class MedicamentService {
     return this.http.post(this.server + 'medicament/create', medicament);
   }
 
-  get_all_medicaments(pharmacie_id:number): Observable<any> {
+  get_all_medicament(pharmacie_id:number): Observable<any> {
     return this.http.get(this.server + 'medicaments?pharmacie=' + pharmacie_id);
   }
   
   search_medicament(value:string,pk:number): Observable<any>{
-    return this.http.get(`${this.server}medic/${pk}?value=${value}`)
+    return this.http.get(`${this.server}medicament-search/${pk}?value=${value}`)
   }
 }

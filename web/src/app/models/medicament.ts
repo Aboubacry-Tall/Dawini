@@ -4,5 +4,5 @@ export class Medicament {
     etat?: number;
     code?: string;
     description?: string;
-    pharmacie_id?: number;
+    pharmacie?: number;
 }
