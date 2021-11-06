@@ -6,6 +6,9 @@ import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import { Pharmacie } from 'src/app/modules/models/pharmacie';
 import { DataService } from 'src/app/modules/services/data.service';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mapbox',
@@ -21,23 +24,28 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   markers!: [];
   popup!: [];
   map_directions : any;
-  start = [-15.9421725293, 18.069114191];
+  start = [];
   longitude : number;
   latitude : number;
   phs_distances = new Array();
   marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
+  private updateSubscription: Subscription;
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
-  constructor(private service: DataService) {}
+  constructor(private service: DataService,private locationAccuracy: LocationAccuracy, 
+    private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
-    this.OnStart()
-  }
+    this.checkPermission()
+    this.updateSubscription = interval(3000).subscribe(
+      (val) => { this.enableGPS()});
+     
+    }
 
   ngAfterViewInit(): void {
     this.getMap();
@@ -52,23 +60,11 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.pharmacies = data;
       console.log(data)
       this.add_marker();
+      this.testDirections()
     },
     error =>console.log(error));
   }
 
-  OnStart(){
-    const geo = navigator.geolocation
-    geo.getCurrentPosition((position) => {
-      this.longitude  = position.coords.longitude;
-      this.latitude = position.coords.latitude;
-      this.start=[this.longitude,this.latitude]
-      console.log(this.longitude,this.latitude)
-      this.map.flyTo({
-        center: [ this.longitude, this.latitude ],
-        zoom:12
-      });
-    });
-  }
 
   testDirections(): void {
     this.map.on('load', () => {
@@ -97,8 +93,8 @@ export class MapboxComponent implements OnInit , AfterViewInit {
           }
         },
         paint: {
-          'circle-radius': 10,
-          'circle-color': '#3887be'
+          'circle-radius': 8,
+          'circle-color': '#00B0F0'
         }
       });
       // this is where the code from the next step will go
@@ -143,8 +139,8 @@ export class MapboxComponent implements OnInit , AfterViewInit {
             }
           },
           paint: {
-            'circle-radius': 10,
-            'circle-color': '#f30'
+            'circle-radius': 9,
+            'circle-color': '#C61818'
           }
         });
       }
@@ -282,7 +278,55 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
     }
   }
-
-  flyToUser(){
+    
+  checkPermission() {
+    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
+      result => {
+        if (result.hasPermission) {
+          this.enableGPS();
+        } else {
+          this.locationAccPermission();
+        }
+      },
+      error => {
+        console.log()
+      }
+    );
   }
+
+  locationAccPermission() {
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+      if (canRequest) {
+      } else {
+        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
+          .then(
+            () => {
+              this.enableGPS();
+            },
+            error => {
+              console.log()
+            }
+          );
+      }
+    });
+  }
+
+  enableGPS() {
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      this.longitude  = position.coords.longitude;
+      this.latitude = position.coords.latitude;
+      this.start=[this.longitude,this.latitude]
+    });
+
+      },
+      error => console.log()
+    );
+  }
+
+
+
 }
