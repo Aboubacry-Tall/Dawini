@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { CoreComponent } from 'src/app/common/core/core.component';
-import { Pharmacie } from 'src/app/modules/models/pharmacie.model';
-import { PharmacieService } from 'src/app/modules/services/pharmacie.service';
+import { Pharmacie } from 'src/app/models/pharmacie';
+import { PharmacieService } from 'src/app/services/pharmacie.service';
 
 @Component({
   selector: 'app-register',

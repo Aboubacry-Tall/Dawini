@@ -24,8 +24,5 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['pharmacie/' + this.get_user_id()]);
   }
 
-  get_parametres(){
-    this.router.navigate(['parametres/' + this.get_user_id()]);
-  }
 }
  

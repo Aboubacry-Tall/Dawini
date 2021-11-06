@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
-import { MappComponent } from './modules/composants/mapp/mapp.component';
-import { ParametresComponent } from './modules/composants/parametres/parametres.component';
-import { PharmacieComponent } from './modules/composants/pharmacie/pharmacie.component';
+import { MapComponent } from './common/map/map.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { MedicamentsComponent } from './pages/medicaments/medicaments.component';
+import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ResetComponent } from './pages/reset/reset.component';
 
@@ -14,12 +13,11 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: LogoutComponent},
+  {path: 'map', component: MapComponent},
   {path: 'reset', component: ResetComponent},
-  {path: 'map', component: MappComponent},
-  {path: 'mapbox', component: MapboxComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'pharmacie/:id', component: PharmacieComponent},
-  {path: 'parametres/:id', component: ParametresComponent}
+  {path: 'medicaments/pharmacie/:id', component: MedicamentsComponent},
   
 ];
 
