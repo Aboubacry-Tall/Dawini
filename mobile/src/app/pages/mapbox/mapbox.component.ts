@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
 import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as mapboxgl from 'mapbox-gl';
@@ -32,6 +31,8 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
   private updateSubscription: Subscription;
+  
+ geolocate = new mapboxgl.GeolocateControl
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
@@ -41,16 +42,14 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
-    this.checkPermission()
-    this.updateSubscription = interval(3000).subscribe(
-      (val) => { this.enableGPS()});
-     
+    this.OnStart()
     }
 
   ngAfterViewInit(): void {
     this.getMap();
     this.map.on('load', () => {
       this.map.resize();
+      this.geolocate.trigger();
     })
     this.testDirections();
   }
@@ -58,13 +57,24 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   get_all_pharmacie(){
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
-      console.log(data)
       this.add_marker();
       this.testDirections()
     },
     error =>console.log(error));
   }
 
+  OnStart(){
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      this.longitude  = position.coords.longitude;
+      this.latitude = position.coords.latitude;
+      this.start=[this.longitude,this.latitude]
+      this.map.flyTo({
+        center: [ this.longitude, this.latitude ],
+        zoom:12
+      });
+    });
+  }
 
   testDirections(): void {
     this.map.on('load', () => {
@@ -145,7 +155,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
         });
       }
       this.getRoutes(coords);
-      console.log(coords);
     });
     
   }
@@ -255,7 +264,7 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     this.map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
     this.map.addControl(
-      new mapboxgl.GeolocateControl({
+      this.geolocate = new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true
         },
@@ -279,54 +288,5 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     }
   }
     
-  checkPermission() {
-    this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(
-      result => {
-        if (result.hasPermission) {
-          this.enableGPS();
-        } else {
-          this.locationAccPermission();
-        }
-      },
-      error => {
-        console.log()
-      }
-    );
-  }
-
-  locationAccPermission() {
-    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-      if (canRequest) {
-      } else {
-        this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION)
-          .then(
-            () => {
-              this.enableGPS();
-            },
-            error => {
-              console.log()
-            }
-          );
-      }
-    });
-  }
-
-  enableGPS() {
-    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-      () => {
-        
-    const geo = navigator.geolocation
-    geo.getCurrentPosition((position) => {
-      this.longitude  = position.coords.longitude;
-      this.latitude = position.coords.latitude;
-      this.start=[this.longitude,this.latitude]
-    });
-
-      },
-      error => console.log()
-    );
-  }
-
-
 
 }
