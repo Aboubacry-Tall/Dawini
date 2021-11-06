@@ -31,7 +31,6 @@ import { MapboxComponent } from './modules/composants/mapbox/mapbox.component';
 import { MapComponent } from './modules/composants/mapbox/map/map.component';
 import { MappComponent } from './modules/composants/mapp/mapp.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MessageComponent } from './pages/message/message.component';
 import { CoreComponent } from './common/core/core.component';
 import { AlertComponent } from './common/alert/alert.component';
 
@@ -51,7 +50,6 @@ import { AlertComponent } from './common/alert/alert.component';
     MapboxComponent,
     MapComponent,
     MappComponent,
-    MessageComponent,
     CoreComponent,
     AlertComponent
   ],
