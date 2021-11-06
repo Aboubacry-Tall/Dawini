@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-
 import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import { Pharmacie } from 'src/app/modules/models/pharmacie';
 import { DataService } from 'src/app/modules/services/data.service';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mapbox',
@@ -21,28 +23,33 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   markers!: [];
   popup!: [];
   map_directions : any;
-  start = [-15.9421725293, 18.069114191];
+  start = [];
   longitude : number;
   latitude : number;
   phs_distances = new Array();
   marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
+  private updateSubscription: Subscription;
+  
+ geolocate = new mapboxgl.GeolocateControl
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
-  constructor(private service: DataService) {}
+  constructor(private service: DataService,private locationAccuracy: LocationAccuracy, 
+    private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
     this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
     this.OnStart()
-  }
+    }
 
   ngAfterViewInit(): void {
     this.getMap();
     this.map.on('load', () => {
       this.map.resize();
+      this.geolocate.trigger();
     })
     this.testDirections();
   }
@@ -50,8 +57,8 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   get_all_pharmacie(){
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
-      console.log(data)
       this.add_marker();
+      this.testDirections()
     },
     error =>console.log(error));
   }
@@ -62,7 +69,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.longitude  = position.coords.longitude;
       this.latitude = position.coords.latitude;
       this.start=[this.longitude,this.latitude]
-      console.log(this.longitude,this.latitude)
       this.map.flyTo({
         center: [ this.longitude, this.latitude ],
         zoom:12
@@ -97,8 +103,8 @@ export class MapboxComponent implements OnInit , AfterViewInit {
           }
         },
         paint: {
-          'circle-radius': 10,
-          'circle-color': '#3887be'
+          'circle-radius': 8,
+          'circle-color': '#00B0F0'
         }
       });
       // this is where the code from the next step will go
@@ -143,13 +149,12 @@ export class MapboxComponent implements OnInit , AfterViewInit {
             }
           },
           paint: {
-            'circle-radius': 10,
-            'circle-color': '#f30'
+            'circle-radius': 9,
+            'circle-color': '#C61818'
           }
         });
       }
       this.getRoutes(coords);
-      console.log(coords);
     });
     
   }
@@ -259,7 +264,7 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     this.map.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
     this.map.addControl(
-      new mapboxgl.GeolocateControl({
+      this.geolocate = new mapboxgl.GeolocateControl({
         positionOptions: {
           enableHighAccuracy: true
         },
@@ -282,7 +287,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
     }
   }
+    
 
-  flyToUser(){
-  }
 }
