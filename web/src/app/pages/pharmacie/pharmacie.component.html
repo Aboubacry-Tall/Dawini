@@ -56,24 +56,25 @@
                     </p>
                     <form >
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <mat-form-field class="example-full-width px-3">
                                     <mat-label>Longitude</mat-label>
-                                    <input matInput type="text" name="longitude" [(ngModel)]="pharmacie.longitude" #longitude="ngModel" placeholder="Longitude" required>
+                                    <input matInput type="text" name="longitude" [(ngModel)]="pharmacie.longitude" #longitude="ngModel" value="{{pharmacie.longitude}}" placeholder="Longitude" required>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <mat-form-field class="example-full-width px-3">
                                     <mat-label>Latitude</mat-label>
-                                    <input matInput type="text" name="latitude" [(ngModel)]="pharmacie.latitude" #latitude="ngModel" placeholder="Latitude" required>
+                                    <input matInput type="text" name="latitude" [(ngModel)]="pharmacie.latitude" #latitude="ngModel" value="{{pharmacie.latitude}}" placeholder="Latitude" required>
                                 </mat-form-field>
                             </div>
+                            <div class="col-sm-2">
+                                <button mat-raised-button color="primary" (click)="edit_pharmacie()" class="float-end my-2">Valider</button>
+                            </div>
                         </div>
-                        <div class="maps shadow p-2 rounded-3">
+                        <div class="maps">
                             <div id="map" class="rounded-3"></div>
-                        </div>
-                        <div class="clearfix">
-                            <button mat-raised-button color="primary" (click)="edit_pharmacie()" class="float-end my-2">Valider</button>
+                            <div class="coordinates"  #coordinates></div>
                         </div>
                     </form>
                 </mat-card-content>

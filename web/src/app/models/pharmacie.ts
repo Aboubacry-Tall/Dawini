@@ -7,8 +7,8 @@ export class Pharmacie {
     primaire !: number;
     secondaire ?: string;
     whatsapp ?: string;
-    longitude ?: string;
-    latitude ?: string;
+    longitude : string = '';
+    latitude : string = '';
     distance : string = '';
     password1 ?: string;
     password2 ?: string;
