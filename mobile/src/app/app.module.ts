@@ -20,6 +20,9 @@ import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { ScannerComponent } from './pages/scanner/scanner.component';
 import { HeaderComponent } from './common/header/header.component';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 
 
@@ -36,11 +39,12 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     ScannerComponent,
     OnstartComponent,
     AproposComponent,
+    
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,FormsModule],
-  providers: [BarcodeScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Geolocation,AndroidPermissions,LocationAccuracy,BarcodeScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
