@@ -1,0 +1,83 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-4">
+            <mat-card>
+                <mat-card-content>
+                    <p class="fs-2 mb-5"><i class="fas fa-user-cog me-2 text-second"></i>Profile</p>
+                    <p class="fs-6">Modifier vos informations</p>
+                    <form #form1="ngForm" (ngSubmit)="edit_pharmacie()" class="mb-4">
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Nom</mat-label>
+                            <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" placeholder="Nom de la pharmacie" required>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Numéro primaire</mat-label>
+                            <input matInput type="tel" pattern="[0-9]{8}" name="primaire" [(ngModel)]="pharmacie.primaire" #primaire="ngModel" placeholder="Numéro primaire" required>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Numéro secondaire (Optionel)</mat-label>
+                            <input matInput type="tel" pattern="[0-9]{8}" name="secondaire" [(ngModel)]="pharmacie.secondaire" #secondaire="ngModel" placeholder="Numéro secondaire">
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Numéro whatsapp (Optionel)</mat-label>
+                            <input matInput type="tel" pattern="[0-9]{8}" name="whatsapp" [(ngModel)]="pharmacie.whatsapp" #whatsapp="ngModel" placeholder="Numéro whatsapp">
+                        </mat-form-field>
+                        <div class="clearfix">
+                            <button [disabled]="form1.form.invalid" mat-raised-button class="float-end"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-content>
+                    <p class="fs-6">Reinitialiser le mot de passe</p>
+                    <form #form2="ngForm" (ngSubmit)="edit_pharmacie()" class="mb-4">
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Ancien mot de passe</mat-label>
+                            <input matInput type="password" name="password1" [(ngModel)]="pharmacie.password1" #password1="ngModel" placeholder="Ancien mot de passe" required>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Nouveau mot de passe</mat-label>
+                            <input matInput type="password" name="password2" [(ngModel)]="pharmacie.password2" #password2="ngModel" placeholder="Nouveau mot de passe" required>
+                        </mat-form-field>
+                        <div class="clearfix">
+                            <button [disabled]="form2.form.invalid" mat-raised-button class="float-end"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-8">
+            <mat-card>
+                <mat-card-content>
+                    <p class="fs-2 mb-5"><i class="fas fa-map-marked-alt me-2 text-second"></i>Géolocalisation</p>
+                    <p><i class="fas fa-chevron-right me-2"></i>
+                        Veuillez indiquer votre position géographique sur le map ou remplissez les champs manullement pour que votre pharmacie soit localisable par vos clients. 
+                    </p>
+                    <form >
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <mat-form-field class="example-full-width px-3">
+                                    <mat-label>Longitude</mat-label>
+                                    <input matInput type="text" name="longitude" [(ngModel)]="pharmacie.longitude" #longitude="ngModel" placeholder="Longitude" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-6">
+                                <mat-form-field class="example-full-width px-3">
+                                    <mat-label>Latitude</mat-label>
+                                    <input matInput type="text" name="latitude" [(ngModel)]="pharmacie.latitude" #latitude="ngModel" placeholder="Latitude" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="maps shadow p-2 rounded-3">
+                            <div id="map" class="rounded-3"></div>
+                        </div>
+                        <div class="clearfix">
+                            <button mat-raised-button color="primary" (click)="edit_pharmacie()" class="float-end my-2">Valider</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
