@@ -10,13 +10,14 @@ import { AlertComponent } from '../alert/alert.component';
 export class CoreComponent implements OnInit {
 
   constructor(public dialog: MatDialog) { }
-  
+  message!: string;
 
   ngOnInit(): void {
   }
 
-  openDialog(width: number) {
-    sessionStorage.setItem('alert', 'login');
+  openDialog(width: number, form: string, message: string) {
+    sessionStorage.setItem('alert', form);
+    sessionStorage.setItem('message', message);
     const dialogRef = this.dialog.open(AlertComponent, {
       width: width + 'px'
     });

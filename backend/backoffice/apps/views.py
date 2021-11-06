@@ -34,8 +34,11 @@ def get_all_pharmacie(request):
     return JsonResponse(pharmacies_serializer.data, status=status.HTTP_200_OK, safe=False)
 
 @api_view(['GET'])
-def get_pharmacie(request):
-    return JsonResponse({'a': 'b'}, status=status.HTTP_200_OK)
+def get_one_pharmacie(request, pk):
+    pharmacie = Pharmacie.objects.get(id=pk)
+    pprint(pharmacie)
+    pharmacie_serializer = PharmacieSerializer(pharmacie)
+    return JsonResponse(pharmacie_serializer.data, status=status.HTTP_200_OK, safe=False)
 
 @api_view(['POST'])
 def login_pharmacie(request):
@@ -55,3 +58,5 @@ def login_pharmacie(request):
 @api_view(['GET'])
 def delete_pharmacie(request):
     return JsonResponse({'a': 'b'}, status=status.HTTP_200_OK)
+
+

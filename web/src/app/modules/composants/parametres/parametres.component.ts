@@ -6,6 +6,7 @@ import { Telephone } from '../../models/telephone.model';
 import { PharmacieService } from '../../services/pharmacie.service';
 import { BaseComponent } from 'src/app/common/base/base.component';
 import { marker } from 'leaflet';
+import { CoreComponent } from 'src/app/common/core/core.component';
 
 @Component({
   selector: 'app-parametres',
@@ -14,7 +15,7 @@ import { marker } from 'leaflet';
 })
 export class ParametresComponent implements OnInit {
 
-  constructor(private s_pharmacie: PharmacieService, public base: BaseComponent){}
+  constructor(private s_pharmacie: PharmacieService, public base: BaseComponent, private core: CoreComponent){}
 
   pharmacie: Pharmacie = new Pharmacie();
   telephone: Telephone = new Telephone();
@@ -36,10 +37,28 @@ export class ParametresComponent implements OnInit {
   }
 
   edit_pharmacie(){
-    this.s_pharmacie.edit_pharmacie(this.pharmacie_id, this.pharmacie).subscribe(data =>{
-      this.pharmacie = data;
-    },
-    error =>console.log(error));
+    if(this.pharmacie.password1 != undefined && this.pharmacie.password2 != undefined){
+      if(this.pharmacie.password1?.length > 2 && this.pharmacie.password2?.length > 2){
+        if(this.pharmacie.password == this.pharmacie.password1){
+          this.pharmacie.password = this.pharmacie.password2
+          this.s_pharmacie.edit_pharmacie(this.pharmacie_id, this.pharmacie).subscribe(data =>{
+          this.pharmacie = data;
+          },
+          error =>console.log(error));
+          this.core.openDialog(270, 'valide', 'Mot de passe de reinitialisé');
+        }else{
+          this.core.openDialog(270, 'invalide', 'Ancien mot de passe incorrect');
+        }
+      }else{
+        this.core.openDialog(270, 'invalide', 'Mot de passe trop court. Minimum trois caractères');
+      }
+    }else{
+      this.s_pharmacie.edit_pharmacie(this.pharmacie_id, this.pharmacie).subscribe(data =>{
+        this.pharmacie = data;
+        },
+        error =>console.log(error));
+        this.core.openDialog(270, 'valide', 'Opération réussie');
+    }
   }
 
   get_telephone(id:number){
@@ -60,7 +79,6 @@ export class ParametresComponent implements OnInit {
     this.s_pharmacie.get_coordonnees(id).subscribe(data =>{
       console.log(data)
       this.coordonnee = data;
-      
     },
     error =>console.log(error));
   }

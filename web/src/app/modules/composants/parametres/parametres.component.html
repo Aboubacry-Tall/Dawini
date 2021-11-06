@@ -5,39 +5,43 @@
                 <mat-card-content>
                     <p class="fs-2 mb-5"><i class="fas fa-user-cog me-2 text-second"></i>Profile</p>
                     <p class="fs-6">Modifier vos informations</p>
-                    <form #form="ngForm" (ngSubmit)="edit_pharmacie()" class="mb-4">
+                    <form #form1="ngForm" (ngSubmit)="edit_pharmacie()" class="mb-4">
                         <mat-form-field class="example-full-width px-3">
                             <mat-label>Nom</mat-label>
-                            <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" value="{{ pharmacie.nom }}" placeholder="Nom de la pharmacie" required>
+                            <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" placeholder="Nom de la pharmacie" required>
                         </mat-form-field>
-                        <mat-form-field class="example-full-width px-3">
-                            <mat-label>Pseudo </mat-label>
-                            <input matInput type="text" name="pseudo" [(ngModel)]="pharmacie.pseudo" #pseudo="ngModel" value="{{ pharmacie.pseudo }}" placeholder="Pseudo" required>
-                        </mat-form-field>
-                        <mat-form-field class="example-full-width px-3">
-                            <mat-label>Mot de passe</mat-label>
-                            <input matInput type="text" name="email" [(ngModel)]="pharmacie.password" #password="ngModel" value="{{ pharmacie.password }}" placeholder="Adresse e-mail" required>
-                        </mat-form-field>
-                        <div class="clearfix">
-                            <button mat-raised-button class="float-end" (click)="edit_pharmacie()"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
-                        </div>
-                    </form>
-                    <p class="fs-6">Modifier vos adresses téléphoniques</p>
-                    <form class="mb-4">
                         <mat-form-field class="example-full-width px-3">
                             <mat-label>Numéro primaire</mat-label>
-                            <input matInput type="number" name="primaire" [(ngModel)]="telephone.primaire" #primaire="ngModel" placeholder="Numéro primaire">
+                            <input matInput type="tel" pattern="[0-9]{8}" name="primaire" [(ngModel)]="pharmacie.primaire" #primaire="ngModel" placeholder="Numéro primaire" required>
                         </mat-form-field>
                         <mat-form-field class="example-full-width px-3">
-                            <mat-label>Numéro secondaire</mat-label>
-                            <input matInput type="number" name="secondaire" [(ngModel)]="telephone.secondaire" #secondaire="ngModel" placeholder="Numéro secondaire">
+                            <mat-label>Numéro secondaire (Optionel)</mat-label>
+                            <input matInput type="tel" pattern="[0-9]{8}" name="secondaire" [(ngModel)]="pharmacie.secondaire" #secondaire="ngModel" placeholder="Numéro secondaire">
                         </mat-form-field>
                         <mat-form-field class="example-full-width px-3">
-                            <mat-label>Numéro whatsapp</mat-label>
-                            <input matInput type="number" name="whatsapp" [(ngModel)]="telephone.whatsapp" #whatsapp="ngModel" placeholder="Numéro whatsapp">
+                            <mat-label>Numéro whatsapp (Optionel)</mat-label>
+                            <input matInput type="tel" pattern="[0-9]{8}" name="whatsapp" [(ngModel)]="pharmacie.whatsapp" #whatsapp="ngModel" placeholder="Numéro whatsapp">
                         </mat-form-field>
                         <div class="clearfix">
-                            <button mat-raised-button class="float-end" (click)="edit_telephone()"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
+                            <button [disabled]="form1.form.invalid" mat-raised-button class="float-end"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
+                        </div>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-content>
+                    <p class="fs-6">Reinitialiser le mot de passe</p>
+                    <form #form2="ngForm" (ngSubmit)="edit_pharmacie()" class="mb-4">
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Ancien mot de passe</mat-label>
+                            <input matInput type="password" name="password1" [(ngModel)]="pharmacie.password1" #password1="ngModel" placeholder="Ancien mot de passe" required>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width px-3">
+                            <mat-label>Nouveau mot de passe</mat-label>
+                            <input matInput type="password" name="password2" [(ngModel)]="pharmacie.password2" #password2="ngModel" placeholder="Nouveau mot de passe" required>
+                        </mat-form-field>
+                        <div class="clearfix">
+                            <button [disabled]="form2.form.invalid" mat-raised-button class="float-end"><i class="fas fa-save text-second me-2"></i>Enregistrer</button>
                         </div>
                     </form>
                 </mat-card-content>

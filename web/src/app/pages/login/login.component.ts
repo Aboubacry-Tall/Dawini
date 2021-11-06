@@ -12,7 +12,7 @@ import { PharmacieService } from 'src/app/modules/services/pharmacie.service';
 })
 export class LoginComponent implements OnInit {
   
-  constructor(private app:AppComponent, private s_pharmacie: PharmacieService, private router: Router, public core: CoreComponent) { }
+  constructor(private app:AppComponent, private s_pharmacie: PharmacieService, private router: Router, private core: CoreComponent) { }
   title = this.app.title;
   hide = true;
   pharmacie: Pharmacie = new Pharmacie();
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       }
     },
     error => {
-      this.core.openDialog(260);
+      this.core.openDialog(260, 'login', 'Vos identifiants Nom / Mot de passe sont incorrectes');
     })
   }
 

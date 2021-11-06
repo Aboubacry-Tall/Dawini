@@ -24,7 +24,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { SearchComponent } from './pages/search/search.component';
 import { PharmacieComponent } from './modules/composants/pharmacie/pharmacie.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { ParametresComponent } from './modules/composants/parametres/parametres.component';
@@ -46,7 +45,6 @@ import { AlertComponent } from './common/alert/alert.component';
     LoginComponent,
     ResetComponent,
     RegisterComponent,
-    SearchComponent,
     PharmacieComponent,
     ParametresComponent,
     LogoutComponent,

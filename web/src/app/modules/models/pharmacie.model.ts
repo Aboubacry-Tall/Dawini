@@ -10,4 +10,6 @@ export class Pharmacie {
     longitude ?: string;
     latitude ?: string;
     distance : string = '';
+    password1 ?: string;
+    password2 ?: string;
 }
