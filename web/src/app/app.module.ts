@@ -33,6 +33,7 @@ import { MedicamentComponent } from './pages/medicament/medicament.component';
 import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { MapComponent } from './common/map/map.component';
+import { SearchComponent } from './pages/search/search.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MapComponent } from './common/map/map.component';
     MedicamentComponent,
     PharmaciesComponent,
     PharmacieComponent,
-    MapComponent
+    MapComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

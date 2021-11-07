@@ -35,4 +35,8 @@ export class PharmacieService {
   get_all_pharmacie(): Observable<any>{
     return this.http.get(this.server + 'pharmacie/list');
   }
+
+  get_pharmacies(name: string): Observable<any>{
+    return this.http.get(this.server + 'pharmacie/list?medicament=' + name);
+  }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
+import { Search } from 'src/app/models/search';
 
 @Component({
   selector: 'app-home',
@@ -7,15 +9,19 @@ import { AppComponent } from 'src/app/app.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  value = '';
-  constructor(private app:AppComponent) { }
+ 
+  constructor(private app:AppComponent, private router: Router) { }
   title: string = "";
+  search : Search = new Search();
+
   ngOnInit(): void {
     this.title = this.app.title;
   }
 
-  focusFunction(){
-    
+  go_seach(){
+    if(this.search.nom != undefined){
+      this.router.navigate(['search/' + this.search.nom]);
+    }
   }
-
+  
 }
