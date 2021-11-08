@@ -54,8 +54,8 @@ def login_pharmacie(request):
             if pharmacie:
                 pharmacie_serialize = PharmacieSerializer(pharmacie, many=True)
                 return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
-            return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_404_NOT_FOUND)
+    return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 def delete_pharmacie(request):
@@ -80,17 +80,30 @@ def get_all_medicament(request):
     medicaments_serializer = MedicamentSerializer(medicaments, many=True)
     return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
 
-
 @api_view(['GET', 'Post'])
 def medicament_search(request,pk):
     name = request.GET['value']
     medicament = Medicament.objects.filter(pharmacie_id=pk)
     try: 
         medicament = Medicament.objects.filter(nom__icontains=name) 
-        
         if request.method == 'GET': 
             medicament_serializer = MedicamentSerializer(medicament,many=True) 
             return JsonResponse(medicament_serializer.data, status=status.HTTP_200_OK, safe=False)
             
     except Medicament.DoesNotExist: 
         return JsonResponse({'message': 'The medic does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
+def get_search_pharmacie(request):
+    name = request.GET['name']
+    medicaments = Medicament.objects.filter(nom__icontains=name)
+    pharmacies = Pharmacie.objects.filter(nom__icontains=name)
+    if medicaments or pharmacies:
+        phs = []
+        for m in medicaments:
+            phs.append(m.pharmacie.id)
+        for p in pharmacies:
+            phs.append(p.id)
+        pharmacies = Pharmacie.objects.all().filter(id__in = phs)
+        pharmaciesSerializer = PharmacieSerializer(pharmacies, many=True)
+        return JsonResponse(pharmaciesSerializer.data, status=status.HTTP_200_OK, safe=False)
+    return JsonResponse({'message': 'Médicament ou pharmacie introuvable'}, status=status.HTTP_404_NOT_FOUND)
