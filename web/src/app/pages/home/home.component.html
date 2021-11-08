@@ -8,14 +8,12 @@
     <p class="display-2 text-success">{{ title }}</p>
     <div class="row">
         <div class="col-sm-6 offset-3">
-            <form>
-                <mat-form-field class="example-full-width mb-3" appearance="fill">
-                    <mat-label></mat-label>
-                    <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
-                    <input matInput type="text" name="nom" [(ngModel)]="search.nom" #nom="ngModel" placeholder="Rechercher des médicament et des pharmacies" autofocus>
-                    <a matSuffix (click)="go_seach()" class="click text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></a>
-                </mat-form-field>
-            </form>
+            <mat-form-field class="example-full-width mb-3" appearance="fill">
+                <mat-label></mat-label>
+                <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
+                <input matInput type="text" name="nom" [(ngModel)]="search.nom" #nom="ngModel" placeholder="Rechercher des médicament et des pharmacies" autofocus>
+                <a matSuffix (click)="go_seach()" class="click text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></a>
+            </mat-form-field>
             <a mat-raised-button class="mx-2 bg-light text-dark animate__animated animate__backInLeft"><i class="fas fa-clinic-medical me-2 fs-5 text-second"></i>Pharmacies</a>
             <a mat-raised-button class="mx-2 bg-light text-dark animate__animated animate__backInRight"><i class="fas fa-capsules me-2 fs-5 text-second"></i>Médicaments</a>
         </div>
