@@ -27,10 +27,9 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   longitude : number;
   latitude : number;
   phs_distances = new Array();
-  marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
+  marker = new mapboxgl.Marker();
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
-  private updateSubscription: Subscription;
   geolocate = new mapboxgl.GeolocateControl
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
@@ -39,11 +38,9 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
-    this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
     this.checkPermission()
-    this.updateSubscription = interval(3000).subscribe(
-      (val) => { this.enableGPS()});
+    this.enableGPS()
      
     }
 
@@ -94,7 +91,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
         },
         paint: {
           'circle-radius': 8,
-          'circle-color': '#233E6F'
+          'circle-color': '#3887be'
         }
       });
       // this is where the code from the next step will go
@@ -139,7 +136,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
             }
           },
           paint: {
-            'circle-radius': 9,
+            'circle-radius': 8,
             'circle-color': '#C61818'
           }
         });
@@ -245,8 +242,9 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     // Language
     const language = new MapboxLanguage();
     this.map.addControl(language);
-    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
-    
+    if (mapboxgl.getRTLTextPluginStatus() !== 'loaded') { 
+          mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
+    }
     // Default locate
     //this.marker.addTo(this.map);
 
@@ -314,18 +312,15 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
       () => {
         
-    const geo = navigator.geolocation
-    geo.getCurrentPosition((position) => {
-      this.longitude  = position.coords.longitude;
-      this.latitude = position.coords.latitude;
-      this.start=[this.longitude,this.latitude]
-    });
-
+        const geo = navigator.geolocation
+        geo.getCurrentPosition((position) => {
+          this.longitude  = position.coords.longitude;
+          this.latitude = position.coords.latitude;
+          this.start=[this.longitude,this.latitude]
+        });
       },
       error => console.log()
     );
   }
-
-
   
 }
