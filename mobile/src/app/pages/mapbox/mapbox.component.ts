@@ -50,6 +50,7 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.map.resize();
       this.geolocate.trigger();
     })
+    this.testDirections();
   }
 
   get_all_pharmacie(){
@@ -102,7 +103,7 @@ export class MapboxComponent implements OnInit , AfterViewInit {
         },
         paint: {
           'circle-radius': 8,
-          'circle-color': '#00B0F0'
+          'circle-color': '#3887be'
         }
       });
       // this is where the code from the next step will go

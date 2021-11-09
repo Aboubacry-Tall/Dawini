@@ -50,6 +50,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
       this.map.resize();
       this.geolocate.trigger()
     })
+    this.testDirections();
   }
 
   get_all_pharmacie(){
@@ -90,7 +91,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
         },
         paint: {
           'circle-radius': 8,
-          'circle-color': '#233E6F'
+          'circle-color': '#3887be'
         }
       });
       // this is where the code from the next step will go
@@ -135,13 +136,12 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
             }
           },
           paint: {
-            'circle-radius': 9,
+            'circle-radius': 8,
             'circle-color': '#C61818'
           }
         });
       }
       this.getRoutes(coords);
-      console.log(coords)
     });
     
   }
