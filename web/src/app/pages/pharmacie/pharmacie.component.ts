@@ -123,8 +123,13 @@ export class PharmacieComponent implements OnInit {
   }
 
   get_user_marker(){
-    this.marker.setLngLat([parseFloat(this.pharmacie.longitude), parseFloat(this.pharmacie.latitude)]);
-    this.marker.addTo(this.map);
+    if(this.pharmacie.latitude){
+      this.marker.setLngLat([parseFloat(this.pharmacie.longitude), parseFloat(this.pharmacie.latitude)]);
+      this.marker.addTo(this.map);
+    }
+    else{
+      this.marker.setLngLat([-15.954111486755835, 18.069114191259317]);
+      this.marker.addTo(this.map)
+    }
   }
-
 }

@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     this.s_pharmacie.login_pharmacie(this.pharmacie).subscribe(data =>{
       if(Object.keys(data).length != 0){
         this.pharmacies = data;
-        this.router.navigate(['pharmacie', this.pharmacies[0].id]);
+        this.router.navigate(['medicaments/pharmacie', this.pharmacies[0].id]);
         const id = this.pharmacies[0].id + '';
         localStorage.setItem('id', id);
       }
