@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { Search } from 'src/app/models/search';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-home',
@@ -10,18 +11,15 @@ import { Search } from 'src/app/models/search';
 })
 export class HomeComponent implements OnInit {
  
-  constructor(private app:AppComponent, private router: Router) { }
+  constructor(private app:AppComponent, private router: Router, private search: SearchComponent) { }
   title: string = "";
-  search : Search = new Search();
+  s: Search = new Search();
 
   ngOnInit(): void {
     this.title = this.app.title;
   }
 
-  go_seach(){
-    if(this.search.nom != undefined){
-      this.router.navigate(['search/' + this.search.nom]);
-    }
+  search_name(): void {
+    this.search.onSearch(this.s);
   }
-  
 }

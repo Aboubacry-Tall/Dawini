@@ -73,7 +73,7 @@ import { SearchComponent } from './pages/search/search.component';
     MatSidenavModule,
     MatDialogModule
   ],
-  providers: [CoreComponent],
+  providers: [CoreComponent, SearchComponent ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

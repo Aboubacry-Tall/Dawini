@@ -17,10 +17,10 @@ import * as mapboxgl from 'mapbox-gl';
 
 export class SearchComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private service: PharmacieService, private core: CoreComponent, private router: Router) { }
+  constructor(private route: ActivatedRoute, private service: PharmacieService, private core: CoreComponent, private router: Router, private ar:ActivatedRoute) { }
   pharmacies!: Pharmacie[];
   pharmacie: Pharmacie = new Pharmacie();
-  name: string = this.route.snapshot.params['name'];
+  name: string = '';
   search: Search = new Search();
   map_mode: number = 1;
   map!: mapboxgl.Map;
@@ -28,12 +28,18 @@ export class SearchComponent implements OnInit {
   start = [ parseFloat(sessionStorage.getItem('user_lng') + ''), parseFloat(sessionStorage.getItem('user_lat') + '') ];
 
   ngOnInit(): void {
+    this.name = this.route.snapshot.params['name'];
     this.get_pharmacies();
     this.get_user_coordonnees();
+    this.create_map();
   }
 
-  ngAfterViewInit(): void {
-    this.create_map();
+  onSearch(s: Search): void {
+    this.router.navigate(['search/' + s.name])
+  }
+
+  test(s: Search): void{
+    this.router.navigate(['search/' + s.name])
   }
 
   get_pharmacies(): void {
