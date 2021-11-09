@@ -1,4 +1,4 @@
 export class Search{
     id ?: number;
-    nom ?: string;
+    name ?: string;
 }

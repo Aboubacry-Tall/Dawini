@@ -1,29 +1,31 @@
 <div class="container mt-5" #body>
     <div class="row">
         <div class="col-sm-8 offset-2">
-            <mat-form-field class="example-full-width mb-3" appearance="fill">
-                <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
-                <input matInput type="text" name="nom" [(ngModel)]="search.nom" #nom="ngModel" placeholder="Rechercher des médicament et des pharmacies" autofocus>
-                <a matSuffix  class="click text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></a>
-            </mat-form-field>
+            <form #form="ngForm" (ngSubmit)="test(search)">
+                <mat-form-field class="example-full-width mb-3" appearance="fill">
+                    <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
+                    <input matInput type="text" name="name" [(ngModel)]="search.name" #name="ngModel" placeholder="Rechercher des médicament et des pharmacies" autofocus required>
+                    <button matSuffix [disabled]="form.form.invalid" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
+                </mat-form-field>
+            </form>
         </div>
     </div>
     <div class="row">
         <div class="col-sm-3">
             <p class="fs-4 mb-5"><i class="fas fa-clinic-medical me-2 text-second"></i>pharmacies</p>
-            <div class="shadow-sm p-2 mb-2" *ngFor="let pharmacie of pharmacies">
-                <div (click)="flyToPharmacie(pharmacie)"  style="cursor: pointer">
+            <div class="shadow-sm p-2 mb-2  animate__animated animate__zoomIn" *ngFor="let pharmacie of pharmacies">
+                <div (click)="flyToPharmacie(pharmacie)" class="click">
                     <p class="text-dark fs-6"><b class="text-success">Ph.</b>{{ pharmacie.nom }}</p>
                     <small>{{ pharmacie.distance }} Km</small>
                 </div>
             </div>
         </div>
         <div class="col-sm-9">
-            <div class="maps shadow-sm p-2 rounded-3">
+            <div class="maps shadow-sm p-2 rounded-3 animate__animated animate__slower">
                 <div id="map" class="rounded-3"></div>
                 <div class="coordinates"  #coordinates></div>
             </div>
-            <div class="shadow-sm p-2 mt-2">
+            <div class="shadow-sm p-2 mt-2 animate__animated animate__zoomIn">
                 <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 1" (click)="set_map_style(0)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Satellite</button>
                 <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 0" (click)="set_map_style(1)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Par defaut</button>
                 <button mat-raised-button class="text-success me-2" (click)="flyToUser()"><i class="fas fa-crosshairs text-second me-2 fs-5"></i>Position</button>
