@@ -74,7 +74,6 @@ def create_medicament(request):
 
 @api_view(['GET'])
 def get_all_medicament(request):
-    medicaments = Medicament.objects.all();
     pharmacie_id = request.GET['pharmacie']
     medicaments = Medicament.objects.filter(pharmacie_id=pharmacie_id).order_by('-id')
     medicaments_serializer = MedicamentSerializer(medicaments, many=True)
@@ -83,9 +82,9 @@ def get_all_medicament(request):
 @api_view(['GET', 'Post'])
 def medicament_search(request,pk):
     name = request.GET['value']
-    medicament = Medicament.objects.filter(pharmacie_id=pk)
+    pprint(pk)
     try: 
-        medicament = Medicament.objects.filter(nom__icontains=name) 
+        medicament = Medicament.objects.filter(pharmacie_id=pk,nom__icontains=name) 
         if request.method == 'GET': 
             medicament_serializer = MedicamentSerializer(medicament,many=True) 
             return JsonResponse(medicament_serializer.data, status=status.HTTP_200_OK, safe=False)

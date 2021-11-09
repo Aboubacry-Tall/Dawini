@@ -16,7 +16,7 @@ export class MedicamentService {
   }
 
   get_all_medicament(pharmacie_id:number): Observable<any> {
-    return this.http.get(this.server + 'medicaments/list?pharmacie=' + pharmacie_id);
+    return this.http.get(`${this.server}medicaments/list?pharmacie=${pharmacie_id}`);
   }
   
   search_medicament(value:string,pk:number): Observable<any>{
