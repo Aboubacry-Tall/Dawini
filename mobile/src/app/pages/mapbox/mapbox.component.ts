@@ -40,7 +40,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
-    this.marker.setLngLat([-15.942172529368463, 18.069114191259317]);
     this.get_all_pharmacie();
     this.OnStart()
     }
@@ -51,7 +50,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.map.resize();
       this.geolocate.trigger();
     })
-    this.testDirections();
   }
 
   get_all_pharmacie(){
@@ -255,8 +253,9 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     // Language
     const language = new MapboxLanguage();
     this.map.addControl(language);
-    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
-    
+    if (mapboxgl.getRTLTextPluginStatus() !== 'loaded') { 
+          mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
+    }
     // Default locate
     //this.marker.addTo(this.map);
 
