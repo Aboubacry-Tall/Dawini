@@ -4,8 +4,8 @@
             <form #form="ngForm" (ngSubmit)="test(search)">
                 <mat-form-field class="example-full-width mb-3" appearance="fill">
                     <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
-                    <input matInput type="text" name="name" [(ngModel)]="search.name" #name="ngModel" placeholder="Rechercher des médicament et des pharmacies" autofocus required>
-                    <button matSuffix [disabled]="form.form.invalid" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
+                    <input matInput type="text" name="Inputs" (keyup)="Search($event)" [(ngModel)]="Inputs" #name="ngModel" placeholder="Rechercher des médicament et des pharmacies" autofocus required>
+                    <button matSuffix [disabled]="form.form.invalid"  (click)="searched()" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
                 </mat-form-field>
             </form>
         </div>

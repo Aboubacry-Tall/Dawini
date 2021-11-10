@@ -21,6 +21,7 @@ export class SearchComponent implements OnInit {
   pharmacies!: Pharmacie[];
   pharmacie: Pharmacie = new Pharmacie();
   name: string = '';
+  Inputs: string = '';
   search: Search = new Search();
   map_mode: number = 1;
   map!: mapboxgl.Map;
@@ -42,6 +43,20 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['search/' + s.name])
   }
 
+  Search(event:any){
+    this.service.get_pharmacies(this.Inputs).subscribe(data => {
+      this.pharmacies = data;
+      console.log(this.Inputs)
+      console.log(data)
+    });
+  }
+
+  searched(){
+    this.service.get_pharmacies(this.Inputs).subscribe(data => {
+      this.pharmacies = data;
+    });
+  }
+
   get_pharmacies(): void {
     this.service.get_pharmacies(this.name).subscribe(data => {
       this.pharmacies = data;
@@ -50,7 +65,6 @@ export class SearchComponent implements OnInit {
       this.get_distance();
       this.get_direction();
 
-      console.log(data);
     },error => {
       this.core.openDialog(270, 'invalide', "Medicament introuvable");
     });
@@ -70,8 +84,9 @@ export class SearchComponent implements OnInit {
     // Language
     const language = new MapboxLanguage();
     this.map.addControl(language);
-    mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
-    
+    if (mapboxgl.getRTLTextPluginStatus() !== 'loaded') { 
+          mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
+    }
     // controls
     this.map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
     this.map.addControl(new mapboxgl.NavigationControl(), 'top-left');

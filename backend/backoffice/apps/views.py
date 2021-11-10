@@ -82,7 +82,6 @@ def get_all_medicament(request):
 @api_view(['GET', 'Post'])
 def medicament_search(request,pk):
     name = request.GET['value']
-    pprint(pk)
     try: 
         medicament = Medicament.objects.filter(pharmacie_id=pk,nom__icontains=name) 
         if request.method == 'GET': 
