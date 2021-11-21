@@ -25,4 +25,12 @@ export class CoreComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  get_user_coordonnees(){
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      sessionStorage.setItem('user_lng', position.coords.longitude + '');
+      sessionStorage.setItem('user_lat', position.coords.latitude + '');
+    });
+  }
 }

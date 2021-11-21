@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CoreComponent } from '../core/core.component';
 
 @Component({
   selector: 'app-base',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BaseComponent implements OnInit {
 
-  constructor() { }
+  constructor(public core: CoreComponent) { }
 
   ngOnInit(): void {
+    this.core.get_user_coordonnees();
   }
 
   public get_pharmacie_Id(){

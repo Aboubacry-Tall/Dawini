@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { MedicamentsComponent } from './pages/medicaments/medicaments.component';
 import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
+import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ResetComponent } from './pages/reset/reset.component';
 import { SearchComponent } from './pages/search/search.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'reset', component: ResetComponent},
   {path: 'search/:name', component: SearchComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'pharmacies', component: PharmaciesComponent},
   {path: 'pharmacie/:id', component: PharmacieComponent},
   {path: 'medicaments/pharmacie/:id', component: MedicamentsComponent},
   

@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <form #form="ngForm" class="text-center">
+                <mat-form-field class="example-full-width w-75" appearance="outline">
+                    <mat-label>Pharmacie</mat-label>
+                    <input matInput autofocus placeholder="Rechercher des pharmacies ...">
+                    <mat-icon matSuffix><i class="fas fa-search text-second pb-1"></i></mat-icon>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <mat-card>
+                <mat-card-content>
+                    <h4 class="fs-5 text-success"><i class="fas fa-clinic-medical me-2 fs-5 text-second"></i>Listes de pharmacies</h4>
+                    <div class= "shadow-sm p-2 mb-2 click" (click)="flyToPharmacie(pharmacie)" *ngFor="let pharmacie of pharmacies">
+                        <div class="clearfix">
+                            <span class="float-start">Ph. {{ pharmacie.nom }}</span>
+                            <span class="float-end">{{ pharmacie.primaire }}</span>
+                        </div>
+                        <small>D. {{ pharmacie.distance }}</small>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-sm-8">
+            <div class="maps shadow rounded-3">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</div>
