@@ -39,4 +39,8 @@ export class PharmacieService {
   get_pharmacies(name: string): Observable<any>{
     return this.http.get(`${this.server}pharmacie/search?name=${name}`);
   }
+
+  search_pharmacie(name: string): Observable<any>{
+    return this.http.get(this.server + 'pharmacies/search/pharmacie?name=' + name);
+  }
 }

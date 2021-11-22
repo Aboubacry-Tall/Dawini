@@ -105,3 +105,17 @@ def get_search_pharmacie(request):
         pharmaciesSerializer = PharmacieSerializer(pharmacies, many=True)
         return JsonResponse(pharmaciesSerializer.data, status=status.HTTP_200_OK, safe=False)
     return JsonResponse({'message': 'Médicament ou pharmacie introuvable'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def search_pharmacie(request):
+    name = request.GET['name']
+    pprint(name)
+    pharmacies = Pharmacie.objects.filter(nom__icontains=name)
+    if pharmacies:
+        phs = []
+        for p in pharmacies:
+            phs.append(p.id)
+        pharmacies = Pharmacie.objects.all().filter(id__in = phs)
+        pharmaciesSerializer = PharmacieSerializer(pharmacies, many=True)
+        return JsonResponse(pharmaciesSerializer.data, status=status.HTTP_200_OK, safe=False)
+    return JsonResponse({'message': 'Pharmacie introuvable'}, status=status.HTTP_404_NOT_FOUND)

@@ -16,17 +16,30 @@ export class PharmaciesComponent implements OnInit {
   constructor(public service: PharmacieService) { }
   
   map!: mapboxgl.Map;
+  map_mode: number = 1;
   pharmacies!: Pharmacie[];
+  pharmacie: Pharmacie = new Pharmacie();
   start = [ parseFloat(sessionStorage.getItem('user_lng') + ''), parseFloat(sessionStorage.getItem('user_lat') + '') ];
 
   ngOnInit(): void {
-    this.map_Init();
     this.get_pharmacies();
   }
 
   get_pharmacies(): void {
     this.service.get_all_pharmacie().subscribe(data => {
       this.pharmacies = data;
+      this.map_Init();
+      this.get_distance();
+      this.get_pharmacies_markers();
+      this.get_direction();
+      console.log(data);
+    });
+  }
+
+  search_pharmacie(): void {
+    this.service.search_pharmacie(this.pharmacie.nom  +'').subscribe(data => {
+      this.pharmacies = data;
+      this.map_Init();
       this.get_distance();
       this.get_pharmacies_markers();
       this.get_direction();
@@ -107,22 +120,33 @@ export class PharmaciesComponent implements OnInit {
     const pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
   }
 
+  get_img(){
+    let img = '';
+    let name = this.pharmacie.nom + '';
+    console.log(name);
+
+    if(this.pharmacie.nom != undefined){
+      if(this.pharmacie.nom.length > 1){
+        img = 'url("../../../../assets/images/l4.png")';
+      }else{
+        img = 'url("../../../../assets/images/ph.png")';
+      }
+    }else{
+      img = 'url("../../../../assets/images/ph.png")';
+    }
+    console.log(img);
+    return img;
+  }
+
   get_pharmacies_markers(){
     const el = document.createElement('div');
-    el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
-    el.style.width = '40px';
-    el.style.height = '40px';
-    el.style.backgroundSize = 'cover';
-    el.style.borderRadius = '50%';
-    el.style.cursor = 'pointer';
-
     const popup = new mapboxgl.Popup({ offset: 25 }).setText(
       'Construction on the Washington Monument began in 1848.'
     );
 
     for(let i = 0; i < this.pharmacies.length; i++){
       const el = document.createElement('div');
-      el.style.backgroundImage = 'url("../../../../assets/images/ph.png")';
+      el.style.backgroundImage = this.get_img();
       el.style.width = '50px';
       el.style.height = '50px';
       el.style.backgroundSize = 'cover';
@@ -142,6 +166,23 @@ export class PharmaciesComponent implements OnInit {
     this.map.flyTo({
       center: [parseFloat(pharmacie.longitude + ''), parseFloat(pharmacie.latitude + '')],
       zoom: 15
+    });
+  }
+
+  set_map_style(mode: number): void{
+    this.map_mode = mode;
+    if(this.map_mode == 0){
+      this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
+    }else{
+      this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
+    }
+  }
+
+  flyToUser(){
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    this.map.flyTo({
+      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
+      zoom: 14
     });
   }
 

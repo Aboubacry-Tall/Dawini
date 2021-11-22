@@ -1,10 +1,10 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-12">
-            <form #form="ngForm" class="text-center">
+            <form #form="ngForm" (ngSubmit)="search_pharmacie()" class="text-center">
                 <mat-form-field class="example-full-width w-75" appearance="outline">
-                    <mat-label>Pharmacie</mat-label>
-                    <input matInput autofocus placeholder="Rechercher des pharmacies ...">
+                    <mat-label>Pharmacies</mat-label>
+                    <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" autofocus placeholder="Rechercher des pharmacies ...">
                     <mat-icon matSuffix><i class="fas fa-search text-second pb-1"></i></mat-icon>
                 </mat-form-field>
             </form>
@@ -24,9 +24,12 @@
             </mat-card>
         </div>
         <div class="col-sm-8">
-            <div class="maps shadow rounded-3">
+            <div class="maps shadow rounded-3 mb-3">
                 <div id="map"></div>
             </div>
+            <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 1" (click)="set_map_style(0)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Satellite</button>
+            <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 0" (click)="set_map_style(1)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Par défaut</button>
+            <button mat-raised-button class="text-success me-2" (click)="flyToUser()"><i class="fas fa-crosshairs text-second me-2 fs-5"></i>Position</button>
         </div>
     </div>
 </div>
