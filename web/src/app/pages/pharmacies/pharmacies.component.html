@@ -32,6 +32,7 @@
             <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 1" (click)="set_map_style(0)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Satellite</button>
             <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 0" (click)="set_map_style(1)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Par défaut</button>
             <button mat-raised-button class="text-success me-2" (click)="flyToUser()"><i class="fas fa-crosshairs text-second me-2 fs-5"></i>Position</button>
+            <button mat-raised-button class="text-success me-2" (click)="reload()"><i class="fas fa-sync-alt text-second me-2 fs-5"></i>Actualiser</button>
         </div>
     </div>
 </div>
