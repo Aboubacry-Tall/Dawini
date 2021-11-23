@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ObserversModule } from '@angular/cdk/observers';
 
 @Component({
   selector: 'app-search',
@@ -9,7 +10,12 @@ import { Component, OnInit } from '@angular/core';
 export class SearchComponent implements OnInit {
 
   constructor() { }
+  a = '';
   ngOnInit(): void {
 
+  }
+
+  projectContentChanged(){
+    this.a = this.a + ' a';
   }
 }

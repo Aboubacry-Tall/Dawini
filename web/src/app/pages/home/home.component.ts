@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
+import { Pharmacie } from 'src/app/models/pharmacie';
 import { Search } from 'src/app/models/search';
-import { SearchComponent } from '../search/search.component';
+import { MedicamentService } from 'src/app/services/medicament.service';
 
 @Component({
   selector: 'app-home',
@@ -11,15 +12,20 @@ import { SearchComponent } from '../search/search.component';
 })
 export class HomeComponent implements OnInit {
  
-  constructor(private app:AppComponent, private router: Router, private search: SearchComponent) { }
+  constructor(private app:AppComponent, private service: MedicamentService) { }
   title: string = "";
+  Input: string = "";
   s: Search = new Search();
+  pharmacies!: Pharmacie[];
 
   ngOnInit(): void {
     this.title = this.app.title;
   }
 
-  search_name(): void {
-    
+  search(event:any){
+    this.service.get_medicaments(this.Input).subscribe(data => {
+      this.pharmacies = data;
+      console.log(data);
+    });
   }
 }

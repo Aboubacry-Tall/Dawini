@@ -79,6 +79,14 @@ def get_all_medicament(request):
     medicaments_serializer = MedicamentSerializer(medicaments, many=True)
     return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
 
+# Recherche automatique de médicaments
+@api_view(['GET'])
+def search_medicaments(request):
+    name = request.GET['name']
+    medicaments = Medicament.objects.filter(nom__icontains=name).order_by('-id')
+    medicaments_serializer = MedicamentSerializer(medicaments, many=True)
+    return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
+
 @api_view(['GET', 'Post'])
 def medicament_search(request,pk):
     name = request.GET['value']

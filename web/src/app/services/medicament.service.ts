@@ -18,8 +18,12 @@ export class MedicamentService {
   get_all_medicament(pharmacie_id:number): Observable<any> {
     return this.http.get(`${this.server}medicaments/list?pharmacie=${pharmacie_id}`);
   }
+
+  get_medicaments(name: string): Observable<any> {
+    return this.http.get(this.server + 'medicaments/search?name=' + name);
+  }
   
   search_medicament(value:string,pk:number): Observable<any>{
-    return this.http.get(`${this.server}medicament-search/${pk}?value=${value}`)
+    return this.http.get(`${this.server}medicament-search/${pk}?value=${value}`);
   }
 }
