@@ -20,6 +20,6 @@ export class HomeComponent implements OnInit {
   }
 
   search_name(): void {
-    this.search.onSearch(this.s);
+    
   }
 }
