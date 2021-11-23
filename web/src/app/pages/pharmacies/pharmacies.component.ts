@@ -47,6 +47,11 @@ export class PharmaciesComponent implements OnInit {
     });
   }
 
+  reload(): void {
+    this.pharmacie.nom='';
+    this.get_pharmacies();
+  }
+
   map_Init(){
     (mapboxgl as any).accessToken = 'pk.eyJ1IjoiZ2hvc3RtYXAiLCJhIjoiY2tzeXNxajBhMGFsODJ3bW9kYWg2eXJuZSJ9.EvLTJYcyz4JZ1y41sqF8nw';
       this.map = new mapboxgl.Map({
@@ -127,7 +132,7 @@ export class PharmaciesComponent implements OnInit {
 
     if(this.pharmacie.nom != undefined){
       if(this.pharmacie.nom.length > 1){
-        img = 'url("../../../../assets/images/l4.png")';
+        img = 'url("../../../../assets/images/ph.png")';
       }else{
         img = 'url("../../../../assets/images/ph.png")';
       }
