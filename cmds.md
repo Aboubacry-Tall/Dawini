@@ -12,9 +12,13 @@ cd .\PFE\mobile\
 ionic serve -l
 
 # run web server
-
 cd .\PFE\web\
 ng serve
+
+# to regenerate icon and splash
+
+cd .\PFE\web\
+ionic cordova resources
 
 # Generer l'app version android
 cd .\PFE\mobile\
