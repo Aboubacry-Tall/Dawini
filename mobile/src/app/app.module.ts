@@ -1,7 +1,6 @@
 
 import { FooterComponent } from './common/footer/footer.component';
 import { AproposComponent } from './pages/apropos/apropos.component';
-import { OnstartComponent } from './pages/onstart/onstart.component';
 import { MedicamentComponent } from './pages/medicament/medicament.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -37,7 +36,6 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
     MedicamentsComponent,
     PharmacieComponent,
     ScannerComponent,
-    OnstartComponent,
     AproposComponent,
     
   ],
