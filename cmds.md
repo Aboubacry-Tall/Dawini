@@ -15,14 +15,14 @@ ionic serve -l
 cd .\PFE\web\
 ng serve
 
+# Generer l'app version android
+cd .\PFE\mobile\
+ionic cordova build android
+
 # to regenerate icon and splash
 
 cd .\PFE\web\
 ionic cordova resources
-
-# Generer l'app version android
-cd .\PFE\mobile\
-ionic cordova build android
 
 # create  virtual environment ,install dependences
 python -m venv venv 
