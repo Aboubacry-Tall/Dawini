@@ -10,8 +10,8 @@
                     <mat-card-subtitle class="text-center text-dark mt-3" style="font-size: 20px;">Se connecter à DAWINI</mat-card-subtitle>
                     <mat-card-content>
                         <mat-form-field class="example-full-width px-3">
-                            <mat-label>Nom de la pharmacie</mat-label>
-                            <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" placeholder="Adresse e-mail" required>
+                            <mat-label>Numéro de téléphone</mat-label>
+                            <input matInput type="tel" pattern="[0-9]{8}" name="primaire" [(ngModel)]="pharmacie.primaire" #priamire="ngModel" placeholder="Numéro de téléphone" required>
                         </mat-form-field>
                         <mat-form-field class="example-full-width px-3">
                             <mat-label>Mot de passe</mat-label>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="clearfix">
                             <a routerLink='/register' mat-button class="text-decoration-none float-start pt-2">Créer un compte</a>
-                            <button [disabled]="form.form.invalid" type="submit" mat-raised-button color="primary" class="text-white float-end me-3">Se connecter</button>
+                            <button [disabled]="form.form.invalid" type="submit" mat-raised-button class="bg-success text-white float-end me-3">Se connecter</button>
                         </div>
                     </mat-card-content>
                 </mat-card>

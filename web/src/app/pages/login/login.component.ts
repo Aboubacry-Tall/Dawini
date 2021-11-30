@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+    this.pharmacie.nom = "GHOST";
     this.s_pharmacie.login_pharmacie(this.pharmacie).subscribe(data =>{
       if(Object.keys(data).length != 0){
         this.pharmacies = data;

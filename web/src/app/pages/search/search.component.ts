@@ -62,6 +62,10 @@ export class SearchComponent implements OnInit {
   get_pharmacies_search(name:string | undefined): void {
     this.s_ph.get_pharmacies(this.Input).subscribe(data => {
       this.pharmacies = data;
+      this.map_Init();
+      this.get_distance();
+      this.get_pharmacies_markers();
+      this.get_direction();
     });
   }
 
@@ -189,6 +193,23 @@ export class SearchComponent implements OnInit {
     this.map.flyTo({
       center: [parseFloat(pharmacie.longitude + ''), parseFloat(pharmacie.latitude + '')],
       zoom: 16
+    });
+  }
+
+  set_map_style(mode: number): void{
+    this.map_mode = mode;
+    if(this.map_mode == 0){
+      this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
+    }else{
+      this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
+    }
+  }
+
+  flyToUser(){
+    const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];
+    this.map.flyTo({
+      center: [parseFloat(lng+ ''), parseFloat(lat + '')],
+      zoom: 14
     });
   }
 

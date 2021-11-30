@@ -34,6 +34,9 @@
             <div class="maps shadow rounded-3 mb-3">
                 <div id="map"></div>
             </div>
+            <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 1" (click)="set_map_style(0)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Satellite</button>
+            <button mat-raised-button class="text-success me-2" *ngIf="map_mode == 0" (click)="set_map_style(1)"><i class="fas fa-map text-second me-2 fs-5"></i>Vue : Par défaut</button>
+            <button mat-raised-button class="text-success me-2" (click)="flyToUser()"><i class="fas fa-crosshairs text-second me-2 fs-5"></i>Position</button>
         </div>
     </div>
 </div>
