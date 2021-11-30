@@ -60,3 +60,10 @@ python manage.py migrate
 
 # setData 'AnySourceImpl'
 const source: mapboxgl.GeoJSONSource = this.map.getSource('earthquakes') as mapboxgl.GeoJSONSource;
+
+# Code color
+logo-back fbfff2
+
+# Generer l'app version android
+cd .\PFE\mobile\
+ionic cordova build android

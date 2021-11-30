@@ -17,6 +17,7 @@ const routes: Routes = [
   {path: 'logout', component: LogoutComponent},
   {path: 'map', component: MapComponent},
   {path: 'reset', component: ResetComponent},
+  {path: 'search', component: SearchComponent},
   {path: 'search/:name', component: SearchComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'pharmacies', component: PharmaciesComponent},

@@ -2,20 +2,38 @@
     <div class="row">
         <div class="col-sm-8 offset-2">
             <form #form="ngForm">
-                <mat-form-field class="example-full-width mb-3" appearance="fill">
+                <mat-form-field class="example-full-width mb-3 animate__animated animate__zoomInDown" appearance="fill">
                     <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
-                    <input matInput type="text" placeholder="Rechercher des médicament et des pharmacies" autofocus required>
-                    <button matSuffix [disabled]="form.form.invalid" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
-                </mat-form-field>
+                    <input matInput type="text" name="Input" (keyup)="search()" [(ngModel)]="Input" #name="ngModel" value="{{Input}}" [matAutocomplete]="auto" placeholder="Rechercher des médicaments" required>
+                    <span matSuffix *ngIf="Input" class="click btn btn-sm mb-3" (click)="Input=''"><mat-icon>close</mat-icon></span>
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" (click)="get_pharmacies_search(medicament.nom)">
+                            {{medicament.nom}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field> 
             </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
-            
+        <div class="col-sm-4"> 
+            <mat-card>
+                <mat-card-content>
+                    <h4 class="fs-5 text-success"><i class="fas fa-clinic-medical me-2 fs-5 text-second"></i>Listes de pharmacies</h4>
+                    <div class= "shadow-sm p-2 mb-2 click" (click)="flyToPharmacie(pharmacie)" *ngFor="let pharmacie of pharmacies">
+                        <div class="clearfix">
+                            <span class="float-start">Ph. {{ pharmacie.nom }}</span>
+                            <span class="float-end">{{ pharmacie.primaire }}</span>
+                        </div>
+                        <small>D. {{ pharmacie.distance }} Km</small>
+                    </div>
+                </mat-card-content>
+            </mat-card>
         </div>
-        <div class="col-sm-9">
-            
+        <div class="col-sm-8">
+            <div class="maps shadow rounded-3 mb-3">
+                <div id="map"></div>
+            </div>
         </div>
     </div>
 </div>

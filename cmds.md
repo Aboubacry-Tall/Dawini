@@ -64,13 +64,11 @@ ionic cordova run browser
 cordova platform rm android
 
 # Installation du palatform android sur cordova
-
 cordova platform add android
 
 
 # Generer et lancer l'app version android sur un emulateur
 ionic cordova run android --livereload
-
 ionic cordova emulate android
 
 
