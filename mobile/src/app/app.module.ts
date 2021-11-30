@@ -1,7 +1,6 @@
 
 import { FooterComponent } from './common/footer/footer.component';
 import { AproposComponent } from './pages/apropos/apropos.component';
-import { OnstartComponent } from './pages/onstart/onstart.component';
 import { MedicamentComponent } from './pages/medicament/medicament.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +22,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { SQLite } from '@ionic-native/sqlite/ngx';
+import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
 
 
 
@@ -37,14 +38,13 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
     MedicamentsComponent,
     PharmacieComponent,
     ScannerComponent,
-    OnstartComponent,
     AproposComponent,
     
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     HttpClientModule,FormsModule],
-  providers: [Geolocation,AndroidPermissions,LocationAccuracy,BarcodeScanner,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Geolocation,AndroidPermissions,LocationAccuracy,BarcodeScanner,SQLite,SQLitePorter,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

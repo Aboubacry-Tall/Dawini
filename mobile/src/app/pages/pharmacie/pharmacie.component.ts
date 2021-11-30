@@ -31,6 +31,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
   geolocate = new mapboxgl.GeolocateControl
+  updateSubscription: Subscription;
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
@@ -39,7 +40,10 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     this.get_all_pharmacie();
-    this.checkPermission()
+    this.checkPermission();
+    this.updateSubscription = interval(3000).subscribe(
+      (val) => { this.enableGPS()});
+    
     this.enableGPS()
      
     }

@@ -12,13 +12,22 @@ cd .\PFE\mobile\
 ionic serve -l
 
 # run web server
-
 cd .\PFE\web\
 ng serve
+
+# Lancer l'app sur le navigateur de cordova
+cd .\PFE\mobile\
+ionic cordova run browser
 
 # Generer l'app version android
 cd .\PFE\mobile\
 ionic cordova build android
+start C:\Users\Cheikh\Desktop\Master\PFE\mobile\platforms\android\app\build\outputs\apk\debug
+
+# to regenerate icon and splash
+
+cd .\PFE\web\
+ionic cordova resources
 
 # create  virtual environment ,install dependences
 python -m venv venv 
@@ -57,9 +66,6 @@ npm i @ionic-native/core
 ionic cordova plugin add phonegap-plugin-barcodescanner
 npm install @ionic-native/barcode-scanner
 
-# Lancer l'app sur le navigateur de cordova
-ionic cordova run browser
-
 # Desinstallation du palatform android sur cordova
 cordova platform rm android
 
@@ -71,8 +77,7 @@ cordova platform add android
 ionic cordova run android --livereload
 ionic cordova emulate android
 
-
-dans un variable d'environnement 
+# fix gradle : dans un variable d'environnement 
 name :_JAVA_OPTIONS
 value: -Xmx512M
 

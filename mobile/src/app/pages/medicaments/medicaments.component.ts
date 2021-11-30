@@ -15,9 +15,18 @@ export class MedicamentsComponent implements OnInit {
   constructor(private dataService: DataService,private router: Router) { }
 
   ngOnInit() {
-   this.getMedic();
-  }
+  // this.getMedic();
   
+  this.dataService.dbState().subscribe((res) => {
+    if(res){
+      this.dataService.fetchMedicaments().subscribe(item => {
+        this.medicaments = item;
+        console.log(this.medicaments)
+      })
+    }
+  });
+  }
+  /*
    getMedicament() {
     this.dataService.getMedicaments().subscribe(data =>{
       this.medicaments=data;
@@ -32,11 +41,10 @@ export class MedicamentsComponent implements OnInit {
     
   onSearch(event:any){
     this.dataService.getMedic(this.nom).subscribe(data =>{
-      console.log(this.nom)
       this.medicaments=data;
     });
 
   }
-
+*/
 }
 

@@ -41,6 +41,8 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   
   ngOnInit(): void {
     this.get_all_pharmacie();
+    this.updateSubscription = interval(3000).subscribe(
+      (val) => { this.OnStart()});
     this.OnStart()
     }
 
