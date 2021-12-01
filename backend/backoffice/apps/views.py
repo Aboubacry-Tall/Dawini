@@ -47,10 +47,10 @@ def login_pharmacie(request):
     pharmacie_data = JSONParser().parse(request)
     pharmacie_serializer = PharmacieSerializer(data=pharmacie_data)
     if pharmacie_serializer.is_valid():
-        nom = pharmacie_serializer.data['nom']
+        telephone = pharmacie_serializer.data['primaire']
         password = pharmacie_serializer.data['password']
-        if nom is not None and password is not None:
-            pharmacie = Pharmacie.objects.filter(nom = nom, password = password)
+        if telephone is not None and password is not None:
+            pharmacie = Pharmacie.objects.filter(primaire = telephone, password = password)
             if pharmacie:
                 pharmacie_serialize = PharmacieSerializer(pharmacie, many=True)
                 return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)

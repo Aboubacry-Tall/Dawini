@@ -32,7 +32,6 @@ export class PharmaciesComponent implements OnInit {
       this.get_distance();
       this.get_pharmacies_markers();
       this.get_direction();
-      console.log(data);
     });
   }
 
@@ -43,7 +42,6 @@ export class PharmaciesComponent implements OnInit {
       this.get_distance();
       this.get_pharmacies_markers();
       this.get_direction();
-      console.log(data);
     });
   }
 

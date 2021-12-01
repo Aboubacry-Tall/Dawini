@@ -3,25 +3,25 @@
         Trouvez vos médicaments <br> sans perdre du temps
     </p> -->
     <div class="my-4">
-        <img src="assets/images/logo.png" alt="logo" width="200" height="200">
+        <img src="assets/images/logo.png" class="bdr animate__animated animate__zoomIn animate__delay-1s" alt="logo" width="200" height="200">
     </div>
-    <p class="display-2 text-success">{{ title }}</p>
+    <p class="display-2 text-success animate__animated animate__zoomInDown">{{ title }}</p>
     <div class="row">
         <div class="col-sm-6 offset-3">
             <form #form="ngForm">
-                <mat-form-field class="example-full-width mb-3" appearance="fill">
+                <mat-form-field class="example-full-width mb-3 animate__animated animate__zoomInDown" appearance="fill">
                     <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
-                    <input matInput type="text" name="Input" (keyup)="search($event)" [(ngModel)]="Input" #name="ngModel" [matAutocomplete]="auto" placeholder="Rechercher des médicaments et des pharmacies" required>
-                    <button matSuffix [disabled]="form.form.invalid" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
+                    <input matInput type="text" name="Input" (keyup)="search()" [(ngModel)]="Input" #name="ngModel" [matAutocomplete]="auto" placeholder="Rechercher des médicaments" required>
+                    <button matSuffix [disabled]="form.form.invalid" (click)="verifier()" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of pharmacies" [value]="option" routerLink="search/{{option.nom}}">
-                            {{option.nom}}
+                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" routerLink="search/{{medicament.nom}}">
+                            {{medicament.nom}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
             </form>
-            <a mat-raised-button routerLink="pharmacies" class="mx-2 bg-light text-dark animate__animated animate__backInLeft"><i class="fas fa-clinic-medical me-2 fs-5 text-second"></i>Pharmacies</a>
-            <a mat-raised-button class="mx-2 bg-light text-dark animate__animated animate__backInRight"><i class="fas fa-capsules me-2 fs-5 text-second"></i>Médicaments</a>
+            <a mat-raised-button routerLink="pharmacies" class="mx-2 mb-2 bg-light text-dark animate__animated animate__backInLeft animate__slow animate__delay-1s"><i class="fas fa-clinic-medical me-2 fs-5 text-second"></i>Pharmacies</a>
+            <a mat-raised-button class="mx-2 mb-2 bg-light text-dark animate__animated animate__backInRight animate__slow animate__delay-1s"><i class="fas fa-capsules me-2 fs-5 text-second"></i>Médicaments</a>
         </div>
     </div>
 </div>
