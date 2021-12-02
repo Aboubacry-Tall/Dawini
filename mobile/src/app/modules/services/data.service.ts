@@ -72,7 +72,7 @@ export class DataService {
 
   // Get all medicaments list
   getMedicamentsList(){
-    return this.database.executeSql('SELECT * FROM medicament WHERE prix<90', []).then(res => {
+    return this.database.executeSql('SELECT * FROM medicament WHERE prix<60', []).then(res => {
       let items: Medicament[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 

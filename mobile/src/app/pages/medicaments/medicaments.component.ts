@@ -24,6 +24,7 @@ export class MedicamentsComponent implements OnInit {
       if(res){
         this.dataService.fetchAllMedicaments().subscribe(item => {
           this.medicaments = item;
+          console.log('all'+this.medicaments)
         })
       }
     });
@@ -31,10 +32,10 @@ export class MedicamentsComponent implements OnInit {
   onSearch(event:any){
     this.dataService.dbState().subscribe((res) => {
       if(res){
-        console.log('nom search'+this.nom)
         this.dataService.getMedicament(this.nom)
         this.dataService.fetchMedicament().subscribe(data =>{
         this.medicaments=data;
+        console.log('search'+this.medicaments)
     });
       }else{
         console.log('search error')
