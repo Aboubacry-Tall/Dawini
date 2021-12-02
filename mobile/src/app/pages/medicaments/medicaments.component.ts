@@ -15,36 +15,31 @@ export class MedicamentsComponent implements OnInit {
   constructor(private dataService: DataService,private router: Router) { }
 
   ngOnInit() {
-  // this.getMedic();
+  this.dataService.DataBase()
+  this.getAllMedicaments()
+  }
   
-  this.dataService.dbState().subscribe((res) => {
-    if(res){
-      this.dataService.fetchMedicaments().subscribe(item => {
-        this.medicaments = item;
-        console.log(this.medicaments)
-      })
-    }
-  });
-  }
-  /*
-   getMedicament() {
-    this.dataService.getMedicaments().subscribe(data =>{
-      this.medicaments=data;
-      console.log(this.medicaments)
+  getAllMedicaments() {  
+    this.dataService.dbState().subscribe((res) => {
+      if(res){
+        this.dataService.fetchAllMedicaments().subscribe(item => {
+          this.medicaments = item;
+        })
+      }
     });
-  }
-   getMedic(){
-    this.dataService.getMedic(this.nom).subscribe(data =>{
-      this.medicaments=data;
-    });
-  }
-    
+}   
   onSearch(event:any){
-    this.dataService.getMedic(this.nom).subscribe(data =>{
-      this.medicaments=data;
+    this.dataService.dbState().subscribe((res) => {
+      if(res){
+        console.log('nom search'+this.nom)
+        this.dataService.getMedicament(this.nom)
+        this.dataService.fetchMedicament().subscribe(data =>{
+        this.medicaments=data;
     });
-
+      }else{
+        console.log('search error')
+      }
+    })  
   }
-*/
 }
 
