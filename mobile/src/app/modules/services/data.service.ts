@@ -21,10 +21,17 @@ export class DataService {
   
   private database: SQLiteObject;
   medicamentsList = new BehaviorSubject([]);
+  medicaments = new BehaviorSubject([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  insert=false
   constructor(private httpClient: HttpClient,private platform: Platform,
    private sqlite: SQLite, private sqlitePorter: SQLitePorter ) { 
+  }
+  DataBase(){
+    if(this.insert==true){
+      console.log('true')
+    }else{
     this.platform.ready().then(() => {
       this.sqlite.create({
         name: 'medicaments.db',
@@ -32,11 +39,13 @@ export class DataService {
       })
       .then((db: SQLiteObject) => {
           this.database = db;
-          this.getData();
+            console.log('false')
+            this.getData();
+        
       });
     });
   }
-  
+  }
     // Render medicaments data
     getData() {
       this.httpClient.get(
@@ -45,8 +54,9 @@ export class DataService {
       ).subscribe(data => {
         this.sqlitePorter.importSqlToDb(this.database, data)
           .then(_ => {
-            this.getMedicamentList();
             this.isDbReady.next(true);
+            this.getMedicamentsList()
+            this.insert=true
           })
           .catch(error => console.error(error));
       });
@@ -56,13 +66,13 @@ export class DataService {
     return this.isDbReady.asObservable();
   }
  
-  fetchMedicaments(): Observable<Medicament[]> {
+  fetchAllMedicaments(): Observable<Medicament[]> {
     return this.medicamentsList.asObservable();
   }
 
-  // Get list
-  getMedicamentList(){
-    return this.database.executeSql('SELECT * FROM medicament', []).then(res => {
+  // Get all medicaments list
+  getMedicamentsList(){
+    return this.database.executeSql('SELECT * FROM medicament WHERE prix<90', []).then(res => {
       let items: Medicament[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 
@@ -78,15 +88,30 @@ export class DataService {
     });
   }
 
-
-
-  getMedicaments(): Observable<any>{
-    return this.httpClient.get(this.baseUrl+'medicaments')
-  }  
-  getMedic(nom:string): Observable<any>{
-    return this.httpClient.get(`${this.baseUrl+'medicaments'}?nom=${nom}`)
+  fetchMedicament(): Observable<Medicament[]> {
+    return this.medicaments.asObservable();
   }
-   
+
+  getMedicament(nom:string){
+    if(nom!=''){
+      return this.database.executeSql(`SELECT * FROM medicament WHERE UPPER(nom) like '${nom}%' `, []).then(res => {
+        let items: Medicament[] = [];
+        if (res.rows.length > 0) {
+          for (var i = 0; i < res.rows.length; i++) { 
+            items.push({ 
+              id: res.rows.item(i).id,
+              nom: res.rows.item(i).nom, 
+              description: res.rows.item(i).description,
+              prix: res.rows.item(i).prix,  
+             });
+          }
+        }
+        this.medicaments.next(items);
+      });
+    }else{
+      this.getMedicamentsList()
+    }
+  }  
   getPharmacies(): Observable<any>{
     return this.httpClient.get(this.baseUrl+'pharmacies')
   }
