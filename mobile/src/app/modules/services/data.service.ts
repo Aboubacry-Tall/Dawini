@@ -72,7 +72,7 @@ export class DataService {
 
   // Get all medicaments list
   getMedicamentsList(){
-    return this.database.executeSql('SELECT * FROM medicament WHERE prix<60', []).then(res => {
+    return this.database.executeSql('SELECT DISTINCT * FROM medicament WHERE prix<60', []).then(res => {
       let items: Medicament[] = [];
       if (res.rows.length > 0) {
         for (var i = 0; i < res.rows.length; i++) { 
@@ -94,7 +94,7 @@ export class DataService {
 
   getMedicament(nom:string){
     if(nom!=''){
-      return this.database.executeSql(`SELECT * FROM medicament WHERE UPPER(nom) like '${nom}%' `, []).then(res => {
+      return this.database.executeSql(`SELECT DISTINCT * FROM medicament WHERE UPPER(nom) like '${nom}%' `, []).then(res => {
         let items: Medicament[] = [];
         if (res.rows.length > 0) {
           for (var i = 0; i < res.rows.length; i++) { 
