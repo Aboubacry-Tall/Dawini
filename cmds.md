@@ -22,6 +22,7 @@ ionic cordova run browser
 # Generer l'app version android
 cd .\PFE\mobile\
 ionic cordova build android
+
 start C:\Users\Cheikh\Desktop\Master\PFE\mobile\platforms\android\app\build\outputs\apk\debug
 
 # to regenerate icon and splash
