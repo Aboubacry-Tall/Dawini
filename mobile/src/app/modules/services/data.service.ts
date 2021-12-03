@@ -17,7 +17,7 @@ export class Medicament {
 })
 export class DataService {
 
-  private baseUrl = "http://127.0.0.1:8000/api/mobile/";
+  private baseUrl = "http://127.0.0.1:8000/api/apps/";
   
   private database: SQLiteObject;
   medicamentsList = new BehaviorSubject([]);
@@ -28,6 +28,7 @@ export class DataService {
   constructor(private httpClient: HttpClient,private platform: Platform,
    private sqlite: SQLite, private sqlitePorter: SQLitePorter ) { 
   }
+
   DataBase(){
     if(this.insert==true){
       console.log('true')
@@ -113,6 +114,6 @@ export class DataService {
     }
   }  
   getPharmacies(): Observable<any>{
-    return this.httpClient.get(this.baseUrl+'pharmacies')
+    return this.httpClient.get(this.baseUrl+'pharmacie/list')
   }
 }

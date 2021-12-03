@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import MapboxLanguage from '@mapbox/mapbox-gl-language';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
@@ -24,8 +24,6 @@ export class MapboxComponent implements OnInit  {
   private updateSubscription: Subscription;
   
  geolocate = new mapboxgl.GeolocateControl
-
-  @ViewChild('coordinates') coordonnees!: ElementRef;
   
   constructor(private service: DataService) {}
   
@@ -41,7 +39,6 @@ export class MapboxComponent implements OnInit  {
     });
     this.testDirections();
     }
-
 
   get_all_pharmacie(){
     this.service.getPharmacies().subscribe(data =>{
@@ -83,7 +80,9 @@ export class MapboxComponent implements OnInit  {
     };
     phs.shift();
     const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
-    const pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+    this.pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+    
+    console.log(this.pharmacies)
   }
 
   testDirections(): void {
