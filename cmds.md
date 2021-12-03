@@ -27,7 +27,7 @@ start C:\Users\Cheikh\Desktop\Master\PFE\mobile\platforms\android\app\build\outp
 
 # to regenerate icon and splash
 
-cd .\PFE\web\
+cd .\PFE\mobile\
 ionic cordova resources
 
 # create  virtual environment ,install dependences
