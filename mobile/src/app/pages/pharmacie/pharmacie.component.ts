@@ -195,18 +195,6 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   }
 
   add_marker(){
-    const el = document.createElement('div');
-    el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
-    el.style.width = '40px';
-    el.style.height = '40px';
-    el.style.backgroundSize = 'cover';
-    el.style.borderRadius = '50%';
-    el.style.cursor = 'pointer';
-
-    const popup = new mapboxgl.Popup({ offset: 25 }).setText(
-      'Construction on the Washington Monument began in 1848.'
-    );
-
     for(let i = 0; i < this.pharmacies.length; i++){
       const el = document.createElement('div');
       el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
@@ -249,8 +237,6 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     if (mapboxgl.getRTLTextPluginStatus() !== 'loaded') { 
           mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
     }
-    // Default locate
-    //this.marker.addTo(this.map);
 
     // controls
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -271,14 +257,6 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     );
   }
 
-  set_map_style(mode: number): void{
-    this.map_mode = mode;
-    if(this.map_mode == 0){
-      this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
-    }else{
-      this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
-    }
-  }
     
   checkPermission() {
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(

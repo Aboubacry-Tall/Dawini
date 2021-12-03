@@ -1,12 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import MapboxLanguage from '@mapbox/mapbox-gl-language';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import { Pharmacie } from 'src/app/modules/models/pharmacie';
 import { DataService } from 'src/app/modules/services/data.service';
-import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { interval, Subscription } from 'rxjs';
 
 @Component({
@@ -14,20 +11,14 @@ import { interval, Subscription } from 'rxjs';
   templateUrl: './mapbox.component.html',
   styleUrls: ['./mapbox.component.scss'],
 })
-export class MapboxComponent implements OnInit , AfterViewInit {
+export class MapboxComponent implements OnInit  {
 
 
-  value = '';
-  map_mode: number = 1;
-  map!: mapboxgl.Map
-  markers!: [];
-  popup!: [];
-  map_directions : any;
+  map!: mapboxgl.Map;
   start = [];
   longitude : number;
   latitude : number;
-  phs_distances = new Array();
-  marker = new mapboxgl.Marker({ draggable: true, color: 'black'});
+  marker = new mapboxgl.Marker();
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
   private updateSubscription: Subscription;
@@ -36,30 +27,27 @@ export class MapboxComponent implements OnInit , AfterViewInit {
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
-  constructor(private service: DataService,private locationAccuracy: LocationAccuracy, 
-    private androidPermissions: AndroidPermissions) {}
+  constructor(private service: DataService) {}
   
   ngOnInit(): void {
-    this.get_all_pharmacie();
     this.updateSubscription = interval(3000).subscribe(
       (val) => { this.OnStart()});
-    this.OnStart()
-    }
-
-  ngAfterViewInit(): void {
+    this.OnStart();
+    this.get_all_pharmacie();
     this.getMap();
     this.map.on('load', () => {
       this.map.resize();
       this.geolocate.trigger();
-    })
+    });
     this.testDirections();
-  }
+    }
+
 
   get_all_pharmacie(){
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
+      this.get_distance()
       this.add_marker();
-      this.testDirections()
     },
     error =>console.log(error));
   }
@@ -70,11 +58,32 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       this.longitude  = position.coords.longitude;
       this.latitude = position.coords.latitude;
       this.start=[this.longitude,this.latitude]
-      this.map.flyTo({
-        center: [ this.longitude, this.latitude ],
-        zoom:12
-      });
     });
+  }
+  
+  get_distance(): void {
+    const [lng, lat] = [ this.longitude,this.latitude ];
+    const from = turf.point([lng, lat]);
+    const to = turf.point([0, 0]);
+    const phs = [
+      {
+        "ph_id": "",
+        "ph_distance": ""
+      }
+    ];
+    
+    for(let i = 0; i < this.pharmacies.length; i++){
+      const to = turf.point([parseFloat(this.pharmacies[i].longitude + ''), parseFloat(this.pharmacies[i].latitude + '')]);
+      const ph = {
+        "ph_id": this.pharmacies[i].id + '',
+        "ph_distance": turf.distance(from, to) + ''
+      }
+      phs.push(ph); 
+      this.pharmacies[i].distance = parseFloat(ph.ph_distance).toFixed(2);
+    };
+    phs.shift();
+    const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
+    const pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
   }
 
   testDirections(): void {
@@ -205,17 +214,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
   }
 
   add_marker(){
-    const el = document.createElement('div');
-    el.style.backgroundImage = 'url("../../../../assets/images/l4.png")';
-    el.style.width = '40px';
-    el.style.height = '40px';
-    el.style.backgroundSize = 'cover';
-    el.style.borderRadius = '50%';
-    el.style.cursor = 'pointer';
-
-    const popup = new mapboxgl.Popup({ offset: 25 }).setText(
-      'Construction on the Washington Monument began in 1848.'
-    );
 
     for(let i = 0; i < this.pharmacies.length; i++){
       const el = document.createElement('div');
@@ -259,8 +257,6 @@ export class MapboxComponent implements OnInit , AfterViewInit {
     if (mapboxgl.getRTLTextPluginStatus() !== 'loaded') { 
           mapboxgl.setRTLTextPlugin('https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.0/mapbox-gl-rtl-text.js', (error: Error) => {});
     }
-    // Default locate
-    //this.marker.addTo(this.map);
 
     // controls
     this.map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
@@ -280,15 +276,5 @@ export class MapboxComponent implements OnInit , AfterViewInit {
       'bottom-right'
     );
   }
-
-  set_map_style(mode: number): void{
-    this.map_mode = mode;
-    if(this.map_mode == 0){
-      this.map.setStyle('mapbox://styles/ghostmap/ckvh14f5527ks14pkam2n7rn4');
-    }else{
-      this.map.setStyle('mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg');
-    }
-  }
-    
 
 }
