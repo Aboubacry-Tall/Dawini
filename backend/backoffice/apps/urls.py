@@ -13,6 +13,13 @@ urlpatterns = [
     url(r'^api/apps/medicament/create', views.create_medicament),
     url(r'^api/apps/medicaments/list', views.get_all_medicament),
     url(r'^api/apps/medicaments/search', views.search_medicaments),
-    url(r'^api/apps/medicament-search/(?P<pk>[0-9]+)$', views.medicament_search)
+    url(r'^api/apps/medicament-search/(?P<pk>[0-9]+)$', views.medicament_search),
+
+    url(r'^api/apps/medicaments/pharmacie', views.get_all_medicaments),
+
+    # OPERATIONS
+    url(r'^api/apps/medicaments/set-etat', views.set_medicament_etat),
+    url(r'^api/apps/medicaments/online', views.get_medicaments_online),
+    url(r'^api/apps/medicaments/offline', views.get_medicaments_offline)
 
 ]

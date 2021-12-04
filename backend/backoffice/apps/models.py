@@ -17,12 +17,12 @@ class Pharmacie(models.Model):
 class Medicament(models.Model):
     nom = models.CharField(max_length=50, blank=False)
     prix = models.IntegerField(blank=False)
-    etat = models.IntegerField(blank=False, default=0)
-    code = models.CharField(max_length=50, blank=True, default='')
-    debut = models.CharField(max_length=50, blank=True, default='')
-    fin = models.CharField(max_length=50, blank=True, default='')
     description = models.CharField(max_length=255, blank=True, default='')
-    pharmacie = models.ForeignKey(Pharmacie, blank=False, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.nom
+
+class Etat(models.Model):
+    etat = models.IntegerField(blank=False)
+    medicament = models.IntegerField(blank=False)
+    pharmacie = models.IntegerField(blank=False)
+   

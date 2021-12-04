@@ -4,8 +4,10 @@ from django.http.response import JsonResponse
 from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
+from apps.models import Etat
 from apps.models import Pharmacie
 from apps.models import Medicament
+from apps.serializers import EtatSerializer
 from apps.serializers import PharmacieSerializer
 from apps.serializers import MedicamentSerializer
 
@@ -15,7 +17,6 @@ def create_pharmacie(request):
     pharmacie_serializer = PharmacieSerializer(data=pharmacie_data)
     if pharmacie_serializer.is_valid():
         pharmacie_serializer.save()
-        
         return JsonResponse(pharmacie_serializer.data, status=status.HTTP_201_CREATED)
     return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -38,7 +39,6 @@ def get_all_pharmacie(request):
 @api_view(['GET'])
 def get_one_pharmacie(request, pk):
     pharmacie = Pharmacie.objects.get(id=pk)
-    pprint(pharmacie)
     pharmacie_serializer = PharmacieSerializer(pharmacie)
     return JsonResponse(pharmacie_serializer.data, status=status.HTTP_200_OK, safe=False)
 
@@ -127,3 +127,47 @@ def search_pharmacie(request):
         pharmaciesSerializer = PharmacieSerializer(pharmacies, many=True)
         return JsonResponse(pharmaciesSerializer.data, status=status.HTTP_200_OK, safe=False)
     return JsonResponse({'message': 'Pharmacie introuvable'}, status=status.HTTP_404_NOT_FOUND)
+
+# Liste de tous les médicaments
+@api_view(['GET'])
+def get_all_medicaments(request):
+    medicaments = Medicament.objects.all()[:20]
+    medicaments_serializer = MedicamentSerializer(medicaments, many=True)
+    return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
+
+# Changement d'état de médicament
+@api_view(['GET'])
+def set_medicament_etat(request):
+    medicament_id = request.GET['medicament']
+    pharmacie_id = request.GET['pharmacie']
+    try:
+        medicament = Etat.objects.get(medicament=medicament_id, pharmacie=pharmacie_id)
+        medicament.etat *= (-1)
+        medicament.save()
+    except:
+        Etat.objects.create(etat=1, medicament=medicament_id, pharmacie=pharmacie_id)
+    return JsonResponse({'m': 'medicament'}, status=status.HTTP_200_OK)
+
+# Liste des médicaments disponibles
+@api_view(['GET'])
+def get_medicaments_online(request):
+    pharmacie_id = request.GET['id']
+    etats = Etat.objects.filter(etat=1, pharmacie=pharmacie_id)
+    tab_etat = []
+    for etat in etats:
+        tab_etat.append(etat.medicament)
+    medicaments = Medicament.objects.exclude(id__in = tab_etat)[:15]
+    medicaments_serializer = MedicamentSerializer(medicaments, many=True)
+    return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
+
+# Liste des médicaments non disponibles
+@api_view(['GET'])
+def get_medicaments_offline(request):
+    pharmacie_id = request.GET['id']
+    etats = Etat.objects.filter(etat=1, pharmacie=pharmacie_id)
+    tab_etat = []
+    for etat in etats:
+        tab_etat.append(etat.medicament)
+    medicaments = Medicament.objects.filter(id__in = tab_etat)[:15]
+    medicaments_serializer = MedicamentSerializer(medicaments, many=True)
+    return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
