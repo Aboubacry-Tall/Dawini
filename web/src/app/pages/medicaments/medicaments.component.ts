@@ -15,25 +15,17 @@ export class MedicamentsComponent implements OnInit {
 
   constructor(private app:AppComponent, private s_medicament: MedicamentService, private s_pharmacie: PharmacieService, private router: Router, private route : ActivatedRoute) { }
   title = this.app.title;
-  hide = true;
-  value ='';
+  Input: string = '';
+  count_alert: number = 0;
   pharmacie: Pharmacie = new Pharmacie();
-  pharmacie_id!: number;
-  medicament: Medicament = new Medicament();
-  medicaments!: Medicament[];
+  pharmacie_id: number = this.route.snapshot.params['id'];
+  medicaments_online!: Medicament[];
+  medicaments_offline!: Medicament[];
 
   ngOnInit(): void {
-    this.pharmacie_id= this.route.snapshot.params['id'];
-    this.search();
-  }
-
-  create_medicament(){
-    this.medicament.pharmacie = this.pharmacie_id;
-    this.s_medicament.create_medicament(this.medicament).subscribe(data =>{
-      console.log(data);
-    },
-    error =>console.log(error));
-    location.reload();
+    this.get_pharmacie(this.pharmacie_id);
+    this.get_medicaments_online();
+    this.get_medicaments_offline();
   }
 
   get_pharmacie(id:number){
@@ -43,24 +35,30 @@ export class MedicamentsComponent implements OnInit {
     error =>console.log(error));
   }
 
-  get_all_medicaments(pharmacie_id:number){
-    this.s_medicament.get_all_medicament(this.pharmacie_id).subscribe(data =>{
-      this.medicaments = data;
-    },
-    error =>console.log(error));
-  }
-  
-  onSearch(event:any){
-    this.s_medicament.search_medicament(this.value,this.pharmacie_id).subscribe(data =>{
-      this.medicaments=data;
+  get_medicaments_online(): void{
+    this.s_medicament.get_medicaments_online(this.pharmacie_id).subscribe(data =>{
+      this.medicaments_online = data;
+      for (let medicament of this.medicaments_online){
+        medicament.etat = true;
+      }
     });
   }
 
-  search(){
-    this.s_medicament.search_medicament(this.value,this.pharmacie_id).subscribe(data =>{
-      console.log(data);
-      this.medicaments=data;
+  get_medicaments_offline(): void{
+    this.s_medicament.get_medicaments_offline(this.pharmacie_id).subscribe(data =>{
+      this.medicaments_offline = data;
+      for (let medicament of this.medicaments_offline){
+        medicament.etat = false;
+      }
+      this.count_alert = this.medicaments_offline.length;
     });
   }
 
+  set_etat(medicament_id: number | undefined){
+    this.s_medicament.set_medicament_etat(medicament_id, this.pharmacie_id).subscribe(data =>{
+      this.get_medicaments_online();
+      this.get_medicaments_offline();
+      console.log(medicament_id + ' ------- ' + this.pharmacie_id);
+    });
+  }
 }

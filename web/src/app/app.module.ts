@@ -14,6 +14,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -73,7 +75,8 @@ import { SearchComponent } from './pages/search/search.component';
     MatMenuModule,
     MatSidenavModule,
     MatDialogModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatSlideToggleModule
   ],
   providers: [CoreComponent, SearchComponent ],
   bootstrap: [AppComponent]
