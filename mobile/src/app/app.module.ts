@@ -24,6 +24,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
+import {IonBottomSheetModule} from 'ion-bottom-sheet'
 
 
 
@@ -43,7 +44,7 @@ import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-    HttpClientModule,FormsModule],
+    HttpClientModule,FormsModule,IonBottomSheetModule],
   providers: [Geolocation,AndroidPermissions,LocationAccuracy,BarcodeScanner,SQLite,SQLitePorter,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

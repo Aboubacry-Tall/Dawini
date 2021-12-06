@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import MapboxLanguage from '@mapbox/mapbox-gl-language';
-import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import { Pharmacie } from 'src/app/modules/models/pharmacie';
@@ -9,6 +8,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 import { interval, Subscription } from 'rxjs';
+import { SheetState } from 'ion-bottom-sheet';
 @Component({
   selector: 'app-pharmacie',
   templateUrl: './pharmacie.component.html',
@@ -16,22 +16,16 @@ import { interval, Subscription } from 'rxjs';
 })
 export class PharmacieComponent implements OnInit, AfterViewInit {
   
-
-  value = '';
-  map_mode: number = 1;
   map!: mapboxgl.Map
-  markers!: [];
-  popup!: [];
-  map_directions : any;
   start = [];
   longitude : number;
   latitude : number;
-  phs_distances = new Array();
   marker = new mapboxgl.Marker();
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
   geolocate = new mapboxgl.GeolocateControl
   updateSubscription: Subscription;
+  sheetState = SheetState.Bottom
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
@@ -40,12 +34,11 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     this.get_all_pharmacie();
-    this.checkPermission();
+    /*
     this.updateSubscription = interval(3000).subscribe(
       (val) => { this.enableGPS()});
     
-    this.enableGPS()
-     
+    this.enableGPS()*/
     }
 
   ngAfterViewInit(): void {
@@ -54,18 +47,49 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
       this.map.resize();
       this.geolocate.trigger()
     })
-    this.testDirections();
+   // this.testDirections();
   }
 
   get_all_pharmacie(){
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
+     // this.get_distance()
       this.add_marker();
-      this.testDirections()
+     // this.testDirections()
     },
     error =>console.log(error));
   }
 
+  OpenSheet(){
+    this.sheetState = SheetState.Docked;
+  }
+
+  get_distance(): void {
+    const [lng, lat] = [ this.longitude,this.latitude ];
+    const from = turf.point([lng, lat]);
+    const to = turf.point([0, 0]);
+    const phs = [
+      {
+        "ph_id": "",
+        "ph_distance": ""
+      }
+    ];
+    
+    for(let i = 0; i < this.pharmacies.length; i++){
+      const to = turf.point([parseFloat(this.pharmacies[i].longitude + ''), parseFloat(this.pharmacies[i].latitude + '')]);
+      const ph = {
+        "ph_id": this.pharmacies[i].id + '',
+        "ph_distance": turf.distance(from, to) + ''
+      }
+      phs.push(ph); 
+      this.pharmacies[i].distance = parseFloat(ph.ph_distance).toFixed(2);
+    };
+    phs.shift();
+    const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
+    this.pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
+    
+    console.log(this.pharmacies)
+  }
 
   testDirections(): void {
     this.map.on('load', () => {

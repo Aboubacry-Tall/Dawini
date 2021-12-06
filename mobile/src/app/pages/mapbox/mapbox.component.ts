@@ -5,6 +5,7 @@ import * as turf from '@turf/turf';
 import { Pharmacie } from 'src/app/modules/models/pharmacie';
 import { DataService } from 'src/app/modules/services/data.service';
 import { interval, Subscription } from 'rxjs';
+import { SheetState } from 'ion-bottom-sheet';
 
 @Component({
   selector: 'app-mapbox',
@@ -22,8 +23,8 @@ export class MapboxComponent implements OnInit  {
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
   private updateSubscription: Subscription;
-  
- geolocate = new mapboxgl.GeolocateControl
+ geolocate = new mapboxgl.GeolocateControl;
+ sheetState = SheetState.Bottom
   
   constructor(private service: DataService) {}
   
@@ -56,6 +57,9 @@ export class MapboxComponent implements OnInit  {
       this.latitude = position.coords.latitude;
       this.start=[this.longitude,this.latitude]
     });
+  }
+  OpenSheet(){
+    this.sheetState = SheetState.Docked;
   }
   
   get_distance(): void {
