@@ -40,11 +40,9 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   
   ngOnInit(): void {
     this.get_all_pharmacie();
-    /*
     this.updateSubscription = interval(3000).subscribe(
       (val) => { this.enableGPS()});
-    
-    this.enableGPS()*/
+    this.enableGPS()
     }
 
   ngAfterViewInit(): void {
@@ -57,12 +55,6 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   }
 
   get_all_pharmacie(){
-        const geo = navigator.geolocation
-        geo.getCurrentPosition((position) => {
-          this.longitude  = position.coords.longitude;
-          this.latitude = position.coords.latitude;
-          this.start=[this.longitude,this.latitude]
-        });
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
       this.get_distance()
