@@ -6,9 +6,6 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
     </ion-buttons>
-    <ion-button slot="end" (click)="OpenSheet()">
-      button
-    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -18,10 +15,16 @@
 </ion-content>
 
 
-<ion-bottom-sheet [(state)]="sheetState" >
-<input name="nom" type="search" class="form-control"placeholder="Rechercher un medicament">
-  <div *ngFor="let pharmacie of pharmacies ">
-    <ion-card>
+<ion-bottom-sheet 
+[(state)]="sheetState"
+[title]="title"
+[dockedHeight]="dockedHeight" 
+[minHeight]="minHeight"
+[enableScrollContent]="enableScrollContent"
+>
+<input name="nom" type="search" class="form-control" [(ngModel)]="value" (keyup)='get_pharmacie($event)' placeholder="Rechercher un medicament">
+  <div  (click)="flyToPharmacie(pharmacie)" *ngFor="let pharmacie of pharmacies ">
+    <ion-card >
       <ion-card-content>
         <ion-card-title><h2> {{pharmacie.nom}}</h2></ion-card-title>
           <ion-card-title class="float-end"><small><h6><b>{{pharmacie.primaire}}</b></h6></small></ion-card-title>

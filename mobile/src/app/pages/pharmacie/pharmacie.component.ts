@@ -20,12 +20,18 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   start = [];
   longitude : number;
   latitude : number;
+  value = '';
   marker = new mapboxgl.Marker();
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
-  geolocate = new mapboxgl.GeolocateControl
+  geolocate = new mapboxgl.GeolocateControl;
   updateSubscription: Subscription;
-  sheetState = SheetState.Bottom
+  sheetState = SheetState.Bottom;
+  title = "Liste des pharmacies";
+  dockedHeight = 300;
+  hideCloseButton = true;
+  minHeight = 50;
+  enableScrollContent = true
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
@@ -47,15 +53,32 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
       this.map.resize();
       this.geolocate.trigger()
     })
-   // this.testDirections();
+    this.testDirections();
   }
 
   get_all_pharmacie(){
+        const geo = navigator.geolocation
+        geo.getCurrentPosition((position) => {
+          this.longitude  = position.coords.longitude;
+          this.latitude = position.coords.latitude;
+          this.start=[this.longitude,this.latitude]
+        });
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
-     // this.get_distance()
+      this.get_distance()
       this.add_marker();
-     // this.testDirections()
+      this.testDirections()
+    },
+    error =>console.log(error));
+  }
+  
+  get_pharmacie(event:any){
+    this.service.search_pharmacie(this.value).subscribe(data =>{
+      this.pharmacies = data;
+      this.get_distance()
+      this.getMap()
+      this.add_marker();
+      this.testDirections()
     },
     error =>console.log(error));
   }
