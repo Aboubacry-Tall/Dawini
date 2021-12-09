@@ -8,8 +8,8 @@ class Pharmacie(models.Model):
     primaire = models.CharField(max_length=50, blank=True, default='')
     secondaire = models.CharField(max_length=50, blank=True, default='')
     whatsapp = models.CharField(max_length=50, blank=True, default='')
-    latitude = models.CharField(max_length=50, blank=True, default='')
-    longitude = models.CharField(max_length=50, blank=True, default='')
+    latitude = models.CharField(max_length=50, blank=True, default='0')
+    longitude = models.CharField(max_length=50, blank=True, default='0')
 
     def __str__(self):
         return self.nom

@@ -14,8 +14,8 @@
                     <input matInput type="text" name="Input" (keyup)="search()" [(ngModel)]="Input" #name="ngModel" [matAutocomplete]="auto" placeholder="Rechercher des médicaments" required>
                     <button matSuffix [disabled]="form.form.invalid" (click)="verifier()" class="click btn btn-sm text-second"><i class="fas fa-arrow-alt-circle-right mb-1 fs-5"></i></button>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" routerLink="search/{{medicament.nom}}">
-                            {{medicament.nom}}
+                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" (click)="redirect(medicament)">
+                            {{medicament.nom}} {{medicament.description}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>

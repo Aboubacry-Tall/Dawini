@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Medicament } from '../models/medicament';
 import { Pharmacie } from '../models/pharmacie';
 
 @Injectable({
@@ -42,5 +43,9 @@ export class PharmacieService {
 
   search_pharmacie(name: string): Observable<any>{
     return this.http.get(this.server + 'pharmacies/search/pharmacie?name=' + name);
+  }
+
+  get_pharmacies_online(medicament: Medicament): Observable<any>{
+    return this.http.post(this.server + 'pharmacies/online', medicament);
   }
 }

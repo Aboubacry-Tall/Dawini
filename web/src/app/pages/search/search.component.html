@@ -4,11 +4,11 @@
             <form #form="ngForm">
                 <mat-form-field class="example-full-width mb-3 animate__animated animate__zoomInDown" appearance="fill">
                     <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
-                    <input matInput type="text" name="Input" (keyup)="search()" [(ngModel)]="Input" #name="ngModel" value="{{Input}}" [matAutocomplete]="auto" placeholder="Rechercher des médicaments" required>
+                    <input matInput type="text" name="Input" (keyup)="get_medicaments()" [(ngModel)]="Input" #name="ngModel" value="{{Input}}" [matAutocomplete]="auto" placeholder="Rechercher des médicaments" required>
                     <span matSuffix *ngIf="Input" class="click btn btn-sm mb-3" (click)="Input=''"><mat-icon>close</mat-icon></span>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" (click)="get_pharmacies_search(medicament.nom)">
-                            {{medicament.nom}}
+                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" (click)="search(medicament)">
+                            {{medicament.nom}} {{medicament.description}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field> 

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { AppComponent } from 'src/app/app.component';
 import { CoreComponent } from 'src/app/common/core/core.component';
 import { Medicament } from 'src/app/models/medicament';
-import { Pharmacie } from 'src/app/models/pharmacie';
 import { Search } from 'src/app/models/search';
 import { MedicamentService } from 'src/app/services/medicament.service';
 
@@ -14,7 +13,7 @@ import { MedicamentService } from 'src/app/services/medicament.service';
 })
 export class HomeComponent implements OnInit {
  
-  constructor(private app:AppComponent, private service: MedicamentService, private core: CoreComponent) { }
+  constructor(private app:AppComponent, private service: MedicamentService, private core: CoreComponent, private router: Router) { }
   title: string = "";
   Input: string = "";
   s: Search = new Search();
@@ -33,5 +32,11 @@ export class HomeComponent implements OnInit {
   verifier(){
     if(this.medicaments.length < 1)
       this.core.openDialog(270, 'invalide', 'Médicament [' + this.Input + '] introuvable');
+  }
+
+  redirect(medicament: Medicament): void{
+    //medicament.description.trim().replace(/\s/g, "_";
+    sessionStorage.setItem('medicament_description',  medicament.description + '');
+    this.router.navigate(['search/' + medicament.nom]);
   }
 }

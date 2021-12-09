@@ -18,49 +18,32 @@ import * as mapboxgl from 'mapbox-gl';
 
 export class SearchComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private s_ph: PharmacieService, private m_ph: MedicamentService, private core: CoreComponent) { }
-  name: string = '';
+  constructor(private route: ActivatedRoute, private s_ph: PharmacieService, private s_md: MedicamentService, private core: CoreComponent) { }
   map!: mapboxgl.Map;
   map_mode: number = 1;
-  Input: string = this.route.snapshot.params['name'];
+  name = this.route.snapshot.params['name'];
+  description = sessionStorage.getItem('medicament_description');
+  Input: string =  this.name + this.description;
   pharmacies!: Pharmacie[];
   medicaments!: Medicament[];
   pharmacie: Pharmacie = new Pharmacie();
+  medicament: Medicament = new Medicament();
   start = [ parseFloat(sessionStorage.getItem('user_lng') + ''), parseFloat(sessionStorage.getItem('user_lat') + '') ];
 
   ngOnInit(): void {
-    this.get_pharmacies();
+    this.seach_pharmacies_online();
   }
 
-  search(){
-    this.m_ph.get_medicaments(this.Input).subscribe(data => {
+  get_medicaments():void {
+    this.s_md.get_medicaments(this.Input).subscribe(data => {
       this.medicaments = data;
     });
   }
 
-  get_pharmacies(): void { 
-    if(this.route.snapshot.params['name']){
-      this.name = this.route.snapshot.params['name'];
-      this.s_ph.get_pharmacies(this.name).subscribe(data => {
-        this.pharmacies = data;
-        this.map_Init();
-        this.get_distance();
-        this.get_pharmacies_markers();
-        this.get_direction();
-      });
-    }else{
-      this.s_ph.get_all_pharmacie().subscribe(data => {
-        this.pharmacies = data;
-        this.map_Init();
-        this.get_distance();
-        this.get_pharmacies_markers();
-        this.get_direction();
-      });
-    }
-  }
-
-  get_pharmacies_search(name:string | undefined): void {
-    this.s_ph.get_pharmacies(this.Input).subscribe(data => {
+  seach_pharmacies_online():void {
+    this.medicament.nom = this.name;
+    this.medicament.description = this.description + '';
+    this.s_ph.get_pharmacies_online(this.medicament).subscribe(data => {
       this.pharmacies = data;
       this.map_Init();
       this.get_distance();
@@ -69,9 +52,14 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  verifier(){
-    if(this.medicaments.length < 1)
-      this.core.openDialog(270, 'invalide', 'Médicament [' + this.Input + '] introuvable');
+  search(medicament: Medicament):void {
+    this.s_ph.get_pharmacies_online(this.medicament).subscribe(data => {
+      this.pharmacies = data;
+      this.map_Init();
+      this.get_distance();
+      this.get_pharmacies_markers();
+      this.get_direction();
+    });
   }
 
   map_Init(){

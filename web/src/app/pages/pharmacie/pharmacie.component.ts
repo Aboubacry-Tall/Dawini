@@ -123,7 +123,7 @@ export class PharmacieComponent implements OnInit {
   }
 
   get_user_marker(){
-    if(this.pharmacie.latitude){
+    if(parseFloat(this.pharmacie.latitude) != 0){
       this.marker.setLngLat([parseFloat(this.pharmacie.longitude), parseFloat(this.pharmacie.latitude)]);
       this.marker.addTo(this.map);
     }

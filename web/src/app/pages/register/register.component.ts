@@ -23,6 +23,8 @@ export class RegisterComponent implements OnInit {
 
   create_pharmacie(){
     if(this.pharmacie.password != undefined && this.pharmacie.password.length > 2){
+      this.pharmacie.latitude = '0';
+      this.pharmacie.longitude = '0';
       this.s_pharmacie.create_pharmacie(this.pharmacie).subscribe(data =>{
         console.log(data);
         this.router.navigate(['login']);

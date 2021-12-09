@@ -171,3 +171,25 @@ def get_medicaments_offline(request):
     medicaments = Medicament.objects.filter(id__in = tab_etat)[:15]
     medicaments_serializer = MedicamentSerializer(medicaments, many=True)
     return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)
+
+# Liste de pharmacies disposant le médicament recherché
+@api_view(['POST'])
+def get_pharmacies_online(request):
+    medicament_data = JSONParser().parse(request)
+    nom = medicament_data['nom']
+    description = medicament_data['description']
+    try:
+        medicament = Medicament.objects.get(nom=nom, description=description)
+        etats = Etat.objects.filter(etat=1, id=medicament.id)
+        tab_pharmacie = []
+        if etats:
+            for etat in etats:
+                tab_pharmacie.append(etat.pharmacie)
+        pharmacies = Pharmacie.objects.exclude(id__in = tab_pharmacie)
+        if pharmacies is not None:
+            pharmacies_serializer = PharmacieSerializer(pharmacies, many=True)
+            return JsonResponse(pharmacies_serializer.data, status=status.HTTP_200_OK, safe=False)
+        return JsonResponse({'Pharmacies': 'Non disponible'}, status=status.HTTP_404_NOT_FOUND)
+    except:
+        Medicament.DoesNotExist
+    return JsonResponse({'Medicament': 'Introuvable'}, status=status.HTTP_404_NOT_FOUND)
