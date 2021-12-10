@@ -4,7 +4,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { MedicamentComponent } from './pages/medicament/medicament.component';
 import { MedicamentsComponent } from './pages/medicaments/medicaments.component';
-import { MapboxComponent } from './pages/mapbox/mapbox.component';
 import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 
 const routes: Routes = [
@@ -19,10 +18,6 @@ const routes: Routes = [
   {
     path: 'medicaments',
     component:MedicamentsComponent
-  },
-  {
-    path: 'mapbox',
-    component:MapboxComponent
   },
   {
     path: 'scanner',
