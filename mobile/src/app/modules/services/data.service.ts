@@ -120,4 +120,13 @@ export class DataService {
   search_pharmacie(name: string): Observable<any>{
     return this.httpClient.get(this.baseUrl + 'pharmacies/search/pharmacie?name=' + name);
   }
+  
+  get_medicaments(name: string): Observable<any> {
+    return this.httpClient.get(this.baseUrl + 'medicaments/search?name=' + name);
+  }
+  
+  get_pharmacies_online(medicament: Medicament): Observable<any>{
+    return this.httpClient.post(this.baseUrl + 'pharmacies/online', medicament);
+  }
+
 }

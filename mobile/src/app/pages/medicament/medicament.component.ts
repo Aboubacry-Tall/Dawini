@@ -8,6 +8,8 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { interval, Subscription } from 'rxjs';
 import { SheetState } from 'ion-bottom-sheet';
+import { ActivatedRoute } from '@angular/router';
+import { Medicament } from 'src/app/modules/models/medicament';
 
 @Component({
   selector: 'app-medicament',
@@ -25,9 +27,15 @@ export class MedicamentComponent implements OnInit {
   marker = new mapboxgl.Marker();
   pharmacie: Pharmacie = new Pharmacie();
   pharmacies!: Pharmacie[];
+  medicaments!: Medicament[];
+  medicament: Medicament = new Medicament();
   geolocate = new mapboxgl.GeolocateControl;
   updateSubscription: Subscription;
-  sheetState = SheetState.Bottom;
+  name = this.route.snapshot.params['name'];
+  description = sessionStorage.getItem('medicament_description');
+  Input: string =  this.name + this.description;
+  
+  sheetState = SheetState.Docked;
   title = "Liste des pharmacies";
   dockedHeight = 300;
   hideCloseButton = true;
@@ -40,11 +48,11 @@ export class MedicamentComponent implements OnInit {
 
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
-  constructor(private service: DataService,private locationAccuracy: LocationAccuracy, 
+  constructor(private service: DataService,private route: ActivatedRoute,private locationAccuracy: LocationAccuracy, 
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
-    this.get_all_pharmacie();
+    this.seach_pharmacies_online()
     // this.updateSubscription = interval(3000).subscribe(
     //   (val) => { this.enableGPS()});
     // this.enableGPS()
@@ -59,26 +67,37 @@ export class MedicamentComponent implements OnInit {
     // this.testDirections();
   }
 
-  get_all_pharmacie(){
-    this.service.getPharmacies().subscribe(data =>{
-      this.pharmacies = data;
-      // this.get_distance()
-       this.add_marker();
-      // this.testDirections()
-    },
-    error =>console.log(error));
+
+  get_medicaments():void {
+    this.service.get_medicaments(this.Input).subscribe(data => {
+      this.medicaments = data;
+    });
   }
   
-  get_pharmacie(event:any){
-    this.service.search_pharmacie(this.value).subscribe(data =>{
+  search(medicament: Medicament):void {
+    this.service.get_pharmacies_online(medicament).subscribe(data => {
       this.pharmacies = data;
       //this.get_distance()
       this.getMap()
       this.add_marker();
       //this.testDirections()
-    },
-    error =>console.log(error));
+    });
   }
+
+
+  seach_pharmacies_online():void {
+    this.medicament.nom = this.name;
+    this.medicament.description = this.description + '';
+    console.log(this.medicament)
+    this.service.get_pharmacies_online(this.medicament).subscribe(data => {
+      this.pharmacies = data;
+      //this.get_distance()
+      this.getMMap()
+      this.add_marker();
+      //this.testDirections()
+    });
+  }
+
 
   OpenSheet(){
     this.sheetState = SheetState.Docked;
@@ -301,6 +320,35 @@ export class MedicamentComponent implements OnInit {
     );
   }
 
+  getMMap() {
+    (mapboxgl as any).accessToken = 'pk.eyJ1IjoiZ2hvc3RtYXAiLCJhIjoiY2tzeXNxajBhMGFsODJ3bW9kYWg2eXJuZSJ9.EvLTJYcyz4JZ1y41sqF8nw';
+      this.mapM = new mapboxgl.Map({
+      container: 'mapM', // container ID
+      style: 'mapbox://styles/ghostmap/ckvemallz25uu15nwdw9hs9qg', // style URL
+      center: [-15.942172529368463, 18.069114191259317], // starting position [lng, lat]
+      zoom: 12.3, 
+      pitch: 60, // pitch in degrees
+      bearing: 10 // bearing in degrees
+    });
+
+    // controls
+    this.mapM.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    this.mapM.addControl(new mapboxgl.FullscreenControl(), 'bottom-right');
+    this.mapM.addControl(
+      this.geolocate = new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,timeout:3000
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+        fitBoundsOptions: {
+          zoom: 15  
+        }
+        
+      }),
+      'bottom-right'
+    );
+  }
     
   checkPermission() {
     this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(

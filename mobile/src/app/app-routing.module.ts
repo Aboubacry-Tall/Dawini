@@ -16,6 +16,10 @@ const routes: Routes = [
     component:MedicamentComponent
   },
   {
+    path: 'medicament/:name',
+    component:MedicamentComponent
+  },
+  {
     path: 'medicaments',
     component:MedicamentsComponent
   },

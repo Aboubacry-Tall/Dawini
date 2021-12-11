@@ -7,9 +7,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BaseComponent } from './common/base/base.component';
@@ -24,7 +26,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { SQLitePorter } from '@ionic-native/sqlite-porter/ngx';
-import {IonBottomSheetModule} from 'ion-bottom-sheet'
+import {IonBottomSheetModule} from 'ion-bottom-sheet';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 
 
@@ -41,10 +44,11 @@ import {IonBottomSheetModule} from 'ion-bottom-sheet'
     ScannerComponent,
     AproposComponent,
     
+    
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-    HttpClientModule,FormsModule,IonBottomSheetModule],
+  imports: [MatFormFieldModule,MatIconModule,MatAutocompleteModule,BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+    HttpClientModule,FormsModule,IonBottomSheetModule, BrowserAnimationsModule],
   providers: [Geolocation,AndroidPermissions,LocationAccuracy,BarcodeScanner,SQLite,SQLitePorter,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

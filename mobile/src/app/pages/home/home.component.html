@@ -19,10 +19,17 @@
     </ion-row>
     <ion-row>
     <ion-col>
-      <ion-searchbar >
+      <ion-searchbar (ionInput)="get_medicaments($event)"  name="Input" [(ngModel)]="Input" #name="ngModel" value="{{Input}}" >
       </ion-searchbar>
     </ion-col>
-    </ion-row>
+  </ion-row>
+  <ion-row>
+    <ion-list>
+      <ion-item *ngFor="let medicament of medicaments" (click)="redirect(medicament)">
+        {{medicament.nom}} {{medicament.description}}
+      </ion-item>
+    </ion-list>
+  </ion-row>
   </ion-grid>
 </ion-content>
 <app-footer></app-footer>

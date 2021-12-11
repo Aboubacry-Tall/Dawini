@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      DAWINI
+      Medicaments
     </ion-title>
     <ion-buttons slot="start">
       <ion-menu-button menu="main-menu"></ion-menu-button>
@@ -25,9 +25,23 @@
 [hideCloseButton]="hideCloseButton"
 [titleCentered]="titleCentered"
 [topDistance]="topDistance"
-
 >
-<input name="nom" type="search" class="form-control" [(ngModel)]="value" (keyup)='get_pharmacie($event)' placeholder="Rechercher un medicament">
+  <div class="row">
+    <div class="col-10">
+    <input name="Input" (keyup)="get_medicaments()" class="form-control" [(ngModel)]="Input" #name="ngModel" 
+               value="{{Input}}" [matAutocomplete]="auto" placeholder="Rechercher des médicaments">
+    </div>
+    <div class="col-2">
+      <span matSuffix *ngIf="Input" (click)="Input=''"><mat-icon class="mt-2">close</mat-icon></span>
+    </div>
+  </div>
+  
+<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" (click)="search(medicament)">
+          {{medicament.nom}} {{medicament.description}}
+      </mat-option>
+  </mat-autocomplete>
+                
   <div  (click)="flyToPharmacie(pharmacie)" *ngFor="let pharmacie of pharmacies ">
     <ion-card >
       <ion-card-content>
