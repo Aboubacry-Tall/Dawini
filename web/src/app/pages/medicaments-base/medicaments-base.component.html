@@ -1,0 +1,50 @@
+<div class="container mt-4">
+    <div class="text-center">
+        <mat-form-field class="w-75 mb-3">
+            <span matPrefix class="text-second"><i class="fa fa-search me-3"></i></span>
+            <input  matInput name="nom" type="search" (keyup)="search(medicament.nom)" [(ngModel)]="medicament.nom" #nom="ngModel" placeholder="Rechercher des médicaments" autofocus>
+            <button *ngIf="medicament.nom" matSuffix mat-icon-button aria-label="Clear" (click)="Name=''">
+              <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <button class="ms-2 btn btn-sm bg-success text-white shadow-sm">Rechercher</button>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <mat-card class="mb-1">
+                <p class="fs-5"><i class="fas fa-capsules me-2 fs-2 text-second"></i>Liste des médicaments disponibles</p>
+                <div class="p-2 mb-2 bg-light text-success">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <p>N°</p>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>Nom</p>
+                        </div>
+                        <div class="col-sm-3 text-end">
+                            <p>Prix en <b>MRU</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 mb-2 shadow-sm" *ngFor="let medicament of medicaments">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            {{ medicament.id }}
+                        </div>
+                        <div class="col-sm-8">
+                            {{ medicament.nom }} {{ medicament.description }}
+                        </div>
+                        <div class="col-sm-3 text-end">
+                            {{ medicament.prix }} <b>MRU</b>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+            <mat-card class="mb-5">
+                <button *ngIf="page > 10" mat-raised-button class="mx-2" (click)="precedent()">Précédent</button>
+                <span>[{{ page }}]</span>
+                <button *ngIf="page >= 1" mat-raised-button class="mx-2" (click)="suivant()">Suivant</button>
+            </mat-card>
+        </div>
+    </div>
+</div>

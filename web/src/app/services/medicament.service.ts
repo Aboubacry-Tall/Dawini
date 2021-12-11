@@ -42,4 +42,8 @@ export class MedicamentService {
   set_medicament_etat(medicament_id: number | undefined, pharmacie_id: number): Observable<any> {
     return this.http.get(this.server + 'medicaments/set-etat?medicament=' + medicament_id + '&pharmacie=' + pharmacie_id);
   }
+
+  get_medicaments_base(index: number): Observable<any>{
+    return this.http.get(this.server + 'medicaments/' + index);
+  }
 }

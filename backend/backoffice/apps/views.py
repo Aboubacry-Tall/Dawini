@@ -193,3 +193,10 @@ def get_pharmacies_online(request):
     except:
         Medicament.DoesNotExist
     return JsonResponse({'Medicament': 'Introuvable'}, status=status.HTTP_404_NOT_FOUND)
+
+# Liste de médicaments avec pagination
+@api_view(['GET'])
+def get_medicaments_base(request, pk):
+    medicaments = Medicament.objects.all()[int(pk) - 1 : int(pk) + 9]
+    medicaments_serializer = MedicamentSerializer(medicaments, many=True)
+    return JsonResponse(medicaments_serializer.data, status=status.HTTP_200_OK, safe=False)

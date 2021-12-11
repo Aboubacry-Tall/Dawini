@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +38,7 @@ import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
 import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { MapComponent } from './common/map/map.component';
 import { SearchComponent } from './pages/search/search.component';
+import { MedicamentsBaseComponent } from './pages/medicaments-base/medicaments-base.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { SearchComponent } from './pages/search/search.component';
     PharmaciesComponent,
     PharmacieComponent,
     MapComponent,
-    SearchComponent
+    SearchComponent,
+    MedicamentsBaseComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ import { SearchComponent } from './pages/search/search.component';
     MatSidenavModule,
     MatDialogModule,
     MatAutocompleteModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatPaginatorModule
   ],
   providers: [CoreComponent, SearchComponent ],
   bootstrap: [AppComponent]

@@ -4,7 +4,8 @@
             <form #form="ngForm" (ngSubmit)="search_pharmacie()" class="text-center">
                 <mat-form-field class="example-full-width w-75" appearance="fill">
                     <mat-label>Pharmacies</mat-label>
-                    <input matInput type="text" name="nom" [(ngModel)]="pharmacie.nom" #nom="ngModel" autofocus placeholder="Rechercher des pharmacies ...">
+                    <span matPrefix class="text-second"><i class="fa fa-search me-3 mb-1 fs-5"></i></span>
+                    <input matInput type="text" name="nom" (keyup)="search_pharmacie()" [(ngModel)]="pharmacie.nom" #nom="ngModel" autofocus placeholder="Rechercher des pharmacies ...">
                     <span class="click" *ngIf="pharmacie.nom" matSuffix mat-icon-button aria-label="Clear" (click)="reload()">
                         <mat-icon>close</mat-icon>
                     </span>

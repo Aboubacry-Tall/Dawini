@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^api/apps/medicaments/set-etat', views.set_medicament_etat),
     url(r'^api/apps/medicaments/online', views.get_medicaments_online),
     url(r'^api/apps/medicaments/offline', views.get_medicaments_offline),
+    url(r'^api/apps/medicaments/(?P<pk>[0-9]+)$', views.get_medicaments_base),
 
     # OPERATIONS SUR LES PHARMACIES
     url(r'^api/apps/pharmacies/online', views.get_pharmacies_online),

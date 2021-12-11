@@ -4,6 +4,7 @@ import { MapComponent } from './common/map/map.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { MedicamentsBaseComponent } from './pages/medicaments-base/medicaments-base.component';
 import { MedicamentsComponent } from './pages/medicaments/medicaments.component';
 import { PharmacieComponent } from './pages/pharmacie/pharmacie.component';
 import { PharmaciesComponent } from './pages/pharmacies/pharmacies.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'search/:name', component: SearchComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'pharmacies', component: PharmaciesComponent},
+  {path: 'medicaments', component: MedicamentsBaseComponent},
   {path: 'pharmacie/:id', component: PharmacieComponent},
   {path: 'medicaments/pharmacie/:id', component: MedicamentsComponent},
   
