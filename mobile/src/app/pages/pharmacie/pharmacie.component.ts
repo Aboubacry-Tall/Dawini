@@ -6,15 +6,16 @@ import { Pharmacie } from 'src/app/modules/models/pharmacie';
 import { DataService } from 'src/app/modules/services/data.service';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
-
 import { interval, Subscription } from 'rxjs';
 import { SheetState } from 'ion-bottom-sheet';
+
 @Component({
   selector: 'app-pharmacie',
   templateUrl: './pharmacie.component.html',
   styleUrls: ['./pharmacie.component.scss'],
 })
 export class PharmacieComponent implements OnInit, AfterViewInit {
+  
   
   map!: mapboxgl.Map
   start = [];
@@ -31,8 +32,11 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   dockedHeight = 300;
   hideCloseButton = true;
   minHeight = 50;
-  enableScrollContent = true
-
+  enableScrollContent = true;
+  hideDragIcon = true;
+  titleCentered = true;
+  topDistance= 120;
+  
   @ViewChild('coordinates') coordonnees!: ElementRef;
   
   constructor(private service: DataService,private locationAccuracy: LocationAccuracy, 

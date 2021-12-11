@@ -1,16 +1,40 @@
-<ion-content>
-    <ion-infinite-scroll>
-      <ion-infinite-scroll-content>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      DAWINI
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="main-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-    <div class="container">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Card title</h3>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <h4>prix : 450MRU</h4>
-          </div>
-        </div>
-    </div>
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll>  
+<ion-content>
+  <div id="mapM" style="width: 100%; height: 100%">
+  </div>
 </ion-content>
+
+
+<ion-bottom-sheet 
+[(state)]="sheetState"
+[title]="title"
+[dockedHeight]="dockedHeight" 
+[minHeight]="minHeight"
+[enableScrollContent]="enableScrollContent"
+[hideDragIcon]="hideDragIcon"
+[hideCloseButton]="hideCloseButton"
+[titleCentered]="titleCentered"
+[topDistance]="topDistance"
+
+>
+<input name="nom" type="search" class="form-control" [(ngModel)]="value" (keyup)='get_pharmacie($event)' placeholder="Rechercher un medicament">
+  <div  (click)="flyToPharmacie(pharmacie)" *ngFor="let pharmacie of pharmacies ">
+    <ion-card >
+      <ion-card-content>
+        <ion-card-title><h2> {{pharmacie.nom}}</h2></ion-card-title>
+          <ion-card-title class="float-end"><small><h6><b>{{pharmacie.primaire}}</b></h6></small></ion-card-title>
+          <small>{{pharmacie.distance}}</small>
+      </ion-card-content>
+    </ion-card>   
+  </div>
+</ion-bottom-sheet>

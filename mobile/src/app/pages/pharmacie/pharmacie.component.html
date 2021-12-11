@@ -21,8 +21,12 @@
 [dockedHeight]="dockedHeight" 
 [minHeight]="minHeight"
 [enableScrollContent]="enableScrollContent"
+[hideDragIcon]="hideDragIcon"
+[hideCloseButton]="hideCloseButton"
+[titleCentered]="titleCentered"
+[topDistance]="topDistance"
 >
-<input name="nom" type="search" class="form-control" [(ngModel)]="value" (keyup)='get_pharmacie($event)' placeholder="Rechercher un medicament">
+<input name="nom" type="search" class="form-control" [(ngModel)]="value" (keyup)='get_pharmacie($event)' placeholder="Rechercher une pharmacie">
   <div  (click)="flyToPharmacie(pharmacie)" *ngFor="let pharmacie of pharmacies ">
     <ion-card >
       <ion-card-content>
