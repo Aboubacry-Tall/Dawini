@@ -11,6 +11,7 @@ from apps.serializers import EtatSerializer
 from apps.serializers import PharmacieSerializer
 from apps.serializers import MedicamentSerializer
 
+# Création de pharmacie
 @api_view(['POST'])
 def create_pharmacie(request):
     pharmacie_data = JSONParser().parse(request)
@@ -20,6 +21,7 @@ def create_pharmacie(request):
         return JsonResponse(pharmacie_serializer.data, status=status.HTTP_201_CREATED)
     return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Modifier les informations d'une pharmacie 
 @api_view(['POST', 'PUT'])
 def edit_pharmacie(request, pk):
     pharmacie = Pharmacie.objects.get(pk=pk)
@@ -30,18 +32,21 @@ def edit_pharmacie(request, pk):
         return JsonResponse(pharmacie_serializer.data, status=status.HTTP_200_OK)
     return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Liste de tous les pharmacies
 @api_view(['GET'])
 def get_all_pharmacie(request):
     pharmacies = Pharmacie.objects.all().order_by('-id')
     pharmacies_serializer = PharmacieSerializer(pharmacies, many=True)
     return JsonResponse(pharmacies_serializer.data, status=status.HTTP_200_OK, safe=False)
 
+# Récuperation d'une pharmacie
 @api_view(['GET'])
 def get_one_pharmacie(request, pk):
     pharmacie = Pharmacie.objects.get(id=pk)
     pharmacie_serializer = PharmacieSerializer(pharmacie)
     return JsonResponse(pharmacie_serializer.data, status=status.HTTP_200_OK, safe=False)
 
+# Connexion
 @api_view(['POST'])
 def login_pharmacie(request):
     pharmacie_data = JSONParser().parse(request)
@@ -56,21 +61,6 @@ def login_pharmacie(request):
                 return JsonResponse(pharmacie_serialize.data, status=status.HTTP_200_OK, safe=False)
             return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_404_NOT_FOUND)
     return JsonResponse(pharmacie_serializer.errors, status=status.HTTP_404_NOT_FOUND)
-
-@api_view(['GET'])
-def delete_pharmacie(request):
-    return JsonResponse({'a': 'b'}, status=status.HTTP_200_OK)
-
-### Medicaments ###
-
-@api_view(['POST'])
-def create_medicament(request):
-    medicament_data = JSONParser().parse(request)
-    medicament_serializer = MedicamentSerializer(data=medicament_data)
-    if medicament_serializer.is_valid():
-        medicament_serializer.save()
-        return JsonResponse(medicament_serializer.data, status=status.HTTP_201_CREATED)
-    return JsonResponse(medicament_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def get_all_medicament(request):
