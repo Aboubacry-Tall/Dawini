@@ -28,7 +28,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   geolocate = new mapboxgl.GeolocateControl;
   updateSubscription: Subscription;
   
-  sheetState = SheetState.Top;
+  sheetState = SheetState.Docked;
   title = "Liste des pharmacies";
   dockedHeight = 300;
   hideCloseButton = true;
@@ -44,10 +44,8 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
+    this.OnStart();
     this.get_all_pharmacie();
-    this.updateSubscription = interval(3000).subscribe(
-      (val) => { this.enableGPS()});
-    this.enableGPS()
     }
 
   ngAfterViewInit(): void {
@@ -59,6 +57,15 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     this.testDirections();
   }
 
+  
+  OnStart() {
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      sessionStorage.setItem('user_lng', position.coords.longitude + '');
+      sessionStorage.setItem('user_lat', position.coords.latitude + '');
+      this.start=[parseFloat(sessionStorage.getItem('user_lng') + ''),parseFloat(sessionStorage.getItem('user_lat') + '')]
+    });
+}
   get_all_pharmacie(){
     this.service.getPharmacies().subscribe(data =>{
       this.pharmacies = data;
@@ -85,7 +92,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   }
 
   get_distance(): void {
-    const [lng, lat] = [ this.longitude,this.latitude ];
+    const [lng, lat] = [ parseFloat(sessionStorage.getItem('user_lng') + ''),parseFloat(sessionStorage.getItem('user_lat') + '') ];
     const from = turf.point([lng, lat]);
     const to = turf.point([0, 0]);
     const phs = [
@@ -335,18 +342,15 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   }
 
   enableGPS() {
-    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-      () => {
         
         const geo = navigator.geolocation
         geo.getCurrentPosition((position) => {
           this.longitude  = position.coords.longitude;
           this.latitude = position.coords.latitude;
+          sessionStorage.setItem('user_lng', position.coords.longitude + '');
+          sessionStorage.setItem('user_lat', position.coords.latitude + '');
           this.start=[this.longitude,this.latitude]
         });
-      },
-      error => console.log()
-    );
   }
   
 }
