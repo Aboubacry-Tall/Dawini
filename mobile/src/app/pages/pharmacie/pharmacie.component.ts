@@ -27,7 +27,8 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
   pharmacies!: Pharmacie[];
   geolocate = new mapboxgl.GeolocateControl;
   updateSubscription: Subscription;
-  sheetState = SheetState.Bottom;
+  
+  sheetState = SheetState.Top;
   title = "Liste des pharmacies";
   dockedHeight = 300;
   hideCloseButton = true;

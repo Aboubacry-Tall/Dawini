@@ -4,7 +4,7 @@ cd .\PFE\backend\backoffice\
 .\venv\Scripts\activate 
 python manage.py runserver
 
-manage.py runserver 192.168.0.103:8000
+python manage.py runserver 192.168.137.69:8000
 
 # run mobile server
 cd .\PFE\mobile\

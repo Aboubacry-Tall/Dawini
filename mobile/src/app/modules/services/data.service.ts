@@ -17,7 +17,7 @@ export class Medicament {
 })
 export class DataService {
 
-  private baseUrl = "http://127.0.0.1:8000/api/apps/";
+  private baseUrl = "http://192.168.137.69:8000/api/apps/";
   
   private database: SQLiteObject;
   medicamentsList = new BehaviorSubject([]);
