@@ -44,6 +44,8 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
+    this.updateSubscription = interval(3000).subscribe(
+      (val) => { this.OnStart()})
     this.OnStart();
     this.get_all_pharmacie();
     }
@@ -145,7 +147,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
           }
         },
         paint: {
-          'circle-radius': 8,
+          'circle-radius': 1,
           'circle-color': '#3887be'
         }
       });
@@ -191,7 +193,7 @@ export class PharmacieComponent implements OnInit, AfterViewInit {
             }
           },
           paint: {
-            'circle-radius': 8,
+            'circle-radius': 4,
             'circle-color': '#C61818'
           }
         });

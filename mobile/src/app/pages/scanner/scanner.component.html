@@ -11,20 +11,28 @@
 
 <ion-content>
   
-  <ion-icon class="frame" name="qr-scanner"></ion-icon>
-  <div *ngIf="!showCamera">
-    <ion-button expand="block"  (click)="Barscan()" >
-      <ion-icon slot="start" name="qr-scanner"></ion-icon>
-      Scanner un Code
-    </ion-button>
+<div *ngIf="!showCamera">
+  <ion-icon class="frame" name="qr-scanner">
+  </ion-icon>
+  <ion-button expand="block"  (click)="Barscan()" >
+    <ion-icon slot="start" name="qr-scanner">
+    </ion-icon>
+  Scanner un Code
+  </ion-button>
 
-    <ion-item *ngIf="textScanned" lines="none">
-      <ion-label>
-        <p>Texte du QR Code</p>
-        <h2><b>{{ textScanned.text }}</b></h2>
-      </ion-label>
-    </ion-item>
-    </div>
+  <ion-card *ngIf="text==doli">
+    <ion-card-content>
+      <ion-card-title><h2> DOLIPRANE</h2></ion-card-title>
+        <ion-card-title class="float-end"><small><h5><b>67 MRU</b></h5></small></ion-card-title>
+        <small>Comprime effervescent 1000mg</small>
+    </ion-card-content>
+  </ion-card> 
+  <ion-card *ngIf="text!=doli">
+    <ion-card-content>
+      <ion-card-title><h2> Medicament non trouve</h2></ion-card-title>
+    </ion-card-content>
+  </ion-card> 
+</div>
 
 </ion-content>
 <app-footer></app-footer>

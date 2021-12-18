@@ -52,7 +52,9 @@ export class MedicamentComponent implements OnInit {
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
-     this.OnStart()
+    this.updateSubscription = interval(3000).subscribe(
+      (val) => { this.OnStart()})
+    this.OnStart();
     this.seach_pharmacies_online()
     }
 
@@ -162,7 +164,7 @@ export class MedicamentComponent implements OnInit {
           }
         },
         paint: {
-          'circle-radius': 8,
+          'circle-radius': 1,
           'circle-color': '#3887be'
         }
       });
@@ -208,7 +210,7 @@ export class MedicamentComponent implements OnInit {
             }
           },
           paint: {
-            'circle-radius': 8,
+            'circle-radius': 4,
             'circle-color': '#C61818'
           }
         });
