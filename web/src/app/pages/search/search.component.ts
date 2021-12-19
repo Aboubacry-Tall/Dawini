@@ -37,6 +37,9 @@ export class SearchComponent implements OnInit {
   get_medicaments():void {
     this.s_md.get_medicaments(this.Input).subscribe(data => {
       this.medicaments = data;
+      for (let m of this.medicaments){
+        m.value = m.nom + ' ' + m.description;
+      }
     });
   }
 
@@ -49,16 +52,18 @@ export class SearchComponent implements OnInit {
       this.get_distance();
       this.get_pharmacies_markers();
       this.get_direction();
-    });
+      console.log(data)
+    }); 
   }
 
   search(medicament: Medicament):void {
-    this.s_ph.get_pharmacies_online(this.medicament).subscribe(data => {
+    this.s_ph.get_pharmacies_online(medicament).subscribe(data => {
       this.pharmacies = data;
       this.map_Init();
       this.get_distance();
       this.get_pharmacies_markers();
       this.get_direction();
+      console.log(data)
     });
   }
 
@@ -85,7 +90,7 @@ export class SearchComponent implements OnInit {
 
     // Positions
     this.get_user_marker();
-  }
+  } 
 
   get_user_marker(): void{
     const [lng, lat] = [ sessionStorage.getItem('user_lng'), sessionStorage.getItem('user_lat') ];

@@ -29,7 +29,7 @@
                 <div class="p-2 mb-2 shadow-sm" *ngFor="let medicament of medicaments_online">
                     <div class="row">
                         <div class="col-sm-9">
-                            {{ medicament.nom }}
+                            {{ medicament.nom }} {{ medicament.description }}
                         </div>
                         <div class="col-sm-2 text-end">
                             {{ medicament.prix }} <b>MRU</b>
@@ -65,7 +65,7 @@
                 <div class="p-2 mb-2 shadow-sm" *ngFor="let medicament of medicaments_offline">
                     <div class="row">
                         <div class="col-sm-9">
-                            {{ medicament.nom }}
+                            {{ medicament.nom }} {{ medicament.description }}
                         </div>
                         <div class="col-sm-2 text-end">
                             {{ medicament.prix }} <b>MRU</b>

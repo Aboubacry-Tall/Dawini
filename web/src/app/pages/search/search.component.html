@@ -7,8 +7,8 @@
                     <input matInput type="text" name="Input" (keyup)="get_medicaments()" [(ngModel)]="Input" #name="ngModel" value="{{Input}}" [matAutocomplete]="auto" placeholder="Rechercher des médicaments" required>
                     <span matSuffix *ngIf="Input" class="click btn btn-sm mb-3" (click)="Input=''"><mat-icon>close</mat-icon></span>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.nom" (click)="search(medicament)">
-                            {{medicament.nom}} {{medicament.description}}
+                        <mat-option *ngFor="let medicament of medicaments" [value]="medicament.value" (click)="search(medicament)">
+                            {{medicament.value}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field> 

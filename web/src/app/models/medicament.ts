@@ -6,4 +6,5 @@ export class Medicament {
     code?: string;
     description?: string;
     pharmacie?: number;
+    value?: string;
 }

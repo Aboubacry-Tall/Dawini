@@ -10,7 +10,6 @@ urlpatterns = [
     url(r'^api/apps/pharmacie/search', views.get_search_pharmacie),
     url(r'^api/apps/pharmacies/search/pharmacie', views.search_pharmacie),
 
-    url(r'^api/apps/medicament/create', views.create_medicament),
     url(r'^api/apps/medicaments/list', views.get_all_medicament),
     url(r'^api/apps/medicaments/search', views.search_medicaments),
     url(r'^api/apps/medicament-search/(?P<pk>[0-9]+)$', views.medicament_search),
