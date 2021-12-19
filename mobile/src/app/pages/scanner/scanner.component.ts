@@ -11,7 +11,8 @@ export class ScannerComponent implements OnInit {
   public textScanned: any;
 
   constructor(private barcodeScanner:BarcodeScanner) {}
-  
+  doli='3582910075820';
+  text='';
   Barscan(){
     const options: BarcodeScannerOptions = {
       showTorchButton: false,
@@ -24,6 +25,9 @@ export class ScannerComponent implements OnInit {
     this.barcodeScanner.scan(options).then((barcodeData:any) => {
       console.log('Barcode data', barcodeData);
       this.textScanned= barcodeData;
+      this.text=this.textScanned.text;
+      console.log('text scanner '+this.textScanned);
+      console.log('text '+this.text);
     }).catch(err => {
       console.log('Error', err);
     });
@@ -32,6 +36,4 @@ export class ScannerComponent implements OnInit {
   ngOnInit() {
     this.Barscan();
   }
-  
-
 }

@@ -52,10 +52,10 @@ export class MedicamentComponent implements OnInit {
     private androidPermissions: AndroidPermissions) {}
   
   ngOnInit(): void {
+    this.updateSubscription = interval(3000).subscribe(
+      (val) => { this.OnStart()})
+    this.OnStart();
     this.seach_pharmacies_online()
-    // this.updateSubscription = interval(3000).subscribe(
-    //   (val) => { this.enableGPS()});
-    // this.enableGPS()
     }
 
   ngAfterViewInit(): void {
@@ -64,9 +64,17 @@ export class MedicamentComponent implements OnInit {
       this.mapM.resize();
       this.geolocate.trigger()
     })
-    // this.testDirections();
+     this.testDirections();
   }
 
+  OnStart() {
+    const geo = navigator.geolocation
+    geo.getCurrentPosition((position) => {
+      sessionStorage.setItem('user_lng', position.coords.longitude + '');
+      sessionStorage.setItem('user_lat', position.coords.latitude + '');
+      this.start=[parseFloat(sessionStorage.getItem('user_lng') + ''),parseFloat(sessionStorage.getItem('user_lat') + '')]
+    });
+}
 
   get_medicaments():void {
     this.service.get_medicaments(this.Input).subscribe(data => {
@@ -77,10 +85,11 @@ export class MedicamentComponent implements OnInit {
   search(medicament: Medicament):void {
     this.service.get_pharmacies_online(medicament).subscribe(data => {
       this.pharmacies = data;
-      //this.get_distance()
+      this.OnStart()
+      this.get_distance()
       this.getMap()
       this.add_marker();
-      //this.testDirections()
+      this.testDirections()
     });
   }
 
@@ -88,13 +97,12 @@ export class MedicamentComponent implements OnInit {
   seach_pharmacies_online():void {
     this.medicament.nom = this.name;
     this.medicament.description = this.description + '';
-    console.log(this.medicament)
     this.service.get_pharmacies_online(this.medicament).subscribe(data => {
       this.pharmacies = data;
-      //this.get_distance()
+      this.get_distance()
       this.getMMap()
       this.add_marker();
-      //this.testDirections()
+      this.testDirections()
     });
   }
 
@@ -104,7 +112,7 @@ export class MedicamentComponent implements OnInit {
   }
 
   get_distance(): void {
-    const [lng, lat] = [ this.longitude,this.latitude ];
+    const [lng, lat] = [ parseFloat(sessionStorage.getItem('user_lng') + ''),parseFloat(sessionStorage.getItem('user_lat') + '') ];
     const from = turf.point([lng, lat]);
     const to = turf.point([0, 0]);
     const phs = [
@@ -127,7 +135,6 @@ export class MedicamentComponent implements OnInit {
     const s_phs = phs.sort((a, b) => parseFloat(a.ph_distance) - parseFloat(b.ph_distance));
     this.pharmacies = this.pharmacies.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
     
-    console.log(this.pharmacies)
   }
 
   testDirections(): void {
@@ -157,7 +164,7 @@ export class MedicamentComponent implements OnInit {
           }
         },
         paint: {
-          'circle-radius': 8,
+          'circle-radius': 1,
           'circle-color': '#3887be'
         }
       });
@@ -203,7 +210,7 @@ export class MedicamentComponent implements OnInit {
             }
           },
           paint: {
-            'circle-radius': 8,
+            'circle-radius': 4,
             'circle-color': '#C61818'
           }
         });
@@ -222,7 +229,7 @@ export class MedicamentComponent implements OnInit {
     const json = await query.json();
     const data = json.routes[0];
     const route = data.geometry.coordinates;
-
+    console.log('data'+data)
     const geojson = {
       type: 'Feature' as const,
       properties: {},
@@ -383,8 +390,6 @@ export class MedicamentComponent implements OnInit {
   }
 
   enableGPS() {
-    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-      () => {
         
         const geo = navigator.geolocation
         geo.getCurrentPosition((position) => {
@@ -392,9 +397,6 @@ export class MedicamentComponent implements OnInit {
           this.latitude = position.coords.latitude;
           this.start=[this.longitude,this.latitude]
         });
-      },
-      error => console.log()
-    );
   }
 
 
