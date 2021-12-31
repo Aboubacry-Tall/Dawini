@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit {
   }
 
   search(medicament: Medicament):void {
-    this.s_ph.get_pharmacies_online(this.medicament).subscribe(data => {
+    this.s_ph.get_pharmacies_online(medicament).subscribe(data => {
       this.pharmacies = data;
       this.map_Init();
       this.get_distance();

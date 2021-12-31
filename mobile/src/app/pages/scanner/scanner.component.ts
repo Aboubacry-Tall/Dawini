@@ -26,8 +26,6 @@ export class ScannerComponent implements OnInit {
       console.log('Barcode data', barcodeData);
       this.textScanned= barcodeData;
       this.text=this.textScanned.text;
-      console.log('text scanner '+this.textScanned);
-      console.log('text '+this.text);
     }).catch(err => {
       console.log('Error', err);
     });
